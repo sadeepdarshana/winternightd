@@ -28,6 +28,8 @@ public class DataConnection extends SQLiteOpenHelper{
 
     }
 
+    
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         DataConnection.db = db;
