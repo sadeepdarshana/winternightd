@@ -37,7 +37,7 @@ public class Note extends LinearLayout {
 
 
     private boolean isEditable;
-    public static final int defaultFieldType = CheckedField.classFieldType;
+    public static final int defaultFieldType = SimpleIndentedField.classFieldType;
 
 
     private View scrollableParent;

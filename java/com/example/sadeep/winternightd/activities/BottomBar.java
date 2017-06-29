@@ -1,5 +1,7 @@
 package com.example.sadeep.winternightd.activities;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -42,6 +44,7 @@ public class BottomBar  {
 
     private int toolbarHeight;
     private boolean toolbarVisible = false;
+    private boolean bottomLLOpacity = true;
 
     private LinearLayout bottomLL;
 
@@ -185,16 +188,35 @@ public class BottomBar  {
     }
 
     public void changeBottomLLOpacity(boolean opaque){
-        if(opaque) {
-            int color = ((ColorDrawable)bottomLL.getBackground()).getColor();
-            int newcolor = Color.argb(245,Color.red(color),Color.green(color),Color.blue(color));
-            bottomLL.setBackgroundColor(newcolor);
+        if(bottomLLOpacity == opaque)return;
+        bottomLLOpacity = opaque;
+
+        int colorOpaq = Color.argb(240,252,252,252);
+        int colorTrnsprt = Color.argb(50,50,50,50);
+
+        int colorFrom ;
+        int colorTo ;
+
+        if(opaque){
+            colorFrom = colorTrnsprt;
+            colorTo = colorOpaq;
+        }else {
+            colorTo = colorTrnsprt;
+            colorFrom = colorOpaq;
         }
-        else {
-            int color = ((ColorDrawable)bottomLL.getBackground()).getColor();
-            int newcolor = Color.argb(160,Color.red(color),Color.green(color),Color.blue(color));
-            bottomLL.setBackgroundColor(newcolor);
-        }
+
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(250); // milliseconds
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                bottomLL.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
+
 
     }
 }

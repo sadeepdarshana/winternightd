@@ -47,6 +47,7 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
         editTextView = new EditTextView(getContext(),isEditable,this);
         addView(editTextView.get());
 
+
         super.setIsEditable(isEditable); //here we call super.setIsEditable() because we have already created the edittextview to suit the isEditable parameter. (no need of this.setIsEditable())
     }
 
