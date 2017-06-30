@@ -21,7 +21,6 @@ import android.view.inputmethod.InputConnectionWrapper;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
 import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.field.fields.Field;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.sadeep.winternightd.activities.BottomBar;
+import com.example.sadeep.winternightd.notebookactivity.BottomBar;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 
 /**

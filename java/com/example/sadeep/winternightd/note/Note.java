@@ -12,14 +12,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sadeep.winternightd.activities.BottomBar;
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.field.FieldFactory;
-import com.example.sadeep.winternightd.field.fields.CheckedField;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.spans.SpansFactory;
 import com.example.sadeep.winternightd.field.fields.Field;
-import com.example.sadeep.winternightd.field.fields.NumberedField;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.misc.Globals;

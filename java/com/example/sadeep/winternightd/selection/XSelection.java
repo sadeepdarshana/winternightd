@@ -4,20 +4,13 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.ViewTreeObserver;
 
-import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
-import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.field.FieldFactory;
-import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.note.NoteFactory;
 import com.example.sadeep.winternightd.textboxes.XEditText;
-
-import java.util.Timer;
 
 /**
  * Created by Sadeep on 10/21/2016.

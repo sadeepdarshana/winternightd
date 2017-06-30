@@ -3,23 +3,19 @@ package com.example.sadeep.winternightd.notebook;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.os.CountDownTimer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sadeep.winternightd.activities.BottomBar;
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
-import com.example.sadeep.winternightd.temp.d;
 
 import java.util.ArrayList;
 

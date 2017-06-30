@@ -1,18 +1,14 @@
-package com.example.sadeep.winternightd.activities;
+package com.example.sadeep.winternightd.notebookactivity;
 
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
 import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
@@ -20,14 +16,10 @@ import com.example.sadeep.winternightd.localstorage.DataConnection;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
-import com.example.sadeep.winternightd.note.NoteFactory;
 import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 import com.example.sadeep.winternightd.selection.XSelection;
-import com.example.sadeep.winternightd.temp.QButton;
 import com.example.sadeep.winternightd.temp.XRelativeLayout;
-import com.example.sadeep.winternightd.temp.d;
-import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
 
 public class NotebookActivity extends ChangableActionBarActivity {

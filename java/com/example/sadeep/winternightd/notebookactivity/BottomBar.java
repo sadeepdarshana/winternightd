@@ -1,29 +1,24 @@
-package com.example.sadeep.winternightd.activities;
+package com.example.sadeep.winternightd.notebookactivity;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.animation.XAnimation;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.temp.d;
 import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
 public class BottomBar  {
