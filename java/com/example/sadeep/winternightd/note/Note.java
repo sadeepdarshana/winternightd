@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.field.FieldFactory;
+import com.example.sadeep.winternightd.field.fields.BulletedField;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.spans.SpansFactory;
 import com.example.sadeep.winternightd.field.fields.Field;
@@ -34,7 +35,7 @@ public class Note extends LinearLayout {
 
 
     private boolean isEditable;
-    public static final int defaultFieldType = SimpleIndentedField.classFieldType;
+    public static final int defaultFieldType = BulletedField.classFieldType;
 
 
     private View scrollableParent;

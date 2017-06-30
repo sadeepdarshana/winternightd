@@ -106,7 +106,7 @@ public class TestActivityy extends AppCompatActivity implements View.OnClickList
                 final int cy = 0;
                 final float finalRadius = (float) Math.hypot(cx, cy);
                 Animator anim = ViewAnimationUtils.createCircularReveal(nn, 120, cy, 0, (float) Math.hypot(nn.getWidth(), nn.getHeight()));
-                anim.setDuration(40000) ;
+                anim.setDuration(500) ;
                 anim.start();
             }
         });

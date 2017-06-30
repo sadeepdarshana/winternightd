@@ -22,7 +22,7 @@ import com.example.sadeep.winternightd.misc.Globals;
 public class NumberedField extends SimpleIndentedField {
 
 
-    public static final int classFieldType = 5;
+    public static final int classFieldType = 340657775;
 
     private TextView numberTextView;
     private int number;

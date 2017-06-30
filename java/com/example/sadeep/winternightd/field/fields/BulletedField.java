@@ -22,7 +22,7 @@ import com.example.sadeep.winternightd.misc.Globals;
 public class BulletedField extends SimpleIndentedField {
 
 
-    public static final int classFieldType = 3;
+    public static final int classFieldType = 807450317;
 
     private TextView bulletTextView;
 

@@ -18,7 +18,7 @@ import com.example.sadeep.winternightd.misc.Globals;
  */
 public class CheckedField extends SimpleIndentedField {
 
-    public static final int classFieldType = 4;
+    public static final int classFieldType = 1855431776;
 
 
     private CheckBox checkedCheckView;

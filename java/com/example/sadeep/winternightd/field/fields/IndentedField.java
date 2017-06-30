@@ -15,7 +15,7 @@ import com.example.sadeep.winternightd.misc.Globals;
  */
 public abstract class IndentedField extends Field {
 
-    public static final int classFieldType = 1;
+    public static final int classFieldType = 1761816019;
 
     private int indent;  //the current indent of the Field. this is 0 for no indentation
     private final int indentSize = Globals.dp2px * 30; //the offset due to change of indent by 1 (i.e. width of a single indentation)

@@ -48,7 +48,7 @@ public abstract class Field extends LinearLayout {
      *  4           CheckedField
      *  5           NumberedField
      */
-    public static final int classFieldType = 0;
+    public static final int classFieldType = 1044930821;
 
     protected int fieldType;//see Field.init() for info
 

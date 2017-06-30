@@ -27,7 +27,7 @@ import com.example.sadeep.winternightd.spans.RichText;
 public class SimpleIndentedField extends IndentedField implements SingleText {
 
 
-    public static final int classFieldType = 2;
+    public static final int classFieldType = 1422342676;
 
     protected EditTextView editTextView;  //the main View containing the text
 
