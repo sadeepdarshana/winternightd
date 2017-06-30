@@ -1,6 +1,7 @@
 package com.example.sadeep.winternightd.activities;
 
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -63,7 +64,8 @@ public class NotebookActivity extends ChangableActionBarActivity {
 
         note = (Note) bottomBar.getBottombar().findViewById(R.id.note);
 
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,235,235)));
+        getWindow().setBackgroundDrawableResource(R.drawable.default_wallpaper);
+        //getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,235,235)));
 
         notebook.scrollListener = new Notebook.ScrollListener() {
             @Override

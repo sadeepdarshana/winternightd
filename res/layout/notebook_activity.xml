@@ -4,7 +4,9 @@
     android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:clipChildren="false">
+    android:clipChildren="false"
+    android:background="#ffd9dfd9"
+    >
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/notebook_space"

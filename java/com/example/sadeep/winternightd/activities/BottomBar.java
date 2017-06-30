@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -191,7 +194,8 @@ public class BottomBar  {
         if(bottomLLOpacity == opaque)return;
         bottomLLOpacity = opaque;
 
-        int colorOpaq = Color.argb(240,252,252,252);
+        int colorOpaq = Color.argb(246,252,252,252);
+        int colorInt = Color.argb(75,150,150,150);
         int colorTrnsprt = Color.argb(50,50,50,50);
 
         int colorFrom ;
@@ -204,10 +208,10 @@ public class BottomBar  {
             colorTo = colorTrnsprt;
             colorFrom = colorOpaq;
         }
-
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.setDuration(250); // milliseconds
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        int time = 30;
+        ValueAnimator colorAnimation1 = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorInt);
+        colorAnimation1.setDuration(time); // milliseconds
+        colorAnimation1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
             @Override
             public void onAnimationUpdate(ValueAnimator animator) {
@@ -215,7 +219,23 @@ public class BottomBar  {
             }
 
         });
-        colorAnimation.start();
+        colorAnimation1.setInterpolator(new AccelerateInterpolator(.8f));
+        colorAnimation1.start();
+
+
+        ValueAnimator colorAnimation2 = ValueAnimator.ofObject(new ArgbEvaluator(), colorInt, colorTo);
+        colorAnimation2.setDuration(time); // milliseconds
+        colorAnimation2.setStartDelay(time);
+        colorAnimation2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                bottomLL.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation2.setInterpolator(new DecelerateInterpolator(.8f));
+        colorAnimation2.start();
 
 
     }
