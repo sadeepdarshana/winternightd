@@ -5,7 +5,7 @@
     android:id="@+id/activity_test_activityy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#f5f5f5"
     tools:context="com.example.sadeep.winternightd.activities.TestActivityy">
 
 
@@ -17,7 +17,7 @@
         android:tag="#00bfa5"
         grid:layout_columnWeight="1"
         android:paddingTop="7dp"
-        android:src="@drawable/ic_checkbox_marked_white_48dp" />
+        android:src="@drawable/ic_checkbox_marked_white_36dp" />
 
     <com.example.sadeep.winternightd.buttons.CustomColorTapButton
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         android:tag="#3d5afe"
         grid:layout_columnWeight="1"
         android:paddingTop="7dp"
-        android:src="@drawable/ic_format_list_bulleted_white_48dp" />
+        android:src="@drawable/ic_format_list_bulleted_white_36dp" />
 
     <com.example.sadeep.winternightd.buttons.CustomColorTapButton
         android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
         android:tag="#ff7043"
         grid:layout_columnWeight="1"
         android:paddingTop="7dp"
-        android:src="@drawable/ic_format_list_numbers_white_48dp" />
+        android:src="@drawable/ic_format_list_numbers_white_36dp" />
 
     <com.example.sadeep.winternightd.buttons.CustomColorTapButton
         android:layout_width="wrap_content"

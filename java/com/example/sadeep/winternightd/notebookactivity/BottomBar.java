@@ -17,7 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.activities.TestActivityy;
 import com.example.sadeep.winternightd.animation.XAnimation;
+import com.example.sadeep.winternightd.attachbox.AttachBox;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
@@ -140,6 +142,19 @@ public class BottomBar  {
                         }
                     }, 400);
                 }
+            }
+        });
+
+        attach0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AttachBox.display(v);
+            }
+        });
+        attach1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AttachBox.display(v);
             }
         });
 
