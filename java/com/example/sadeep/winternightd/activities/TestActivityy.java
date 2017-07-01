@@ -72,7 +72,7 @@ public class TestActivityy extends AppCompatActivity {
         gridParent.setBackground(new ColorDrawable(Color.TRANSPARENT));
         gridParent.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,screenHeight-(buttonCoords[1]+button.getHeight())));
 
-        final GridLayout grid = (GridLayout) LayoutInflater.from(context).inflate(R.layout.activity_test_activityy,(ViewGroup) button.getParent(),false);
+        final GridLayout grid = (GridLayout) LayoutInflater.from(context).inflate(R.layout.attachbox,(ViewGroup) button.getParent(),false);
         grid.setColumnCount(screenWidth/(Globals.dp2px*55));
 
         final PopupWindow popupWindow = new PopupWindow(context);

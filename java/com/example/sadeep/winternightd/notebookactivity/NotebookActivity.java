@@ -110,11 +110,6 @@ public class NotebookActivity extends ChangableActionBarActivity {
                 XRelativeLayout.resumeLayout();
             }
         },300);
-        new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-            }
-        }.sendMessageDelayed(new Message(),10000);
     }
 
 }

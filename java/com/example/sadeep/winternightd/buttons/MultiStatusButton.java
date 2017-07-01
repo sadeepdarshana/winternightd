@@ -93,6 +93,10 @@ public abstract class MultiStatusButton extends ImageView {
         updateColorsForModeChanges();
     }
 
+    public void refresh(){
+        init();
+    }
+
     protected abstract int getBackgroundColorTouchDown();
     protected abstract int[] getBackgroundColorForMode();
     protected abstract int[] getContentColorForMode();

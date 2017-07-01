@@ -20,6 +20,7 @@ import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.activities.TestActivityy;
 import com.example.sadeep.winternightd.animation.XAnimation;
 import com.example.sadeep.winternightd.attachbox.AttachBox;
+import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
@@ -148,13 +149,23 @@ public class BottomBar  {
         attach0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AttachBox.display(v);
+                AttachBox.display(v, new OnAttachBoxItemClick() {
+                    @Override
+                    public void buttonClicked(int attachButtonId) {
+                        note.requestFromAttachBox(attachButtonId);
+                    }
+                });
             }
         });
         attach1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AttachBox.display(v);
+                AttachBox.display(v, new OnAttachBoxItemClick() {
+                    @Override
+                    public void buttonClicked(int attachButtonId) {
+                        note.requestFromAttachBox(attachButtonId);
+                    }
+                });
             }
         });
 

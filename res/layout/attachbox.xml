@@ -5,43 +5,42 @@
     android:id="@+id/activity_test_activityy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
-    tools:context="com.example.sadeep.winternightd.activities.TestActivityy">
+    android:background="#f5f5f5">
 
 
 
-    <com.example.sadeep.winternightd.buttons.CustomColorTapButton
+    <com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:tag="#00bfa5"
+        android:tag="0#00bfa5"
         grid:layout_columnWeight="1"
         android:paddingTop="7dp"
         android:src="@drawable/ic_checkbox_marked_white_36dp" />
 
-    <com.example.sadeep.winternightd.buttons.CustomColorTapButton
+    <com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:tag="#3d5afe"
+        android:tag="1#3d5afe"
         grid:layout_columnWeight="1"
         android:paddingTop="7dp"
         android:src="@drawable/ic_format_list_bulleted_white_36dp" />
 
-    <com.example.sadeep.winternightd.buttons.CustomColorTapButton
+    <com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:tag="#ff7043"
+        android:tag="2#ff7043"
         grid:layout_columnWeight="1"
         android:paddingTop="7dp"
         android:src="@drawable/ic_format_list_numbers_white_36dp" />
 
-    <com.example.sadeep.winternightd.buttons.CustomColorTapButton
+    <com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:tag="#8d6e63"
+        android:tag="3#8d6e63"
         grid:layout_columnWeight="1"
         android:paddingTop="7dp"
         android:src="@drawable/ic_camera_white_48dp" />

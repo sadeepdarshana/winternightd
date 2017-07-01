@@ -37,7 +37,10 @@ public class CheckedField extends SimpleIndentedField {
         fieldType = classFieldType;
 
         checkedCheckView = (CheckBox) LayoutInflater.from(getContext()).inflate(R.layout.checkbox,this,false);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); lp.setMargins( /*-7*/0* Globals.dp2px,0 ,0,0);  checkedCheckView.setLayoutParams(lp);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lp.setMargins( -7* Globals.dp2px,0 , 7* Globals.dp2px,0);
+
+        checkedCheckView.setLayoutParams(lp);
 
         addView(checkedCheckView,0);
     }
