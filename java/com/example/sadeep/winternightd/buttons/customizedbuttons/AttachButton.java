@@ -10,7 +10,7 @@ import com.example.sadeep.winternightd.buttons.MultiStatusButton;
  * Created by Sadeep on 6/18/2017.
  */
 
-public class AttachButton extends MultiStatusButton {
+public class AttachButton extends MultiStatusButton implements AttachBoxOpener {
     public AttachButton(Context context) {
         super(context);
     }
