@@ -18,6 +18,7 @@ import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Sadeep on 6/17/2017.
@@ -117,6 +118,7 @@ class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
         else if(position!=getItemCount()-1) {
             holder.card.removeAllViews();
 
+            //holder.card.setCardBackgroundColor(Color.HSVToColor(new float[]{new Random().nextFloat()*360,.001f,1}));
             try {
                 Note note;
                 if (!usesCursor)

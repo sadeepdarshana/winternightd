@@ -1,8 +1,11 @@
 package com.example.sadeep.winternightd.field.fields;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
@@ -39,8 +42,16 @@ public class CheckedField extends SimpleIndentedField {
         checkedCheckView = (CheckBox) LayoutInflater.from(getContext()).inflate(R.layout.checkbox,this,false);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lp.setMargins( -7* Globals.dp2px,0 , 3* Globals.dp2px,0);
-
         checkedCheckView.setLayoutParams(lp);
+
+        checkedCheckView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)checkedCheckView.setButtonTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{Color.parseColor("#FF26A69A")}));
+                else checkedCheckView.setButtonTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{Color.parseColor("#f59d22")}));
+
+            }
+        });
 
         addView(checkedCheckView,0);
     }

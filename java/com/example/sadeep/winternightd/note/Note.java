@@ -38,7 +38,7 @@ public class Note extends LinearLayout {
 
 
     private boolean isEditable;
-    public static final int defaultFieldType = BulletedField.classFieldType;
+    public static final int defaultFieldType = SimpleIndentedField.classFieldType;
 
 
     private View scrollableParent;
@@ -67,9 +67,12 @@ public class Note extends LinearLayout {
     private void init(boolean isEditable) {
 
         setOrientation(VERTICAL);
-        //setPadding(0,0,0,0);
+        setPadding(5*Globals.dp2px,0,0,0);
+
         setBackgroundColor(Color.TRANSPARENT);
         setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        setClipChildren(false);
 
         this.isEditable = isEditable;
     }
