@@ -11,6 +11,9 @@ import com.example.sadeep.winternightd.buttons.MultiStatusButton;
  */
 
 public class AttachButton extends MultiStatusButton implements AttachBoxOpener {
+
+    private boolean attachboxOpened=false;
+
     public AttachButton(Context context) {
         super(context);
     }
@@ -26,11 +29,23 @@ public class AttachButton extends MultiStatusButton implements AttachBoxOpener {
 
     @Override
     protected int[] getBackgroundColorForMode() {
-        return new int[]{ Color.parseColor("#000000ff")        , Color.argb(20, 0, 0, 0)};
+        return new int[]{ Color.parseColor("#00000000")        , Color.parseColor("#EEEEEE")};
     }
 
     @Override
     protected int[] getContentColorForMode() {
         return  new int[]{Color.parseColor("#00AC00"), Color.parseColor("#1EE44A")   };
+    }
+
+    @Override
+    public boolean isAttachboxOpen() {
+        return attachboxOpened;
+    }
+
+    @Override
+    public void setAttachboxOpened(boolean open) {
+        this.attachboxOpened = open;
+        if(open)setMode(1);
+        else setMode(0);
     }
 }

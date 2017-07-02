@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sadeep.winternightd.attachbox.AttachBox;
+import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.fields.BulletedField;
@@ -150,8 +150,8 @@ public class Note extends LinearLayout {
         if(focusListener!=null)focusListener.onFocused();
     }
 
-    public void requestFromAttachBox(int attachButtonId) {
-        if(attachButtonId == AttachBox.ATTACH_BUTTON_ID_CHECKEDFIELD){
+    public void attachboxRequests(int attachButtonId) {
+        if(attachButtonId == AttachBoxManager.ATTACH_BUTTON_ID_CHECKEDFIELD){
             CheckedField field = (CheckedField) FieldFactory.createNewField(getContext(),CheckedField.classFieldType,true);
             CursorPosition cpos = getCursorPosition();
             int newFieldPos;
@@ -160,7 +160,7 @@ public class Note extends LinearLayout {
             addView(field,newFieldPos);
             field.getMainTextBox().requestFocus();
         }
-        if(attachButtonId == AttachBox.ATTACH_BUTTON_ID_BULLETEDFIELD){
+        if(attachButtonId == AttachBoxManager.ATTACH_BUTTON_ID_BULLETEDFIELD){
             BulletedField field = (BulletedField) FieldFactory.createNewField(getContext(),BulletedField.classFieldType,true);
             CursorPosition cpos = getCursorPosition();
             int newFieldPos;
@@ -169,7 +169,7 @@ public class Note extends LinearLayout {
             addView(field,newFieldPos);
             field.getMainTextBox().requestFocus();
         }
-        if(attachButtonId == AttachBox.ATTACH_BUTTON_ID_NUMBEREDFIELD){
+        if(attachButtonId == AttachBoxManager.ATTACH_BUTTON_ID_NUMBEREDFIELD){
             NumberedField field = (NumberedField) FieldFactory.createNewField(getContext(),NumberedField.classFieldType,true);
             CursorPosition cpos = getCursorPosition();
             int newFieldPos;

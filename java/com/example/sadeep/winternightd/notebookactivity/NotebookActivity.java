@@ -1,14 +1,13 @@
 package com.example.sadeep.winternightd.notebookactivity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
+import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
 import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
@@ -72,6 +71,17 @@ public class NotebookActivity extends ChangableActionBarActivity {
             }
         };
 
+
+        final XRelativeLayout root = (XRelativeLayout) notebookSpace.getParent();
+        root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                try{
+                    AttachBoxManager.popupWindow.dismiss();}catch (Exception e){}
+
+            }
+        });
+
     }
 
     @Override
@@ -111,5 +121,6 @@ public class NotebookActivity extends ChangableActionBarActivity {
             }
         },300);
     }
+
 
 }

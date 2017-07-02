@@ -3,7 +3,6 @@ package com.example.sadeep.winternightd.attachbox;
 import android.animation.Animator;
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.GridLayout;
 import android.util.DisplayMetrics;
@@ -18,13 +17,15 @@ import android.widget.RelativeLayout;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxButton;
+import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
+import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachButton;
 import com.example.sadeep.winternightd.misc.Globals;
 
 /**
  * Created by Sadeep on 7/1/2017.
  */
-final public class AttachBox {
-    private AttachBox() {}
+final public class AttachBoxManager {
+    private AttachBoxManager() {}
 
 
     public static final int ATTACH_BUTTON_ID_CHECKEDFIELD = 0;
@@ -32,10 +33,12 @@ final public class AttachBox {
     public static final int ATTACH_BUTTON_ID_NUMBEREDFIELD = 2;
     public static final int ATTACH_BUTTON_ID_CAMERA = 3;
 
-
+    public static PopupWindow popupWindow;
 
 
     public static void display(final View button, final OnAttachBoxItemClick listener) {
+
+        int ATTACHBOX_BUTTON_WIDTH = Globals.dp2px*55;
 
         Activity context= (Activity) button.getContext();
 
@@ -53,17 +56,34 @@ final public class AttachBox {
         gridParent.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,screenHeight-(buttonCoords[1]+button.getHeight())));
 
         final GridLayout grid = (GridLayout) LayoutInflater.from(context).inflate(R.layout.attachbox,(ViewGroup) button.getParent(),false);
-        grid.setColumnCount(screenWidth/(Globals.dp2px*55));
+        grid.setColumnCount(screenWidth/(ATTACHBOX_BUTTON_WIDTH));
 
 
         final PopupWindow popupWindow = new PopupWindow(context);
+        AttachBoxManager.popupWindow = popupWindow;
         popupWindow.setHeight(screenHeight-(buttonCoords[1]+button.getHeight()));
         popupWindow.setWidth(screenWidth);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setBackgroundDrawable(null);
         popupWindow.setOutsideTouchable(true);
+        popupWindow.setSplitTouchEnabled(true);
 
         popupWindow.setContentView(grid);
         popupWindow.showAtLocation(button, Gravity.NO_GRAVITY,0,buttonCoords[1]+button.getHeight());
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                try {
+                    ((AttachButton)button).setMode(0);
+                }catch (Exception e){}
+                button.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((AttachBoxOpener)button).setAttachboxOpened(false);
+                    }
+                },900);
+            }
+        });
 
         for(int i=0;i<grid.getChildCount();i++){
             grid.getChildAt(i).setOnClickListener(new View.OnClickListener() {

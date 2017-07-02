@@ -5,5 +5,6 @@ package com.example.sadeep.winternightd.buttons.customizedbuttons;
  */
 
 public interface AttachBoxOpener {
-    boolean attachboxOpened=false;
+    boolean isAttachboxOpen();
+    void setAttachboxOpened(boolean open);
 }

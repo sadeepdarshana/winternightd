@@ -17,10 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.example.sadeep.winternightd.R;
-import com.example.sadeep.winternightd.activities.TestActivityy;
 import com.example.sadeep.winternightd.animation.XAnimation;
-import com.example.sadeep.winternightd.attachbox.AttachBox;
+import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
 import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
+import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
@@ -146,24 +146,32 @@ public class BottomBar  {
             }
         });
 
-        attach0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AttachBox.display(v, new OnAttachBoxItemClick() {
-                    @Override
-                    public void buttonClicked(int attachButtonId) {
-                        note.requestFromAttachBox(attachButtonId);
-                    }
-                });
-            }
-        });
         attach1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AttachBox.display(v, new OnAttachBoxItemClick() {
+                if(!((AttachBoxOpener)v).isAttachboxOpen()) {
+                    ((AttachBoxOpener) v).setAttachboxOpened(true);
+                    AttachBoxManager.display(v, new OnAttachBoxItemClick() {
+                        @Override
+                        public void buttonClicked(int attachButtonId) {
+                            note.attachboxRequests(attachButtonId);
+                        }
+                    });
+                }else{
+                    try {
+                        AttachBoxManager.popupWindow.dismiss();
+                    }catch (Exception e){}
+                }
+            }
+        });
+        attach0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AttachBoxOpener)v).setAttachboxOpened(true);
+                AttachBoxManager.display(v, new OnAttachBoxItemClick() {
                     @Override
                     public void buttonClicked(int attachButtonId) {
-                        note.requestFromAttachBox(attachButtonId);
+                        note.attachboxRequests(attachButtonId);
                     }
                 });
             }
