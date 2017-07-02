@@ -42,8 +42,11 @@ public class NumberedField extends SimpleIndentedField {
         numberTextView = new TextView(getContext());
         numberTextView.setPadding(0,0,0,0);
         numberTextView.setBackgroundColor(Color.TRANSPARENT);
-        numberTextView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         numberTextView.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lp.setMargins( 3* Globals.dp2px,0 , 1* Globals.dp2px,0);
+        numberTextView.setLayoutParams(lp);
 
         setNumber(0);
 

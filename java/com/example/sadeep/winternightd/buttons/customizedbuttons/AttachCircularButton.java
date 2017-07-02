@@ -16,8 +16,8 @@ import android.view.View;
 
 public class AttachCircularButton extends FloatingActionButton implements AttachBoxOpener {
 
-    private int colorNormal  = Color.parseColor("#fff8f8f8");
-    private int colorPressed = Color.parseColor("#00EE00");
+    public static int colorNormal  = Color.parseColor("#fff8f8f8");
+    public static int colorPressed = Color.parseColor("#ffcccccc");
 
     private boolean attachboxOpened=false;
 
@@ -45,7 +45,7 @@ public class AttachCircularButton extends FloatingActionButton implements Attach
 
     }
 
-    private void setColor(int color) {
+    public void setColor(int color) {
         setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{color}));
     }
 
@@ -57,5 +57,8 @@ public class AttachCircularButton extends FloatingActionButton implements Attach
     @Override
     public void setAttachboxOpened(boolean open) {
         this.attachboxOpened = open;
+
+        if(open)setColor(colorPressed);
+        else setColor(colorNormal);
     }
 }

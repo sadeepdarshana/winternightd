@@ -41,9 +41,13 @@ public class BulletedField extends SimpleIndentedField {
         bulletTextView = new TextView(getContext());
         bulletTextView.setPadding(0,0,0,0);
         bulletTextView.setBackgroundColor(Color.TRANSPARENT);
-        bulletTextView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         bulletTextView.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize);
         bulletTextView.setText("◯   ");
+
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lp.setMargins( 2* Globals.dp2px,0 , -2* Globals.dp2px,0);
+        bulletTextView.setLayoutParams(lp);
 
         addView(bulletTextView,0);
 

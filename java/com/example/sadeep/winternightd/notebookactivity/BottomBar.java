@@ -146,7 +146,7 @@ public class BottomBar  {
             }
         });
 
-        attach1.setOnClickListener(new View.OnClickListener() {
+        attach0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!((AttachBoxOpener)v).isAttachboxOpen()) {
@@ -164,16 +164,22 @@ public class BottomBar  {
                 }
             }
         });
-        attach0.setOnClickListener(new View.OnClickListener() {
+        attach1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AttachBoxOpener)v).setAttachboxOpened(true);
-                AttachBoxManager.display(v, new OnAttachBoxItemClick() {
-                    @Override
-                    public void buttonClicked(int attachButtonId) {
-                        note.attachboxRequests(attachButtonId);
-                    }
-                });
+                if(!((AttachBoxOpener)v).isAttachboxOpen()) {
+                    ((AttachBoxOpener) v).setAttachboxOpened(true);
+                    AttachBoxManager.display(v, new OnAttachBoxItemClick() {
+                        @Override
+                        public void buttonClicked(int attachButtonId) {
+                            note.attachboxRequests(attachButtonId);
+                        }
+                    });
+                }else{
+                    try {
+                        AttachBoxManager.popupWindow.dismiss();
+                    }catch (Exception e){}
+                }
             }
         });
 

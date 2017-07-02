@@ -246,4 +246,8 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
 
         editTextView.get().setText(RichText.readFromFieldDataStream(stream).getCharSequence());            //0  the text of the Field
     }
+
+    public boolean isEmpty() {
+        return getMainTextBox().length()==0;
+    }
 }

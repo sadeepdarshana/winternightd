@@ -19,6 +19,7 @@ import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxButton;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachButton;
+import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachCircularButton;
 import com.example.sadeep.winternightd.misc.Globals;
 
 /**
@@ -38,7 +39,12 @@ final public class AttachBoxManager {
 
     public static void display(final View button, final OnAttachBoxItemClick listener) {
 
-        int ATTACHBOX_BUTTON_WIDTH = Globals.dp2px*55;
+        if(popupWindow!=null){
+            try{popupWindow.dismiss();}
+            catch (Exception e){}
+        }
+
+        int ATTACHBOX_BUTTON_MINIMUM_WIDTH = Globals.dp2px*55;
 
         Activity context= (Activity) button.getContext();
 
@@ -51,30 +57,48 @@ final public class AttachBoxManager {
         int screenWidth=displayMetrics.widthPixels;
         int screenHeight=displayMetrics.heightPixels;
 
+        int attachboxHeight = screenHeight-(buttonCoords[1]+button.getHeight());
+        int attachboxWidth = screenWidth;
+        int posX = 0;
+        int posY = buttonCoords[1]+button.getHeight();
+        int _rippleX = button.getWidth()/2;
+        int _rippleY = 0;
+
+        if(attachboxHeight<400){
+            attachboxHeight=400;
+            posY = buttonCoords[1]-attachboxHeight;
+            _rippleY = attachboxHeight;
+        }
+
+        final int rippleX = _rippleX;
+        final int rippleY = _rippleY;
+
+
         LinearLayout gridParent = new LinearLayout(context);
         gridParent.setBackground(new ColorDrawable(Color.TRANSPARENT));
-        gridParent.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,screenHeight-(buttonCoords[1]+button.getHeight())));
+        gridParent.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,attachboxHeight));
 
         final GridLayout grid = (GridLayout) LayoutInflater.from(context).inflate(R.layout.attachbox,(ViewGroup) button.getParent(),false);
-        grid.setColumnCount(screenWidth/(ATTACHBOX_BUTTON_WIDTH));
+        grid.setColumnCount(screenWidth/(ATTACHBOX_BUTTON_MINIMUM_WIDTH));
 
 
         final PopupWindow popupWindow = new PopupWindow(context);
         AttachBoxManager.popupWindow = popupWindow;
-        popupWindow.setHeight(screenHeight-(buttonCoords[1]+button.getHeight()));
+        popupWindow.setHeight(attachboxHeight);
         popupWindow.setWidth(screenWidth);
-        popupWindow.setBackgroundDrawable(null);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setSplitTouchEnabled(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         popupWindow.setContentView(grid);
-        popupWindow.showAtLocation(button, Gravity.NO_GRAVITY,0,buttonCoords[1]+button.getHeight());
+        popupWindow.showAtLocation(button, Gravity.NO_GRAVITY,posX,posY);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 try {
                     ((AttachButton)button).setMode(0);
+                }catch (Exception e){}
+                try {
+                    ((AttachCircularButton)button).setColor(AttachCircularButton.colorNormal);
                 }catch (Exception e){}
                 button.postDelayed(new Runnable() {
                     @Override
@@ -88,14 +112,13 @@ final public class AttachBoxManager {
         for(int i=0;i<grid.getChildCount();i++){
             grid.getChildAt(i).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     if(!(v instanceof AttachBoxButton))return;
-                    listener.buttonClicked(((AttachBoxButton)v).getAttachButtonId());
 
                     button.post(new Runnable() {
                         @Override
                         public void run() {
-                            Animator anim = ViewAnimationUtils.createCircularReveal(grid, button.getLeft()+button.getWidth()/2, 0, (float) Math.hypot(grid.getWidth(), grid.getHeight()),0);
+                            Animator anim = ViewAnimationUtils.createCircularReveal(grid,rippleX,rippleY, (float) Math.hypot(grid.getWidth(), grid.getHeight()),0);
                             anim.setDuration(200) ;
                             anim.start();
                         }
@@ -105,6 +128,7 @@ final public class AttachBoxManager {
                         @Override
                         public void run() {
                             popupWindow.dismiss();
+                            listener.buttonClicked(((AttachBoxButton)v).getAttachButtonId());
                         }
                     },201);
                 }
@@ -115,7 +139,7 @@ final public class AttachBoxManager {
             @Override
             public void run() {
                 grid.setVisibility(View.VISIBLE);
-                Animator anim = ViewAnimationUtils.createCircularReveal(grid, button.getLeft()+button.getWidth()/2, 0, 0, (float) Math.hypot(grid.getWidth(), grid.getHeight()));
+                Animator anim = ViewAnimationUtils.createCircularReveal(grid, rippleX, rippleY, 0, (float) Math.hypot(grid.getWidth(), grid.getHeight()));
                 anim.setDuration(500) ;
                 anim.start();
             }

@@ -157,6 +157,14 @@ public class Note extends LinearLayout {
             int newFieldPos;
             if(cpos==null)newFieldPos = getFieldCount();
             else newFieldPos = cpos.fieldIndex+1;
+
+            if(getFieldAt(newFieldPos-1)instanceof SimpleIndentedField){
+                if(((SimpleIndentedField)getFieldAt(newFieldPos-1)).isEmpty()){
+                    removeView(getFieldAt(newFieldPos-1));
+                    newFieldPos--;
+                }
+            }
+
             addView(field,newFieldPos);
             field.getMainTextBox().requestFocus();
         }
@@ -166,6 +174,14 @@ public class Note extends LinearLayout {
             int newFieldPos;
             if(cpos==null)newFieldPos = getFieldCount();
             else newFieldPos = cpos.fieldIndex+1;
+
+            if(getFieldAt(newFieldPos-1)instanceof SimpleIndentedField){
+                if(((SimpleIndentedField)getFieldAt(newFieldPos-1)).isEmpty()){
+                    removeView(getFieldAt(newFieldPos-1));
+                    newFieldPos--;
+                }
+            }
+
             addView(field,newFieldPos);
             field.getMainTextBox().requestFocus();
         }
@@ -175,6 +191,14 @@ public class Note extends LinearLayout {
             int newFieldPos;
             if(cpos==null)newFieldPos = getFieldCount();
             else newFieldPos = cpos.fieldIndex+1;
+
+            if(getFieldAt(newFieldPos-1)instanceof SimpleIndentedField){
+                if(((SimpleIndentedField)getFieldAt(newFieldPos-1)).isEmpty()){
+                    removeView(getFieldAt(newFieldPos-1));
+                    newFieldPos--;
+                }
+            }
+
             addView(field,newFieldPos);
             field.getMainTextBox().requestFocus();
         }
