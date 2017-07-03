@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.SingleText;
+import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.temp.XRelativeLayout;
 import com.example.sadeep.winternightd.textboxes.EditTextView;
 import com.example.sadeep.winternightd.textboxes.XEditText;
@@ -49,6 +50,7 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
 
         setClipChildren(false);
 
+        setPadding(6* Globals.dp2px,0,0,0);
 
         super.setIsEditable(isEditable); //here we call super.setIsEditable() because we have already created the edittextview to suit the isEditable parameter. (no need of this.setIsEditable())
     }

@@ -67,7 +67,6 @@ public class Note extends LinearLayout {
     private void init(boolean isEditable) {
 
         setOrientation(VERTICAL);
-        setPadding(5*Globals.dp2px,0,0,0);
 
         setBackgroundColor(Color.TRANSPARENT);
         setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
