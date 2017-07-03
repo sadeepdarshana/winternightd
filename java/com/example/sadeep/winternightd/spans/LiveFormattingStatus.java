@@ -4,6 +4,9 @@ package com.example.sadeep.winternightd.spans;
  * Created by Sadeep on 6/10/2017.
  */
 
+import com.example.sadeep.winternightd.misc.Globals;
+import com.example.sadeep.winternightd.toolbar.ToolbarController;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -31,4 +34,8 @@ final public class LiveFormattingStatus {
     public static int format[] = {-1,-1,-1};
 
 
+    public static void update(int[] spanStatus) {
+        for(int i=0;i< SpansFactory.NO_OF_ORDINARY_SPAN_TYPES;i++)format[i]=spanStatus[i];
+        ToolbarController.updateStatus(spanStatus);
+    }
 }

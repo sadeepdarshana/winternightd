@@ -92,7 +92,7 @@ class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
 
-        if(position==0){
+        if(position==0){//footer that changes height to be always equal to bottombar's height
             if(holder.ll.getChildCount()==0) {
                 final View v = new View(context);
                 v.setPadding(0,0,0,0);
@@ -115,7 +115,8 @@ class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
 
             return;
         }
-        else if(position!=getItemCount()-1) {
+        else if(position!=getItemCount()-1) //general note
+        {
             holder.card.removeAllViews();
 
             //holder.card.setCardBackgroundColor(Color.HSVToColor(new float[]{new Random().nextFloat()*360,.001f,1}));

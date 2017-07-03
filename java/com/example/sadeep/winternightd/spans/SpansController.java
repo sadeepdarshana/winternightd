@@ -57,4 +57,18 @@ public class SpansController {
             }
         }
     }
+
+    public static void updateToolbarForCurrentPosition(Spannable text, int position){
+        Object[] spans =  text.getSpans(Math.max(position - 1, 0), Math.min(position + 1, text.length()),RecognizedSpan.class );
+
+        int spanStatus[] = new int[]{-1,-1,-1};
+        for(Object span:spans)
+        {
+            SpansFactory.RecognizedSpan rspan = (RecognizedSpan) span;
+            if( rspan.getSpanType()== XBoldSpan.spanType ||
+                rspan.getSpanType()== XItalicSpan.spanType ||
+                rspan.getSpanType()== XUnderlineSpan.spanType )spanStatus[rspan.getSpanType()]=1;
+        }
+        LiveFormattingStatus.update(spanStatus);
+    }
 }

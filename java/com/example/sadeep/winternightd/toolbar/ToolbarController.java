@@ -4,9 +4,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.sadeep.winternightd.buttons.customizedbuttons.ToolbarButton;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.buttons.MultiStatusButton;
 import com.example.sadeep.winternightd.spans.LiveFormattingStatus;
+import com.example.sadeep.winternightd.spans.SpansFactory;
 
 /**
  * Created by Sadeep on 10/12/2016.
@@ -21,11 +23,8 @@ final public class ToolbarController {
      * the status (on or off) of the 4 toolbar buttons bold, italic, underline and highlight.
      * (the order has been purposely made to coincide with the relevant span type [@see SpansFactory])
      * @see com.example.sadeep.winternightd.spans.SpansFactory */
-    public final static boolean[] BIUH =new boolean[] { false, false, false, false };
 
-    private static Note boundNote;
-
-    private static MultiStatusButton[] toolbarButtons = new MultiStatusButton[10];
+    private static ToolbarButton[] toolbarButtons = new ToolbarButton[10];
 
     /**
      *  ButtonId    Button
@@ -46,8 +45,6 @@ final public class ToolbarController {
 
     public static void initialize(ViewGroup tbarHSV) {
 
-        BIUH[0]=false; BIUH[1]=false; BIUH[2]=false; BIUH[3]=false;
-        boundNote = null;
 
         LinearLayout tbarLL = (LinearLayout) tbarHSV.getChildAt(0);
 
@@ -59,7 +56,7 @@ final public class ToolbarController {
          */
         for (int c = 0; c < tbarLL.getChildCount(); c++)
         {
-            MultiStatusButton btn=null; try{ btn = (MultiStatusButton)tbarLL.getChildAt(c);}catch (Exception e){} // hope java will soon get C#'s 'as'
+            ToolbarButton btn=null; try{ btn = (ToolbarButton)tbarLL.getChildAt(c);}catch (Exception e){} // hope java will soon get C#'s 'as'
 
             if (btn != null)
             {
@@ -77,7 +74,7 @@ final public class ToolbarController {
 
     private static void toolbarButtonClicked(int buttonId) {
 
-        MultiStatusButton btn = toolbarButtons[buttonId];
+        ToolbarButton btn = toolbarButtons[buttonId];
 
         /**
          * ImageViewToolbarButton tags 0,1,2,3 - Bold, Italic, Underline, Highlight (can only be in Mode=0 or Mode=1)
@@ -91,7 +88,6 @@ final public class ToolbarController {
         if (buttonId <= 3)
         {
             btn.setMode((btn.getMode()+1)%2);
-            BIUH[buttonId] = (btn.getMode() == 1);  //the the relevant BIUH index coincides with the relevant buttonId
             //if(GlobalStaticStorage.FocusedXEditText!=null) GlobalStaticStorage.FocusedXEditText.FormatSelectedText(tag);
             if(LiveFormattingStatus.format[buttonId]==1)LiveFormattingStatus.format[buttonId]=-1;
             else if(LiveFormattingStatus.format[buttonId]==-1)LiveFormattingStatus.format[buttonId]=1;
@@ -100,4 +96,13 @@ final public class ToolbarController {
     }
 
 
+    public static void updateStatus(int[] spanStatus) {
+        for(int i =0;i< SpansFactory.NO_OF_ORDINARY_SPAN_TYPES;i++) {
+
+
+            if(     i== SpansFactory.XBoldSpan.spanType     ||
+                    i== SpansFactory.XItalicSpan.spanType   ||
+                    i== SpansFactory.XUnderlineSpan.spanType)   toolbarButtons[i].setMode((spanStatus[i]+1)/2);
+        }
+    }
 }
