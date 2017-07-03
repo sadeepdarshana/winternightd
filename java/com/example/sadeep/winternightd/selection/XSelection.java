@@ -10,6 +10,7 @@ import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
 import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.note.Note;
+import com.example.sadeep.winternightd.spans.SpansController;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 
 /**
@@ -54,9 +55,11 @@ final public class XSelection {
     }
 
     public static CursorPosition getSelectionStart(){
+        if(handles[0]==null||handles[1]==null||handles[0].getCursorPosition()==null||handles[1].getCursorPosition()==null)return null;
         return CursorPosition.min(handles[0].getCursorPosition(),handles[1].getCursorPosition());
     }
     public static CursorPosition getSelectionEnd(){
+        if(handles[0]==null||handles[1]==null||handles[0].getCursorPosition()==null||handles[1].getCursorPosition()==null)return null;
         return CursorPosition.max(handles[0].getCursorPosition(),handles[1].getCursorPosition());
     }
     public static Note getSelectedNote(){
@@ -133,14 +136,16 @@ final public class XSelection {
     }
 
     static void handlePositionUpdated(boolean handleCursorPositionChanged) {
-        if(handleCursorPositionChanged)
-            updateSpans();
+        if(handleCursorPositionChanged) {
+            updateHighlightSpans();
+            SpansController.updateToolbarForCurrentSelection();
+        }
     }
     private static void refreshHandlePositions() {
         handles[0].updatePosition(handles[0].getCursorPosition(),false);
         handles[1].updatePosition(handles[1].getCursorPosition(),false);
     }
-    private static void updateSpans() {
+    private static void updateHighlightSpans() {
         if(handles[0].getCursorPosition()==null||handles[1].getCursorPosition()==null)return;
         CursorPosition start = CursorPosition.min(handles[0].getCursorPosition(),handles[1].getCursorPosition());
         CursorPosition end = CursorPosition.max(handles[0].getCursorPosition(),handles[1].getCursorPosition());

@@ -7,7 +7,9 @@ import android.widget.LinearLayout;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.ToolbarButton;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.buttons.MultiStatusButton;
+import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.spans.LiveFormattingStatus;
+import com.example.sadeep.winternightd.spans.SpansController;
 import com.example.sadeep.winternightd.spans.SpansFactory;
 
 /**
@@ -76,33 +78,29 @@ final public class ToolbarController {
 
         ToolbarButton btn = toolbarButtons[buttonId];
 
-        /**
-         * ImageViewToolbarButton tags 0,1,2,3 - Bold, Italic, Underline, Highlight (can only be in Mode=0 or Mode=1)
-         * For every new char typed XEditText checks (in _TextChanged event) ToolbarController.BIUH array to determine its work on spans.
-         *
-         * XEditText changes ToolbarController.BIUH (in its OnSelectionChanged method) when user changes the cursor position to suit the spans in the new position.
-         * When user clicks on a BIUH button
-         *    1. ToolbarController.ToolbarBtnClick method toggles BIUH[x]
-         *    2. ToolbarController.ToolbarBtnClick method fires FormatSelectedText on the focused XEditText allowing selected text (if any) to change spans
-         **/
-        if (buttonId <= 3)
-        {
-            btn.setMode((btn.getMode()+1)%2);
-            //if(GlobalStaticStorage.FocusedXEditText!=null) GlobalStaticStorage.FocusedXEditText.FormatSelectedText(tag);
-            if(LiveFormattingStatus.format[buttonId]==1)LiveFormattingStatus.format[buttonId]=-1;
-            else if(LiveFormattingStatus.format[buttonId]==-1)LiveFormattingStatus.format[buttonId]=1;
-
+        if(XSelection.isSelectionAvailable()){
+            if (buttonId < 3) {
+                SpansController.formatRegion(XSelection.getActiveNote(),XSelection.getSelectionStart(),XSelection.getSelectionEnd(),buttonId,LiveFormattingStatus.format[buttonId]*-1);
+            }
         }
+
+        if (buttonId < 3) {
+            btn.setMode((btn.getMode() + 1) % 2);
+            if (LiveFormattingStatus.format[buttonId] == 1)
+                LiveFormattingStatus.format[buttonId] = -1;
+            else if (LiveFormattingStatus.format[buttonId] == -1)
+                LiveFormattingStatus.format[buttonId] = 1;
+        }
+
     }
 
 
     public static void updateStatus(int[] spanStatus) {
+        if(toolbarButtons[0]==null)return;
         for(int i =0;i< SpansFactory.NO_OF_ORDINARY_SPAN_TYPES;i++) {
 
 
-            if(     i== SpansFactory.XBoldSpan.spanType     ||
-                    i== SpansFactory.XItalicSpan.spanType   ||
-                    i== SpansFactory.XUnderlineSpan.spanType)   toolbarButtons[i].setMode((spanStatus[i]+1)/2);
+            if(i<3)   toolbarButtons[i].setMode((spanStatus[i]+1)/2);
         }
     }
 }

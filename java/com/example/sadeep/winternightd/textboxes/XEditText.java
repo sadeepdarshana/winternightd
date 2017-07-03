@@ -26,6 +26,7 @@ import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.misc.Globals;
+import com.example.sadeep.winternightd.spans.LiveFormattingStatus;
 import com.example.sadeep.winternightd.spans.SpansController;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 import com.example.sadeep.winternightd.selection.XSelection;
@@ -112,6 +113,8 @@ public class XEditText extends EditText implements View.OnKeyListener {
         super.onSelectionChanged(selStart, selEnd);
 
         attemptXSelection();
+
+        if(selStart==selEnd)SpansController.updateToolbarForCurrentPosition(getText(),selStart);
     }
 
     private void init(){
