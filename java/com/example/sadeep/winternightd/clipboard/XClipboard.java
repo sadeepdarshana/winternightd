@@ -72,7 +72,7 @@ final public class XClipboard {
                 note = ((NotebookActivity) context).getActiveNote();
             //todo other activities
         }
-        
+
         CursorPosition cp = note.getCurrentCursorPosition();
 
         if(cp.isInternal()){
