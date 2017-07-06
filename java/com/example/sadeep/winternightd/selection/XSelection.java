@@ -135,10 +135,10 @@ final public class XSelection {
         CursorPosition start = CursorPosition.min(handles[0].getCursorPosition(),handles[1].getCursorPosition());
         CursorPosition end = CursorPosition.max(handles[0].getCursorPosition(),handles[1].getCursorPosition());
 
-        note.deleteContent(start,end);
+        note.eraseContent(start,end);
         note.insertCharSequenceAt(start,text);
         start.characterIndex+=text.length();
-        note.setCursorPosition(start);
+        note.setCursor(start);
         clearSelections();
     }
 

@@ -99,14 +99,10 @@ public class NotebookActivity extends ChangableActionBarActivity {
                 XSelection.replaceSelectionWith("");
                 break;
             case R.id.action_copy:
-                XClipboard.copySelectionToClipboard();
-                CursorPosition cp = XSelection.getSelectionStart();
-                Note note =  XSelection.getSelectedNote();
-                XSelection.clearSelections();
-                note.setCursorPosition(cp);
+                XClipboard.requestCopy();
                 break;
             case R.id.action_paste:
-                XClipboard.performPaste(this);
+                XClipboard.requestPaste(this);
         }
     }
 

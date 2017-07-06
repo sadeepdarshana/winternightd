@@ -236,7 +236,7 @@ public class Note extends LinearLayout {
         return XSelection.getCurrentCursorPosition(this);
     }
 
-    public void setCursorPosition(CursorPosition pos) {
+    public void setCursor(CursorPosition pos) {
         XSelection.setCursorPosition(this,pos);
     }
 
@@ -266,7 +266,7 @@ public class Note extends LinearLayout {
 
     }
 
-    public void deleteContent(CursorPosition start, CursorPosition end){
+    public void eraseContent(CursorPosition start, CursorPosition end){
         if(start.equals(end))return;
 
         while(end.fieldIndex >= start.fieldIndex+2){

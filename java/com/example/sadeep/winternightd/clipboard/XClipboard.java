@@ -57,18 +57,26 @@ final public class XClipboard {
 
     }
 
-    public static void copyClipboardToCurrentCursor(Context context) {
+    public static void pasteClipboardToCurrentCursor(Context context) {
 
         Note note =null;
-        if(context instanceof NotebookActivity){
-            note = ((NotebookActivity)context).getActiveNote();
+        if(XSelection.isSelectionAvailable()){
+            note = XSelection.getActiveNote();
+            CursorPosition start = XSelection.getSelectionStart();
+            note.eraseContent(start,XSelection.getSelectionEnd());
+            XSelection.clearSelections();
+            note.setCursor(start);
+        }
+        else {
+            if (context instanceof NotebookActivity)
+                note = ((NotebookActivity) context).getActiveNote();
+            //todo other activities
         }
         CursorPosition cp = note.getCurrentCursorPosition();
 
         if(cp.isInternal()){
             SimpleIndentedField field = (SimpleIndentedField) note.getFieldAt(cp.fieldIndex);
             XEditText edittext = (XEditText) field.getMainTextBox();
-
 
             CharSequence oldtext = edittext.getText();
             CharSequence textbegin = android.text.TextUtils.concat(oldtext.subSequence(0,cp.characterIndex),XClipboard.clipedSelectionStartText);
@@ -88,7 +96,18 @@ final public class XClipboard {
                 xEditText.requestFocus();
                 xEditText.setSelection(n);
             }
-
         }
+    }
+
+    public static void requestPaste(Context context){
+        pasteClipboardToCurrentCursor(context);
+    }
+
+    public static void requestCopy(){
+        XClipboard.copySelectionToClipboard();
+        CursorPosition cp = XSelection.getSelectionStart();
+        Note note =  XSelection.getSelectedNote();
+        XSelection.clearSelections();
+        note.setCursor(cp);
     }
 }
