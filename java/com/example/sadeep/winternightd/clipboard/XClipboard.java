@@ -1,8 +1,11 @@
 package com.example.sadeep.winternightd.clipboard;
 
+import android.content.Context;
+
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.note.Note;
+import com.example.sadeep.winternightd.notebookactivity.NotebookActivity;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 import com.example.sadeep.winternightd.selection.XSelection;
@@ -19,6 +22,8 @@ final public class XClipboard {
     public static Vector<Field> clipedSelectionFields;
 
     public static void copySelectionToClipboard(){
+        if(!XSelection.isSelectionAvailable())return;
+
         CursorPosition start = XSelection.getSelectionStart();
         CursorPosition end = XSelection.getSelectionEnd();
 
@@ -26,19 +31,18 @@ final public class XClipboard {
 
         Vector<Object> fieldsandstrings = new Vector<>();
 
-        XSelection.clearSelections();
 
         if(start.fieldIndex==end.fieldIndex){
             fieldsandstrings.add(note.getFieldAt(start.fieldIndex).duplicateSelection(start.characterIndex,end.characterIndex));
         }
         else {
-            for(int c=start.fieldIndex;c<=end.fieldIndex;c++){
+            for(int i=start.fieldIndex;i<=end.fieldIndex;i++){
                 int a=-2,b=-1;
 
-                if(c==start.fieldIndex)a=start.characterIndex;
-                if(c==end.fieldIndex)b=end.characterIndex;
+                if(i==start.fieldIndex)a=start.characterIndex;
+                if(i==end.fieldIndex)b=end.characterIndex;
 
-                Object o = note.getFieldAt(c).duplicateSelection(a,b);
+                Object o = note.getFieldAt(i).duplicateSelection(a,b);
                 fieldsandstrings.add(o);
             }
         }
@@ -51,12 +55,15 @@ final public class XClipboard {
             else clipedSelectionFields.add((Field)fieldsandstrings.get(c));
         }
 
-        return;
     }
 
-    public static void performPaste() {
-        Note note = XSelection.getActiveNote();
-        CursorPosition cp = note.getCursorPosition();
+    public static void copyClipboardToCurrentCursor(Context context) {
+
+        Note note =null;
+        if(context instanceof NotebookActivity){
+            note = ((NotebookActivity)context).getActiveNote();
+        }
+        CursorPosition cp = note.getCurrentCursorPosition();
 
         if(cp.isInternal()){
             SimpleIndentedField field = (SimpleIndentedField) note.getFieldAt(cp.fieldIndex);

@@ -4,13 +4,20 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
 import com.example.sadeep.winternightd.field.FieldFactory;
+import com.example.sadeep.winternightd.field.SingleText;
+import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
+import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.spans.SpansController;
+import com.example.sadeep.winternightd.spans.SpansFactory;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 
 /**
@@ -110,7 +117,7 @@ final public class XSelection {
             handles[0].dismiss();
             handles[1].dismiss();
             note.getViewTreeObserver().removeOnPreDrawListener(onPreDrawListener);
-            note.highlightSelection(new CursorPosition(0,0),new CursorPosition(0,0));
+            highlightSelection(note,new CursorPosition(0,0),new CursorPosition(0,0));
 
         }catch (Exception e){}
 
@@ -150,8 +157,87 @@ final public class XSelection {
         CursorPosition start = CursorPosition.min(handles[0].getCursorPosition(),handles[1].getCursorPosition());
         CursorPosition end = CursorPosition.max(handles[0].getCursorPosition(),handles[1].getCursorPosition());
 
-        note.highlightSelection(start,end);
+        highlightSelection(note,start,end);
 
+    }
+
+    /**
+     * Returns the current position of the cursor. But the function is not wise enough to identify
+     * the current working note. So you need to provide it.
+     * @param note current working note
+     * @return CursorPosition if currently being working on the note, if not null
+     */
+    public static CursorPosition getCurrentCursorPosition(Note note){
+        if(note.getFocusedChild()==null)return null;
+        if(note.getFocusedChild()instanceof SimpleIndentedField) {
+            return new CursorPosition(note.indexOfChild(note.getFocusedChild()),((SimpleIndentedField) note.getFocusedChild()).getMainTextBox().getSelectionStart());
+        }
+        return null;
+    }
+    public static void setCursorPosition(Note note,CursorPosition pos) {
+        Field f = note.getFieldAt(pos.fieldIndex);
+        if(f instanceof SimpleIndentedField){
+            XEditText tv = (XEditText) ((SimpleIndentedField) f).getMainTextBox();
+            tv.requestFocus();
+            tv.setSelection(pos.characterIndex);
+        }
+    }
+
+
+    private static void highlightSelection(Note note,CursorPosition start, CursorPosition end) {
+
+        /**
+         * We first remove all the highlightings; that is,
+         *  we set the Field background color to transparent
+         *  we remove all XSelectionSpans
+         */
+        for(int c=0;c<note.getChildCount();c++){
+            note.getFieldAt(c).setBackgroundColor(Color.TRANSPARENT);
+            if(note.getFieldAt(c)instanceof SingleText){
+                Spannable spannable = (Spannable) ((SingleText) note.getFieldAt(c)).getMainTextBox().getText();
+                Object[] spans = spannable.getSpans(0, spannable.length(), SpansFactory.XSelectionSpan.class);
+
+                for (Object x : spans) spannable.removeSpan(x);
+                ((SingleText) note.getFieldAt(c)).getMainTextBox().invalidate();
+            }
+        }
+
+        if(start.equals(end))return;
+        /**
+         * Now we add spans to suit start and end.
+         */
+        if(start.characterIndex==end.characterIndex && start.fieldIndex==end.fieldIndex)return;
+
+        for(int c=start.fieldIndex+1;c<end.fieldIndex;c++){
+            note.getFieldAt(c).setBackgroundColor(Globals.defaultHighlightColor);
+        }
+
+        if(start.fieldIndex==end.fieldIndex){
+            Field field = note.getFieldAt(start.fieldIndex);
+            if(start.characterIndex>=0&&end.characterIndex>=0) {
+                if(!(field instanceof SingleText))return;
+                TextView tv = ((SingleText) note.getFieldAt(start.fieldIndex)).getMainTextBox();
+                Spannable spannable = (Spannable) tv.getText();
+                spannable.setSpan(SpansFactory.createSpan(SpansFactory.XSelectionSpan.spanType),start.characterIndex,end.characterIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tv.invalidate();
+            }
+            else if (start.characterIndex==-2 && end.characterIndex ==-1)field.setBackgroundColor(Globals.defaultHighlightColor);
+        }
+        else {
+            if(start.characterIndex==-2) note.getFieldAt(start.fieldIndex).setBackgroundColor(Globals.defaultHighlightColor);
+            else if(start.characterIndex>=0) {
+                Spannable spannable = (Spannable)((SingleText) note.getFieldAt(start.fieldIndex)).getMainTextBox().getText();
+                spannable.setSpan(SpansFactory.createSpan(SpansFactory.XSelectionSpan.spanType),start.characterIndex,spannable.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ((SingleText) note.getFieldAt(start.fieldIndex)).getMainTextBox().invalidate();
+            }
+
+            if(end.characterIndex==-1) note.getFieldAt(end.fieldIndex).setBackgroundColor(Globals.defaultHighlightColor);
+            else if(end.characterIndex>=0) {
+                Spannable spannable = (Spannable)((SingleText) note.getFieldAt(end.fieldIndex)).getMainTextBox().getText();
+                spannable.setSpan(SpansFactory.createSpan(SpansFactory.XSelectionSpan.spanType),0,end.characterIndex,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ((SingleText) note.getFieldAt(end.fieldIndex)).getMainTextBox().invalidate();
+            }
+        }
     }
 }
 

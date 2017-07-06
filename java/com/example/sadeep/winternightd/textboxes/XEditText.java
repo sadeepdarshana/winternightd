@@ -74,7 +74,7 @@ public class XEditText extends EditText implements View.OnKeyListener {
                 XSelection.replaceSelectionWith("");
                 break;
             case android.R.id.paste:
-                XClipboard.performPaste();
+                XClipboard.performPaste(getContext());
                 break;
             case android.R.id.copy:
                 XClipboard.copySelectionToClipboard();

@@ -16,6 +16,7 @@ import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.misc.Globals;
+import com.example.sadeep.winternightd.temp.Utils;
 import com.example.sadeep.winternightd.temp.XRelativeLayout;
 import com.example.sadeep.winternightd.textboxes.EditTextView;
 import com.example.sadeep.winternightd.textboxes.XEditText;
@@ -190,15 +191,15 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
 
         if(characterIndex1==-2){
             SimpleIndentedField field = (SimpleIndentedField) duplicate();
-            CharSequence text = getMainTextBox().getText().subSequence(0,characterIndex2);
+            CharSequence text = Utils.duplicateCharSequence(getMainTextBox().getText().subSequence(0,characterIndex2));
             field.getMainTextBox().setText(text);
             return field;
         }
         if(characterIndex1>=0&&characterIndex2==-1){
-            return getMainTextBox().getText().subSequence(characterIndex1,getMainTextBox().length());
+            return Utils.duplicateCharSequence(getMainTextBox().getText().subSequence(characterIndex1,getMainTextBox().length()));
         }
         if(characterIndex1>=0){
-            return getMainTextBox().getText().subSequence(characterIndex1,characterIndex2);
+            return Utils.duplicateCharSequence(getMainTextBox().getText().subSequence(characterIndex1,characterIndex2));
         }
         return null;
     }

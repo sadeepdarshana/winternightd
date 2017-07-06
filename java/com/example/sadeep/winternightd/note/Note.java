@@ -18,6 +18,7 @@ import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.fields.BulletedField;
 import com.example.sadeep.winternightd.field.fields.CheckedField;
 import com.example.sadeep.winternightd.field.fields.NumberedField;
+import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.spans.SpansFactory;
 import com.example.sadeep.winternightd.field.fields.Field;
@@ -155,7 +156,7 @@ public class Note extends LinearLayout {
     public void attachboxRequests(int attachButtonId) {
         if(attachButtonId == AttachBoxManager.ATTACH_BUTTON_ID_CHECKEDFIELD){
             CheckedField field = (CheckedField) FieldFactory.createNewField(getContext(),CheckedField.classFieldType,true);
-            CursorPosition cpos = getCursorPosition();
+            CursorPosition cpos = getCurrentCursorPosition();
             int newFieldPos;
             if(cpos==null)newFieldPos = getFieldCount();
             else newFieldPos = cpos.fieldIndex+1;
@@ -172,7 +173,7 @@ public class Note extends LinearLayout {
         }
         if(attachButtonId == AttachBoxManager.ATTACH_BUTTON_ID_BULLETEDFIELD){
             BulletedField field = (BulletedField) FieldFactory.createNewField(getContext(),BulletedField.classFieldType,true);
-            CursorPosition cpos = getCursorPosition();
+            CursorPosition cpos = getCurrentCursorPosition();
             int newFieldPos;
             if(cpos==null)newFieldPos = getFieldCount();
             else newFieldPos = cpos.fieldIndex+1;
@@ -189,7 +190,7 @@ public class Note extends LinearLayout {
         }
         if(attachButtonId == AttachBoxManager.ATTACH_BUTTON_ID_NUMBEREDFIELD){
             NumberedField field = (NumberedField) FieldFactory.createNewField(getContext(),NumberedField.classFieldType,true);
-            CursorPosition cpos = getCursorPosition();
+            CursorPosition cpos = getCurrentCursorPosition();
             int newFieldPos;
             if(cpos==null)newFieldPos = getFieldCount();
             else newFieldPos = cpos.fieldIndex+1;
@@ -231,21 +232,12 @@ public class Note extends LinearLayout {
 
 //selection and clipboard related methods
 
-    public CursorPosition getCursorPosition(){
-        if(getFocusedChild()==null)return null;
-        if(getFocusedChild()instanceof SimpleIndentedField) {
-            return new CursorPosition(indexOfChild(getFocusedChild()),((SimpleIndentedField) getFocusedChild()).getMainTextBox().getSelectionStart());
-        }
-        return null;
+    public CursorPosition getCurrentCursorPosition(){
+        return XSelection.getCurrentCursorPosition(this);
     }
 
     public void setCursorPosition(CursorPosition pos) {
-        Field f = getFieldAt(pos.fieldIndex);
-        if(f instanceof SimpleIndentedField){
-            XEditText tv = (XEditText) ((SimpleIndentedField) f).getMainTextBox();
-            tv.requestFocus();
-            tv.setSelection(pos.characterIndex);
-        }
+        XSelection.setCursorPosition(this,pos);
     }
 
     public void setCursorVisible(boolean visible){
@@ -255,61 +247,6 @@ public class Note extends LinearLayout {
         }
     }
 
-    public void highlightSelection(CursorPosition start, CursorPosition end) {
-
-        /**
-         * We first remove all the highlightings; that is,
-         *  we set the Field background color to transparent
-         *  we remove all XSelectionSpans
-         */
-        for(int c=0;c<getChildCount();c++){
-            getFieldAt(c).setBackgroundColor(Color.TRANSPARENT);
-            if(getFieldAt(c)instanceof SingleText){
-                Spannable spannable = (Spannable) ((SingleText) getFieldAt(c)).getMainTextBox().getText();
-                Object[] spans = spannable.getSpans(0, spannable.length(), SpansFactory.XSelectionSpan.class);
-
-                for (Object x : spans) spannable.removeSpan(x);
-                ((SingleText) getFieldAt(c)).getMainTextBox().invalidate();
-            }
-        }
-
-        if(start.equals(end))return;
-        /**
-         * Now we add spans to suit start and end.
-         */
-        if(start.characterIndex==end.characterIndex && start.fieldIndex==end.fieldIndex)return;
-
-        for(int c=start.fieldIndex+1;c<end.fieldIndex;c++){
-            getFieldAt(c).setBackgroundColor(Globals.defaultHighlightColor);
-        }
-
-        if(start.fieldIndex==end.fieldIndex){
-            Field field = getFieldAt(start.fieldIndex);
-            if(start.characterIndex>=0&&end.characterIndex>=0) {
-                if(!(field instanceof SingleText))return;
-                TextView tv = ((SingleText) getFieldAt(start.fieldIndex)).getMainTextBox();
-                Spannable spannable = (Spannable) tv.getText();
-                spannable.setSpan(SpansFactory.createSpan(SpansFactory.XSelectionSpan.spanType),start.characterIndex,end.characterIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                tv.invalidate();
-            }
-            else if (start.characterIndex==-2 && end.characterIndex ==-1)field.setBackgroundColor(Globals.defaultHighlightColor);
-        }
-        else {
-            if(start.characterIndex==-2) getFieldAt(start.fieldIndex).setBackgroundColor(Globals.defaultHighlightColor);
-            else if(start.characterIndex>=0) {
-                Spannable spannable = (Spannable)((SingleText) getFieldAt(start.fieldIndex)).getMainTextBox().getText();
-                spannable.setSpan(SpansFactory.createSpan(SpansFactory.XSelectionSpan.spanType),start.characterIndex,spannable.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                ((SingleText) getFieldAt(start.fieldIndex)).getMainTextBox().invalidate();
-            }
-
-            if(end.characterIndex==-1) getFieldAt(end.fieldIndex).setBackgroundColor(Globals.defaultHighlightColor);
-            else if(end.characterIndex>=0) {
-                Spannable spannable = (Spannable)((SingleText) getFieldAt(end.fieldIndex)).getMainTextBox().getText();
-                spannable.setSpan(SpansFactory.createSpan(SpansFactory.XSelectionSpan.spanType),0,end.characterIndex,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                ((SingleText) getFieldAt(end.fieldIndex)).getMainTextBox().invalidate();
-            }
-        }
-    }
     /**
      *  Insert a CharSequence to the note at the CursorPosition specified by start.
      */

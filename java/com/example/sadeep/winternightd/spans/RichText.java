@@ -5,6 +5,11 @@ import android.text.Spanned;
 
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * Created by Sadeep on 10/13/2016.
  */
@@ -36,7 +41,7 @@ public class RichText {
      */
     public static RichText generateRichText(Spanned text)
     {
-        SpansFactory.RecognizedSpan[] spans = text.getSpans(0, text.length(), SpansFactory.RecognizedSpan.class);
+        SpansFactory.RecognizedSpan[] spans = text.getSpans(0, text.length(), SpansFactory.OrdinarySpan.class);
 
         RichText richText = new RichText(spans.length);
 

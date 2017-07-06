@@ -27,11 +27,17 @@ public class NotebookActivity extends ChangableActionBarActivity {
     private LinearLayout notebookSpace;
     private Notebook notebook;
     private BottomBar bottomBar;
-    private Note note;
+    private Note editboxNote;
+
+
+    private Note activeNote;
+    NotebookActivity This;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        This = this;
+
 
         setTheme(R.style.AppThemeX);
         setContentView(R.layout.notebook_activity);
@@ -53,7 +59,8 @@ public class NotebookActivity extends ChangableActionBarActivity {
         notebookSpace.addView(notebook);
 
 
-        note = (Note) bottomBar.getBottombar().findViewById(R.id.note);
+        editboxNote = (Note) bottomBar.getBottombar().findViewById(R.id.note);
+        activeNote = editboxNote;
 
         getWindow().setBackgroundDrawableResource(R.drawable.default_wallpaper);
         //getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,235,235)));
@@ -63,7 +70,7 @@ public class NotebookActivity extends ChangableActionBarActivity {
             public void onScrolled(int dx, int dy) {
                 if(dy<0) {
                     bottomBar.requestToolbarHide();
-                    if(note.isEmpty())bottomBar.changeBottomLLOpacity(false);
+                    if(editboxNote.isEmpty())bottomBar.changeBottomLLOpacity(false);
                 }
                 if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()==0){
                     bottomBar.changeBottomLLOpacity(true);
@@ -93,26 +100,26 @@ public class NotebookActivity extends ChangableActionBarActivity {
                 break;
             case R.id.action_copy:
                 XClipboard.copySelectionToClipboard();
-
                 CursorPosition cp = XSelection.getSelectionStart();
+                Note note =  XSelection.getSelectedNote();
                 XSelection.clearSelections();
-                XSelection.getSelectedNote().setCursorPosition(cp);
+                note.setCursorPosition(cp);
                 break;
             case R.id.action_paste:
-                XClipboard.performPaste();
+                XClipboard.performPaste(this);
         }
     }
 
     public void sendClick(View view){
         XRelativeLayout.pauseLayout();
-        RawFieldDataStream streams=new RawFieldDataStream(note.getFieldDataStream());
+        RawFieldDataStream streams=new RawFieldDataStream(editboxNote.getFieldDataStream());
         //for(int i=0;i<100000;i++) {
             notebook.getNotebookDataHandler().addNote(streams);
             //if(i%100==0)d.p(i);
         //}
         notebook.refresh();
-        note.convertToNewNoteWithOneDefaultField();
-        ((SimpleIndentedField)note.getFieldAt(0)).getMainTextBox().requestFocus();
+        editboxNote.convertToNewNoteWithOneDefaultField();
+        ((SimpleIndentedField) editboxNote.getFieldAt(0)).getMainTextBox().requestFocus();
 
         XRelativeLayout.This.postDelayed(new Runnable() {
             @Override
@@ -122,5 +129,8 @@ public class NotebookActivity extends ChangableActionBarActivity {
         },300);
     }
 
+    public Note getActiveNote() {
+        return activeNote;
+    }
 
 }

@@ -39,8 +39,8 @@ final public class SpansFactory {
      */
     public interface RecognizedSpan{
         int getSpanType();
-
     }
+    public interface OrdinarySpan extends RecognizedSpan{}
 
     //region Spans Dictionary
     public static class XSelectionSpan extends BackgroundColorSpan implements RecognizedSpan {
@@ -57,7 +57,7 @@ final public class SpansFactory {
             return o.getClass()==getClass();
         }
     }
-    public static class XBoldSpan extends StyleSpan implements RecognizedSpan {
+    public static class XBoldSpan extends StyleSpan implements OrdinarySpan {
         public static final int spanType = 0;
         private XBoldSpan() {
             super(Typeface.BOLD);
@@ -72,7 +72,7 @@ final public class SpansFactory {
             return o.getClass()==getClass();
         }
     }
-    public static class XItalicSpan extends StyleSpan implements RecognizedSpan {
+    public static class XItalicSpan extends StyleSpan implements OrdinarySpan {
         public static final int spanType = 1;
         private XItalicSpan() {
             super(Typeface.ITALIC);
@@ -86,7 +86,7 @@ final public class SpansFactory {
             return o.getClass()==getClass();
         }
     }
-    public static class XUnderlineSpan extends UnderlineSpan implements RecognizedSpan {
+    public static class XUnderlineSpan extends UnderlineSpan implements OrdinarySpan {
         public static final int spanType = 2;
         private XUnderlineSpan() {
             super();
@@ -100,7 +100,7 @@ final public class SpansFactory {
             return o.getClass()==getClass();
         }
     }
-    public static class XHighlightSpan extends BackgroundColorSpan implements RecognizedSpan {
+    public static class XHighlightSpan extends BackgroundColorSpan implements OrdinarySpan {
         public static final int spanType = 3;
         private XHighlightSpan() {
             super(Color.GREEN);
