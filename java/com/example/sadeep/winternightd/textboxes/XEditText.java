@@ -70,8 +70,7 @@ public class XEditText extends EditText implements View.OnKeyListener {
     public boolean onTextContextMenuItem(int id) {
         switch (id){
             case android.R.id.cut:
-                XClipboard.copySelectionToClipboard();
-                XSelection.replaceSelectionWith("");
+                XClipboard.requestCut();
                 break;
             case android.R.id.paste:
                 XClipboard.requestPaste(getContext());
@@ -297,7 +296,7 @@ public class XEditText extends EditText implements View.OnKeyListener {
      * returns true if XSelection is made
      */
     private boolean attemptXSelection(){
-        if(getSelectionEnd()==getSelectionStart())return false;  //no selection available, cursor at a sigle particular position
+        if(getSelectionEnd()==getSelectionStart())return false;  //no selection available, cursor at a single particular position
 
         //initiating a XSelection is only possible if this XEditText belongs to a SingleText Field..
         if (boundField == null) return false;

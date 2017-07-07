@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.selection.XSelection;
 
 /**
  * Created by Sadeep on 6/17/2017.
@@ -41,7 +42,10 @@ public abstract class ChangableActionBarActivity extends AppCompatActivity {
         menu.clear();
 
         if(mode == ACTIONBAR_NORMAL) getMenuInflater().inflate(R.menu.notebook, menu);
-        if(mode == ACTIONBAR_SELECT) getMenuInflater().inflate(R.menu.selectmenu, menu);
+        if(mode == ACTIONBAR_SELECT) {
+            getMenuInflater().inflate(R.menu.selectmenu, menu);
+            menu.findItem(R.id.action_cut).setVisible(XSelection.getSelectedNote().getIsEditable());
+        }
 
         return super.onPrepareOptionsMenu(menu);
     }

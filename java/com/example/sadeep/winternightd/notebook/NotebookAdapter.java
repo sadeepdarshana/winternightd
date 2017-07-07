@@ -16,6 +16,7 @@ import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
+import com.example.sadeep.winternightd.selection.XSelection;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -139,6 +140,12 @@ class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
                 holder.card.addView(err);
             }
         }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(CardViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if(holder.card!=null && holder.card.getChildCount()!=0 && holder.card.getChildAt(0)== XSelection.getSelectedNote())XSelection.clearSelections();
     }
 
     @Override

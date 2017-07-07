@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.text.Selection;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.view.ViewTreeObserver;
@@ -30,7 +31,7 @@ import com.example.sadeep.winternightd.textboxes.XEditText;
  * our selection may extend over several EditTexts.
  */
 final public class XSelection {
-    private static XEditText xEditText;
+    private static TextView textbox;
 
     private XSelection(){}
 
@@ -41,12 +42,12 @@ final public class XSelection {
     private static ViewTreeObserver.OnPreDrawListener onPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
         @Override
         public boolean onPreDraw() {
-            XSelection.refreshHandlePositions();
-            note.clearFocus();
-            note.requestFocus();
-            xEditText.requestFocus();
-            xEditText.setSelection(0);
-            return true;
+            try {
+                XSelection.refreshHandlePositions();
+                note.clearFocus();
+                if (textbox instanceof XEditText) ((XEditText) textbox).setSelection(0);
+                return true;
+            } catch (Exception e) { return true;}
         }
     };
 
@@ -54,9 +55,6 @@ final public class XSelection {
         return selectionAvailable;
     }
 
-    public static Note getActiveNote(){
-        return note;
-    }
     public static void setActiveNote(Note note){
         XSelection.note = note;
     }
@@ -74,25 +72,23 @@ final public class XSelection {
     }
 
 
-    public static void newSelection(Note note, CursorPosition pos1, CursorPosition pos2, XEditText xEditText){
+    public static void newSelection(Note note, CursorPosition pos1, CursorPosition pos2, TextView xEditText){
         clearSelections();
         XSelection.note = note;
-        XSelection.xEditText=xEditText;
+        XSelection.textbox =xEditText;
 
-
-
-        ColorFilter cf = new PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
-
-        //xEditText.clearFocus();
-        SimpleIndentedField s= (SimpleIndentedField) FieldFactory.createNewField(note.getContext(), SimpleIndentedField.classFieldType,true);
-        //note.addView(s);
-        //s.getMainTextBox().requestFocus();
-        ((XEditText)s.getMainTextBox()).setSelection(0);
-
+        Spannable txt = (Spannable)textbox.getText();
+        Object[] spans = txt.getSpans(0,txt.length(),Object.class);
+        for(Object span:spans)if(span.getClass().getName().contains("START")||span.getClass().getName().contains("END"))txt.removeSpan(span);
 
 
 
         note.setCursorVisible(false);
+
+        if(handles!=null){
+            if(handles[0]!=null)handles[0].dismiss();
+            if(handles[1]!=null)handles[1].dismiss();
+        }
 
         handles = new Handle[2];
         handles[0] = new Handle(note);
@@ -101,6 +97,7 @@ final public class XSelection {
         handles[0].updatePosition(pos1, true);
         handles[1].updatePosition(pos2, true);
 
+        try{note.getViewTreeObserver().removeOnPreDrawListener(onPreDrawListener);}catch (Exception e){}
         note.getViewTreeObserver().addOnPreDrawListener(onPreDrawListener);
 
 
@@ -176,7 +173,7 @@ final public class XSelection {
     }
     public static void setCursorPosition(Note note,CursorPosition pos) {
         Field f = note.getFieldAt(pos.fieldIndex);
-        if(f instanceof SimpleIndentedField){
+        if(f instanceof SimpleIndentedField &&f.getIsEditable()){
             XEditText tv = (XEditText) ((SimpleIndentedField) f).getMainTextBox();
             tv.requestFocus();
             tv.setSelection(pos.characterIndex);

@@ -1,16 +1,22 @@
 package com.example.sadeep.winternightd.clipboard;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.text.SpannableStringBuilder;
 
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.notebookactivity.NotebookActivity;
+import com.example.sadeep.winternightd.temp.Utils;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 import com.example.sadeep.winternightd.selection.XSelection;
 
 import java.util.Vector;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by Sadeep on 12/27/2016.
@@ -18,8 +24,27 @@ import java.util.Vector;
 final public class XClipboard {
     private XClipboard(){}
 
-    public static CharSequence clipedSelectionStartText;
-    public static Vector<Field> clipedSelectionFields;
+    public static CharSequence clipedSelectionStartText="";
+    public static Vector<Field> clipedSelectionFields=new Vector<>();
+
+    private static ClipboardManager.OnPrimaryClipChangedListener clipboardListener;
+
+    public static void initialize(Context context){
+        if(clipboardListener!=null)return;
+        final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+
+        clipboardListener = new ClipboardManager.OnPrimaryClipChangedListener() {
+            @Override
+            public void onPrimaryClipChanged() {
+                if(clipboardManager.getPrimaryClip().getDescription().getLabel().equals("WNXClipboard"))return;
+                clipedSelectionFields = new Vector<Field>();
+                clipedSelectionStartText = clipboardManager.getPrimaryClip().getItemAt(0).getText();
+            }
+        };
+
+        clipboardManager.addPrimaryClipChangedListener(clipboardListener);
+    }
+
 
     public static void copySelectionToClipboard(){
         if(!XSelection.isSelectionAvailable())return;
@@ -61,7 +86,7 @@ final public class XClipboard {
 
         Note note =null;
         if(XSelection.isSelectionAvailable()){
-            note = XSelection.getActiveNote();
+            note = XSelection.getSelectedNote();
             CursorPosition start = XSelection.getSelectionStart();
             note.eraseContent(start,XSelection.getSelectionEnd());
             XSelection.clearSelections();
@@ -105,10 +130,45 @@ final public class XClipboard {
     }
 
     public static void requestCopy(){
+
+
         XClipboard.copySelectionToClipboard();
         CursorPosition cp = XSelection.getSelectionStart();
         Note note =  XSelection.getSelectedNote();
         XSelection.clearSelections();
         note.setCursor(cp);
+
+        final ClipboardManager clipboardManager = (ClipboardManager) note.getContext().getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("WNXClipboard",generateTextRepresentation()));
+    }
+
+    public static void requestCut(){
+        XClipboard.copySelectionToClipboard();
+        CursorPosition cp = XSelection.getSelectionStart();
+        Note note =  XSelection.getSelectedNote();
+        if(XSelection.getSelectedNote().getIsEditable())XSelection.replaceSelectionWith("");
+        XSelection.clearSelections();
+        note.setCursor(cp);
+
+        final ClipboardManager clipboardManager = (ClipboardManager) note.getContext().getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("WNXClipboard",generateTextRepresentation()));
+
+    }
+
+    private static CharSequence generateTextRepresentation(){
+        SpannableStringBuilder s = new SpannableStringBuilder("");
+        if(clipedSelectionStartText!=null)s.append(clipedSelectionStartText);
+        for(Field field:clipedSelectionFields){
+            if(field instanceof SimpleIndentedField){
+                s.append("\n");
+                SimpleIndentedField sfield = (SimpleIndentedField)field;
+                String indent = "";
+                for(int i=0;i<sfield.getIndent();i++)indent+="    ";
+                s.append(indent);
+                s.append(((SimpleIndentedField) field).getMainTextBox().getText());
+
+            }
+        }
+        return Utils.duplicateCharSequence(s);
     }
 }

@@ -46,21 +46,9 @@ public class TestActivityy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         test = new LinearLayout(this);
+        test.setOrientation(LinearLayout.VERTICAL);
         setContentView(test);
-        edit = new EditText(this){
-            @Override
-            protected void onCreateContextMenu(ContextMenu menu) {
-                //super.onCreateContextMenu(menu);
-                menu.clear();
-
-            }@Override
-            public boolean onTextContextMenuItem(int id) {
-                int x=0;
-                x++;
-                return true;
-            }
-
-        };
+        edit = new EditText(this);
 
         Button button;
         button= new Button(this);
@@ -71,17 +59,29 @@ public class TestActivityy extends AppCompatActivity {
             }
         });
 
-        test.setGravity(Gravity.BOTTOM);
+        //test.setGravity(Gravity.BOTTOM);
         test.addView(button);
         test.addView(edit);
         clip = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        clip.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
+            @Override
+            public void onPrimaryClipChanged() {
+                TextView t = new TextView(TestActivityy.this);
+                t.setText(clip.getPrimaryClip().getItemAt(0).getText());
+                test.addView(t);
+
+                t = new TextView(TestActivityy.this);
+                t.setText(clip.getPrimaryClip().getDescription().getLabel());
+                test.addView(t);
+
+            }
+        });
 
     }
 
     private void Click(View v) {
         ClipData data = ClipData.newPlainText("xyz","123");
         clip.setPrimaryClip(data);
-        edit.getParent().showContextMenuForChild(edit);
 
         try {
             Field field = null;

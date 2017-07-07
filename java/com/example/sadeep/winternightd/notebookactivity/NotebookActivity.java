@@ -48,6 +48,7 @@ public class NotebookActivity extends ChangableActionBarActivity {
 
         Globals.initialize(this);
         DataConnection.initialize(this);
+        XClipboard.initialize(this);
 
 
         bottomBar = new BottomBar(this);
@@ -95,18 +96,21 @@ public class NotebookActivity extends ChangableActionBarActivity {
     public void onMenuItemPressed(int menuItem) {
         switch (menuItem){
             case R.id.action_cut:
-                XClipboard.copySelectionToClipboard();
-                XSelection.replaceSelectionWith("");
+                XClipboard.requestCut();
                 break;
             case R.id.action_copy:
                 XClipboard.requestCopy();
                 break;
             case R.id.action_paste:
                 XClipboard.requestPaste(this);
+                break;
+            case android.R.id.home:
+                XSelection.clearSelections();
         }
     }
 
     public void sendClick(View view){
+        XSelection.clearSelections();
         XRelativeLayout.pauseLayout();
         RawFieldDataStream streams=new RawFieldDataStream(editboxNote.getFieldDataStream());
         //for(int i=0;i<100000;i++) {

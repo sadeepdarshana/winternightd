@@ -79,7 +79,8 @@ public abstract class Field extends LinearLayout {
         setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //because we want to detect Field's onSingleTapUp to clear (if any) Selections (we have our own text selection system)
-        gestureDetector = new GestureDetector(new GestureDetector.OnGestureListener(){
+        gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener(){
+
             @Override
             public boolean onDown(MotionEvent e) {
                 return false;
@@ -92,6 +93,11 @@ public abstract class Field extends LinearLayout {
             public boolean onSingleTapUp(MotionEvent e) {
                 XSelection.clearSelections();
                 return false;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                return super.onDoubleTap(e);
             }
 
             @Override
@@ -276,7 +282,7 @@ public abstract class Field extends LinearLayout {
     }
 
     public void setCursorVisible(boolean visible) {
-        //// TODO
+        //overridden in sub classes
     }
 
     /**

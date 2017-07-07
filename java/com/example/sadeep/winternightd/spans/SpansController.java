@@ -1,6 +1,5 @@
 package com.example.sadeep.winternightd.spans;
 
-import android.support.v7.util.SortedList;
 import android.text.Spannable;
 import android.text.Spanned;
 
@@ -137,7 +136,7 @@ public class SpansController {
         CursorPosition start=XSelection.getSelectionStart();
         CursorPosition end = XSelection.getSelectionEnd();
         if(start==null||end==null)return;
-        Note note = XSelection.getActiveNote();
+        Note note = XSelection.getSelectedNote();
 
         int spanStatus[] = new int[]{-1,-1,-1};
 

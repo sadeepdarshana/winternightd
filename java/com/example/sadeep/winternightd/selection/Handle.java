@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,10 @@ import android.widget.ScrollView;
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
+import com.example.sadeep.winternightd.notebookactivity.NotebookActivity;
+import com.example.sadeep.winternightd.temp.d;
+
+import java.util.Random;
 
 /**
  * Created by Sadeep on 10/22/2016.
@@ -54,12 +59,16 @@ public class Handle extends PopupWindow implements View.OnTouchListener {
         setOutsideTouchable(true);
         setFocusable(false);
 
+        final int idd= new Random().nextInt();
+
         noteScroller = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                note.getScrollableParent().scrollBy(0, scrollDirection*10);
-                ((ScrollView)note.getScrollableParent()).smoothScrollBy(0,scrollDirection*10);
-                noteScroller.sendEmptyMessageDelayed(0,100);
+                if(note.getScrollableParent()instanceof RecyclerView)((RecyclerView)note.getScrollableParent()).smoothScrollBy(0, scrollDirection*50);
+                if(note.getScrollableParent()instanceof ScrollView)((ScrollView)note.getScrollableParent()).smoothScrollBy(0, scrollDirection*50);
+
+                if(XSelection.isSelectionAvailable())noteScroller.sendEmptyMessageDelayed(0,50);
+                d.p("Love you ticking",idd);
             }
         };
         noteScroller.sendEmptyMessage(0);

@@ -5,8 +5,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.buttons.customizedbuttons.ToolbarButton;
-import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.buttons.MultiStatusButton;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.spans.LiveFormattingStatus;
 import com.example.sadeep.winternightd.spans.SpansController;
@@ -80,7 +78,7 @@ final public class ToolbarController {
 
         if(XSelection.isSelectionAvailable()){
             if (buttonId < 3) {
-                SpansController.formatRegion(XSelection.getActiveNote(),XSelection.getSelectionStart(),XSelection.getSelectionEnd(),buttonId,LiveFormattingStatus.format[buttonId]*-1);
+                SpansController.formatRegion(XSelection.getSelectedNote(),XSelection.getSelectionStart(),XSelection.getSelectionEnd(),buttonId,LiveFormattingStatus.format[buttonId]*-1);
             }
         }
 
