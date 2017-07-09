@@ -72,6 +72,16 @@ public class Handle extends PopupWindow implements View.OnTouchListener {
         };
         noteScroller.sendEmptyMessage(0);
 
+        new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if(XSelection.isSelectionAvailable()) {
+                    sendEmptyMessageDelayed(0, 500);
+                    XSelection.refreshHandlePositions();
+                }
+            }
+        }.sendEmptyMessage(0);
+
     }
 
     private float dy=0;

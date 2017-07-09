@@ -110,6 +110,7 @@ public class NotebookActivity extends ChangableActionBarActivity {
     }
 
     public void sendClick(View view){
+        if(editboxNote.isEmpty())return;
         XSelection.clearSelections();
         XRelativeLayout.pauseLayout();
         RawFieldDataStream streams=new RawFieldDataStream(editboxNote.getFieldDataStream());

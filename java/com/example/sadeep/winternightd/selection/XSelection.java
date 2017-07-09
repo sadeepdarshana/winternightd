@@ -151,7 +151,7 @@ final public class XSelection {
             SpansController.updateToolbarForCurrentSelection();
         }
     }
-    private static void refreshHandlePositions() {
+    static void refreshHandlePositions() {
         handles[0].updatePosition(handles[0].getCursorPosition(),false);
         handles[1].updatePosition(handles[1].getCursorPosition(),false);
     }

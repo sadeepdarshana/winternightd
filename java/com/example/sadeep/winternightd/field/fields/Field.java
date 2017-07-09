@@ -116,15 +116,18 @@ public abstract class Field extends LinearLayout {
 
     }
 
-
 //general & misc methods
 
     /**because we want to detect Field's onSingleTapUp to clear (if any) Selections (we have our own text selection system)
     [this framework method detects touch events of the whole ViewGroup before they are dispatched to children.]**/
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev){
-        gestureDetector.onTouchEvent(ev);
         return false;
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        gestureDetector.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     public int getFieldType(){
