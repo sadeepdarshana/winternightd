@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
+import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.notebookactivity.NotebookActivity;
 import com.example.sadeep.winternightd.temp.d;
 
@@ -59,16 +60,14 @@ public class Handle extends PopupWindow implements View.OnTouchListener {
         setOutsideTouchable(true);
         setFocusable(false);
 
-        final int idd= new Random().nextInt();
 
         noteScroller = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                if(note.getScrollableParent()instanceof RecyclerView)((RecyclerView)note.getScrollableParent()).smoothScrollBy(0, scrollDirection*50);
-                if(note.getScrollableParent()instanceof ScrollView)((ScrollView)note.getScrollableParent()).smoothScrollBy(0, scrollDirection*50);
+                if(note.getScrollableParent()instanceof RecyclerView)((RecyclerView)note.getScrollableParent()).smoothScrollBy(0, scrollDirection*25);
+                if(note.getScrollableParent()instanceof ScrollView)((ScrollView)note.getScrollableParent()).smoothScrollBy(0, scrollDirection*25);
 
                 if(XSelection.isSelectionAvailable())noteScroller.sendEmptyMessageDelayed(0,50);
-                d.p("Love you ticking",idd);
             }
         };
         noteScroller.sendEmptyMessage(0);
@@ -83,7 +82,12 @@ public class Handle extends PopupWindow implements View.OnTouchListener {
         //boolean a =true;if(a)return true;
         Rect coords = new Rect();
         note.getGlobalVisibleRect(coords);
-        if (coords.bottom < e.getRawY()) scrollDirection=1;
+
+        int threshold;
+        if(note.getScrollableParent()instanceof Notebook)threshold = Globals.dp2px*45;
+        else threshold=0;
+
+        if (coords.bottom +threshold< e.getRawY()) scrollDirection=1;
         else if (coords.top > e.getRawY()) scrollDirection = -1;
         else scrollDirection = 0;
 

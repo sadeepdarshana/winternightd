@@ -71,7 +71,7 @@ public class Notebook extends RecyclerView {
             {
                 scrollEnabled = true;
             }
-        }, 1000);
+        }, 500);
     }
 
     public interface ScrollListener{void onScrolled(int dx,int dy);}
