@@ -14,7 +14,7 @@ import java.util.Random;
 public class d {
     public static void wow(Context c){
         Random rnd=new Random();
-
+        p("wow",rnd.nextInt());
         ((AppCompatActivity)c).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(rnd.nextInt()%255,rnd.nextInt()%255,rnd.nextInt()%255)));
     }
 

@@ -112,7 +112,7 @@ final public class XSelection {
 
     public static void clearSelections() {
 
-        if(selectionAvailable)Notebook.suspendScrollTemporary();
+        Notebook.suspendScrollTemporary();
 
         if(note!=null)((ChangableActionBarActivity)note.getContext()).changeActionBar(0);
 

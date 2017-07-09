@@ -16,10 +16,15 @@ public final class NoteFactory {
     public static Note createNewNote(Context context, boolean isEditable, ViewGroup parent){
             return new Note(context,isEditable,true,parent);
     }
-    public static Note fromFieldDataStream(Context context,FieldDataStream stream, boolean isEditable, ViewGroup parent){
+    public static Note fromFieldDataStream(Context context,FieldDataStream stream, boolean isEditable, ViewGroup parent,NoteInfo noteInfo){
         Note note = new Note(context,isEditable,false,parent);
         stream.resetCursor();
         note.readFromFieldDataStream(stream);
         return note;
     }
+
+    public static void assignNewNoteInfo(Note note){
+
+    }
+
 }

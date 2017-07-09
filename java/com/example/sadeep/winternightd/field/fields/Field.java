@@ -26,7 +26,7 @@ import com.example.sadeep.winternightd.selection.XSelection;
  * A Field does one specific task.
  *      ex: an instance of the BulletedField(an override of Field) contains one bullet and its content textbox.
  *
- * [not to be confused with java.lang.reflect.Field , java fields]
+ * [not to be confused with java.lang.reflect.Field / class variables]
  */
 
 /** PS
@@ -119,14 +119,10 @@ public abstract class Field extends LinearLayout {
 //general & misc methods
 
     /**because we want to detect Field's onSingleTapUp to clear (if any) Selections (we have our own text selection system)
-    [this framework method detects touch events of the whole ViewGroup before they are dispatched to children.]**/
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev){
-        return false;
-    }
+    [this built-in method detects touch events of the whole ViewGroup before they are dispatched to children.]**/
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        gestureDetector.onTouchEvent(ev);
+        gestureDetector. onTouchEvent(ev);
         return super.dispatchTouchEvent(ev);
     }
 

@@ -44,7 +44,7 @@ public class Note extends LinearLayout {
 
     private View scrollableParent;
 
-
+    public NoteInfo noteInfo;
 
     Note(Context context,boolean isEditable, boolean isNewNote, View scrollableParent) {
         super(context);
