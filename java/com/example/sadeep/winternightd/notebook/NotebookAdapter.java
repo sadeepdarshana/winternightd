@@ -19,13 +19,12 @@ import com.example.sadeep.winternightd.note.NoteFactory;
 import com.example.sadeep.winternightd.selection.XSelection;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Sadeep on 6/17/2017.
  */
 
-class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
+class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
     private ArrayList<FieldDataStream> noteStreams;
     private Cursor cursor;
 
@@ -52,55 +51,22 @@ class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
 
 
     @Override
-    public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType==1) {
-            CardView card = new CardView(context);
-
-            card.setCardBackgroundColor(Color.WHITE);
-            card.setCardElevation(Globals.dp2px * 2f);
-            card.setRadius(Globals.dp2px * 2);
-            card.setMinimumHeight(Globals.dp2px * 100);
-            //card.setUseCompatPadding(true);
-            card.setContentPadding(Globals.dp2px * 7, Globals.dp2px * 7, Globals.dp2px * 7, Globals.dp2px * 7);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-            params.setMargins(Globals.dp2px * 6, Globals.dp2px * 6, Globals.dp2px * 6, Globals.dp2px * 6);
-            card.setLayoutParams(params);
-
-            return new CardViewHolder(card);
-        }else if(viewType==0){//header (position=last-1)
-            LinearLayout footer = new LinearLayout(context);
-            footer.setPadding(0,0,0,0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0,0,0,0);
-            footer.setLayoutParams(params);
-            return new CardViewHolder(footer);
-        }
-        else if(viewType==2){ //footer (position=0)
-            LinearLayout header = new LinearLayout(context);
-            header.setPadding(0,0,0,0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, Globals.dp2px*6);
-            params.setMargins(0,0,0,0);
-            header.setLayoutParams(params);
-            return new CardViewHolder(header);
-
-        }
-
-        return null;
+    public XViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new XViewHolder(XViewHolder.generateHoldingParent(context,viewType));
 
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position) {
+    public void onBindViewHolder(XViewHolder holder, int position) {
 
-        if(position==0){//footer that changes height to be always equal to bottombar's height
-            if(holder.ll.getChildCount()==0) {
+        if(getItemViewType(position)==XViewHolder.VIEWTYPE_LINEARLAYOUT_FOOTER){//footer that changes height to be always equal to bottombar's height
+            if(holder.holdingParent.getChildCount()==0) {
                 final View v = new View(context);
                 v.setPadding(0,0,0,0);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 5);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 2*Globals.dp2px);
                 params.setMargins(0,0,0,0);
                 v.setLayoutParams(params);
-                holder.ll.addView(v);
+                holder.holdingParent.addView(v);
 
                 notebook.bottomBar.getBottombar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                     @Override
@@ -114,13 +80,11 @@ class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
                 });
             }
 
-            return;
         }
-        else if(position!=getItemCount()-1) //general note
+        else if(getItemViewType(position)==XViewHolder.VIEWTYPE_CARDVIEW) //general note
         {
-            holder.card.removeAllViews();
+            holder.holdingParent.removeAllViews();
 
-            //holder.card.setCardBackgroundColor(Color.HSVToColor(new float[]{new Random().nextFloat()*360,.001f,1}));
             try {
                 Note note;
                 if (!usesCursor)
@@ -131,28 +95,28 @@ class NotebookAdapter extends RecyclerView.Adapter <CardViewHolder> {
                     FieldDataStream stream = new FieldDataStream(rawStream);
                     note = NoteFactory.fromFieldDataStream(context, stream, false, notebook);
                 }
-                holder.card.addView(note);
+                holder.holdingParent.addView(note);
             } catch (Exception e) {
                 TextView err = new TextView(context);
                 err.setTextColor(Color.RED);
                 err.setText("Error processing note");
                 err.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION, Globals.defaultFontSize * 1);
-                holder.card.addView(err);
+                holder.holdingParent.addView(err);
             }
         }
     }
 
     @Override
-    public void onViewDetachedFromWindow(CardViewHolder holder) {
+    public void onViewDetachedFromWindow(XViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        if(holder.card!=null && holder.card.getChildCount()!=0 && holder.card.getChildAt(0)== XSelection.getSelectedNote())XSelection.clearSelections();
+        if(holder.holdingParent!=null && holder.holdingParent.getChildCount()!=0 && holder.holdingParent.getChildAt(0)== XSelection.getSelectedNote())XSelection.clearSelections();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0)return 0;
-        if(position==getItemCount()-1)return 2;
-        return 1;
+        if(position==0)return XViewHolder.VIEWTYPE_LINEARLAYOUT_FOOTER;
+        if(position==getItemCount()-1)return XViewHolder.VIEWTYPE_LINEARLAYOUT_HEADER;
+        return XViewHolder.VIEWTYPE_CARDVIEW;
     }
 
     @Override
