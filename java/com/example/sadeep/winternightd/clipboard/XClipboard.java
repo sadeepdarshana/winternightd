@@ -3,7 +3,10 @@ package com.example.sadeep.winternightd.clipboard;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.SystemClock;
 import android.text.SpannableStringBuilder;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
@@ -27,6 +30,8 @@ final public class XClipboard {
     public static CharSequence clipedSelectionStartText="";
     public static Vector<Field> clipedSelectionFields=new Vector<>();
 
+    private static long lastCopyTime;
+
     private static ClipboardManager.OnPrimaryClipChangedListener clipboardListener;
 
     public static void initialize(Context context){
@@ -34,9 +39,11 @@ final public class XClipboard {
         final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
 
         clipboardListener = new ClipboardManager.OnPrimaryClipChangedListener() {
+
             @Override
             public void onPrimaryClipChanged() {
-                if(clipboardManager.getPrimaryClip().getDescription().getLabel().equals("WNXClipboard"))return;
+                lastCopyTime = SystemClock.uptimeMillis();
+                try{if(clipboardManager.getPrimaryClip().getDescription().getLabel().equals("WNXClipboard"))return;}catch (Exception e){}
                 clipedSelectionFields = new Vector<Field>();
                 clipedSelectionStartText = clipboardManager.getPrimaryClip().getItemAt(0).getText();
             }
@@ -170,5 +177,19 @@ final public class XClipboard {
             }
         }
         return Utils.duplicateCharSequence(s);
+    }
+
+    public static void updateLastCopyTime(TextView textbox) {
+        if(SystemClock.uptimeMillis()-lastCopyTime>15000)return;
+
+        try {
+            java.lang.reflect.Field field = null;
+            field =TextView.class.getDeclaredField("sLastCutCopyOrTextChangedTime");
+            field.setAccessible(true);
+
+            field.set(textbox,lastCopyTime);
+
+
+        } catch (Exception e) {}
     }
 }

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.os.Handler;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.Spanned;
@@ -17,6 +18,7 @@ import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
+import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.spans.SpansController;
 import com.example.sadeep.winternightd.spans.SpansFactory;
 import com.example.sadeep.winternightd.textboxes.XEditText;
@@ -77,6 +79,8 @@ final public class XSelection {
         XSelection.note = note;
         XSelection.textbox =xEditText;
 
+        Notebook.suspendScrollTemporary();
+
         Spannable txt = (Spannable)textbox.getText();
         Object[] spans = txt.getSpans(0,txt.length(),Object.class);
         for(Object span:spans)if(span.getClass().getName().contains("START")||span.getClass().getName().contains("END"))txt.removeSpan(span);
@@ -107,6 +111,8 @@ final public class XSelection {
     }
 
     public static void clearSelections() {
+
+        Notebook.suspendScrollTemporary();
 
         if(note!=null)((ChangableActionBarActivity)note.getContext()).changeActionBar(0);
 

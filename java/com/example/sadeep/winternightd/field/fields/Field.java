@@ -79,7 +79,7 @@ public abstract class Field extends LinearLayout {
         setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //because we want to detect Field's onSingleTapUp to clear (if any) Selections (we have our own text selection system)
-        gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener(){
+        gestureDetector = new GestureDetector(getContext(),new GestureDetector.SimpleOnGestureListener(){
 
             @Override
             public boolean onDown(MotionEvent e) {
@@ -298,7 +298,7 @@ public abstract class Field extends LinearLayout {
 
     public Object duplicateSelection(int characterIndex1, int characterIndex2) {
         if(characterIndex1==-2&&characterIndex2==-1)return duplicate();
-
+        //other cases are handled in overridden method of subclasses
         return  null;
     }
 

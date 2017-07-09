@@ -1,6 +1,7 @@
 package com.example.sadeep.winternightd.notebook;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -19,6 +20,8 @@ public class Notebook extends RecyclerView {
 
     public BottomBar bottomBar;
 
+    public static boolean scrollEnabled = true;
+
     public Notebook(Context context, String notebookGuid, BottomBar bottomBar) {
         super(context);
         this.context = context;
@@ -28,7 +31,14 @@ public class Notebook extends RecyclerView {
         dataHandler = new NotebookDataHandler(notebookGuid);
         setAdapter(new NotebookAdapter(context,dataHandler.getCursor(),this));
 
-        layoutManager = new LinearLayoutManager(context);
+        layoutManager = new LinearLayoutManager(context) {
+            @Override
+            public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+                if (Notebook.scrollEnabled)return super.scrollVerticallyBy(dy,recycler,state);
+                return 0;
+            }
+        };
+
         //layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(true);
         setLayoutManager(layoutManager);
@@ -50,5 +60,19 @@ public class Notebook extends RecyclerView {
         super.onScrolled(dx, dy);
         if(scrollListener!=null)scrollListener.onScrolled(dx,dy);
     }
+
+    public static void suspendScrollTemporary() {
+        scrollEnabled = false;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                scrollEnabled = true;
+            }
+        }, 1000);
+    }
+
     public interface ScrollListener{void onScrolled(int dx,int dy);}
 }

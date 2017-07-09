@@ -13,6 +13,7 @@ import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -112,6 +113,12 @@ public class XEditText extends EditText implements View.OnKeyListener {
         if(selStart==selEnd)SpansController.updateToolbarForCurrentPosition(getText(),selStart);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        XClipboard.updateLastCopyTime(this);
+        return super.dispatchTouchEvent(event);
+    }
+
     private void init(){
 
         setPadding(0,0,0,0);
@@ -197,6 +204,7 @@ public class XEditText extends EditText implements View.OnKeyListener {
             @Override
             public void onClick(View v) {
                 if(boundField!=null)boundField.onFocused();
+                XClipboard.updateLastCopyTime(XEditText.this);
             }
         });
     }

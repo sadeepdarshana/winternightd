@@ -51,7 +51,7 @@ public class XTextView extends TextView{
     protected void onSelectionChanged(int selStart, int selEnd) {
         super.onSelectionChanged(selStart, selEnd);
 
-        //attemptXSelection();
+        attemptXSelection();
     }
 
     /**
