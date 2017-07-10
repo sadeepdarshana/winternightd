@@ -59,7 +59,7 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
     @Override
     public void onBindViewHolder(XViewHolder holder, int position) {
 
-        if(getItemViewType(position)==XViewHolder.VIEWTYPE_LINEARLAYOUT_FOOTER){//footer that changes height to be always equal to bottombar's height
+        if(getItemViewType(position)==XViewHolder.VIEWTYPE_LINEARLAYOUT_FOOTER){//footer that changes height to be always equal to bottombar_combined's height
             if(holder.holdingParent.getChildCount()==0) {
                 final View v = new View(context);
                 v.setPadding(0,0,0,0);

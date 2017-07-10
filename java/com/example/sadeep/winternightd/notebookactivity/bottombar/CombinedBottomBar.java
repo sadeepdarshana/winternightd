@@ -23,7 +23,6 @@ import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
-import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
 public class CombinedBottomBar {
 
@@ -82,18 +81,18 @@ public class CombinedBottomBar {
 
     public CombinedBottomBar(Context context) {
 
-        bottombar = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.bottombar,null);
-        //bottombar.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        bottombar = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.bottombar_combined,null);
+        //bottombar_combined.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         toolbar = (HorizontalScrollView)bottombar.findViewById(R.id.toolbar);
         //ToolbarController.initialize(toolbar);
 
-        send0 = bottombar.findViewById(R.id.send0);
-        attach0 = bottombar.findViewById(R.id.attach0);
-        send1 = bottombar.findViewById(R.id.send1);
-        attach1 = bottombar.findViewById(R.id.attach1);
-        noteScroll = (ScrollView) bottombar.findViewById(R.id.notescroll);
-        bottomLL = (LinearLayout)bottombar.findViewById(R.id.bottomLL);
+        send0 = null;
+        attach0 =null;
+        send1 = null;
+        attach1 = null;
+        noteScroll = null;
+        bottomLL = null;
 
         note = NoteFactory.createNewNote(context,true,noteScroll);
         note.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

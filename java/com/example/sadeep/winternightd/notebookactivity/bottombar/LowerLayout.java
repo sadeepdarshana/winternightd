@@ -2,6 +2,7 @@ package com.example.sadeep.winternightd.notebookactivity.bottombar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +29,14 @@ public class LowerLayout {
 
     private ViewGroup noteScroll; //the immediate parent of the Note
 
-    private int attachWidth,sendWidth; //widths of the buttons WHEN THEY ARE SHOWN
+    private int attachWidth,sendWidth, emptyNoteHeight; //widths of the buttons WHEN THEY ARE SHOWN
 
     private boolean buttonVisibility = true;
     private boolean glassModeEnabled = false;
 
 
 
-    public LowerLayout(Context context, boolean buttonVisibility) {
+    public LowerLayout(Context context, boolean buttonVisibility,boolean glassModeEnabled) {
         this.context = context;
         lowerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bottombar_lowerlayout,null);
 
@@ -43,21 +44,40 @@ public class LowerLayout {
         send = lowerLayout.findViewById(R.id.send);
         noteScroll = (ViewGroup) lowerLayout.findViewById(R.id.notescroll);
 
-        attachWidth = Utils.getWidth(attach);
-        sendWidth = Utils.getWidth(send);
-
         note = NoteFactory.createNewNote(context,true, noteScroll);
         note.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         noteScroll.addView(note);
 
+        emptyNoteHeight = Utils.getHeight(note);
+        attachWidth = Utils.getWidth(attach);
+        sendWidth = Utils.getWidth(send);
+
         setButtonsVisibility(buttonVisibility,false);
+        setGlassModeEnabled(glassModeEnabled,false);
+
+
+        note.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (emptyNoteHeight == 0) return;
+                if (note.getHeight() > 1.5 * emptyNoteHeight) {
+                    onNoteHeightMatured();
+                }
+            }
+        });
+    }
+
+    protected void onNoteHeightMatured() {
+
     }
 
     public LinearLayout getLowerLayout() {
         return lowerLayout;
     }
 
-
+    public Note getNote() {
+        return note;
+    }
 
     public boolean getButtonVisibility() {
         return buttonVisibility;
