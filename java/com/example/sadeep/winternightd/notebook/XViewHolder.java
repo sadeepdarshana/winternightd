@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.misc.Globals;
-import com.example.sadeep.winternightd.notebookactivity.bottombar.CombinedBottomBar;
 
 /**
  * Created by Sadeep on 6/17/2017.

@@ -19,7 +19,6 @@ import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.notebookactivity.bottombar.BottomBarCombined;
-import com.example.sadeep.winternightd.notebookactivity.bottombar.CombinedBottomBar;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.temp.XRelativeLayout;
 
