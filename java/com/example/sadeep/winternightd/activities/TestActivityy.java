@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.misc.Globals;
+import com.example.sadeep.winternightd.notebookactivity.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.notebookactivity.bottombar.LowerLayout;
 import com.example.sadeep.winternightd.notebookactivity.bottombar.UpperLayout;
 import com.example.sadeep.winternightd.temp.QButton;
@@ -18,7 +19,7 @@ public class TestActivityy extends AppCompatActivity {
 
     LinearLayout test;
     EditText edit;
-    UpperLayout upperLayout;
+    BottomBarCombined combined;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +31,14 @@ public class TestActivityy extends AppCompatActivity {
 
         Globals.initialize(this);
 
-        upperLayout = new UpperLayout(this,true,true);
-
-        ((ViewGroup)findViewById(R.id.bottombar_space)).addView(upperLayout.getUpperLayout());
-        ((ViewGroup)findViewById(R.id.notebook_space)).addView(new QButton(this){
-
+        combined = new BottomBarCombined(this){
             @Override
-            public void onClick(View v) {
-                upperLayout.setButtonsVisibility(!upperLayout.getButtonVisibility(),true);
-            }
-        });
-        ((ViewGroup)findViewById(R.id.notebook_space)).addView(new QButton(this){
+            protected void onSendClick(View v) {
 
-            @Override
-            public void onClick(View v) {
-                upperLayout.setToolbarVisibility(!upperLayout.getToolbarVisibility(),true);
             }
-        });
+        };
+
+        ((ViewGroup)findViewById(R.id.bottombar_space)).addView(combined.getBottomBar());
     }
 
     private void Click(View v) {

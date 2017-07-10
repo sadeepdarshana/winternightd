@@ -54,7 +54,26 @@ public class UpperLayout {
         toolbarHeight = Utils.getHeight(toolbar);
 
         setButtonsVisibility(buttonVisibility,false);
-        setButtonsVisibility(toolbarVisibility,false);
+        setToolbarVisibility(toolbarVisibility,false);
+
+        attach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAttachClick(v);
+            }
+        });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSendClick(v);
+            }
+        });
+    }
+
+    protected void onAttachClick(View v) {
+
+    }
+    protected void onSendClick(View v) {
 
     }
 
@@ -102,7 +121,7 @@ public class UpperLayout {
     }
 
     public void setToolbarVisibility(boolean visible, boolean animate){
-        final int ANIMATION_DURATION = 300;
+        final int ANIMATION_DURATION = 400;
 
         if(toolbarVisibility == visible)return;
         this.toolbarVisibility=visible;

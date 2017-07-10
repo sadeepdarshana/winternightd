@@ -68,10 +68,9 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
                 v.setLayoutParams(params);
                 holder.holdingParent.addView(v);
 
-                notebook.combinedBottomBar.getBottombar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                notebook._BottomBar.getBottomBar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                     @Override
                     public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-
                         {
                             v.getLayoutParams().height = bottom;
                             v.requestLayout();

@@ -2,6 +2,7 @@ package com.example.sadeep.winternightd.notebookactivity.bottombar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,6 @@ public class LowerLayout {
     private boolean glassModeEnabled = false;
 
 
-
     public LowerLayout(Context context, boolean buttonVisibility,boolean glassModeEnabled) {
         this.context = context;
         lowerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bottombar_lowerlayout,null);
@@ -46,6 +46,12 @@ public class LowerLayout {
 
         note = NoteFactory.createNewNote(context,true, noteScroll);
         note.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        note.focusListener = new Note.FocusListener() {
+            @Override
+            public void onFocused() {
+                onNoteFocused();
+            }
+        };
         noteScroll.addView(note);
 
         emptyNoteHeight = Utils.getHeight(note);
@@ -56,15 +62,38 @@ public class LowerLayout {
         setGlassModeEnabled(glassModeEnabled,false);
 
 
-        note.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        attach.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (emptyNoteHeight == 0) return;
-                if (note.getHeight() > 1.5 * emptyNoteHeight) {
-                    onNoteHeightMatured();
-                }
+            public void onClick(View v) {
+                onAttachClick(v);
             }
         });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSendClick(v);
+            }
+        });
+
+        new CountDownTimer(2000000000, 500)
+        {
+            public void onTick(long millisUntilFinished)
+            {
+                if(note.isEmpty())onNoteIsEmpty();
+                if (note.getHeight() > 1.5 * emptyNoteHeight && emptyNoteHeight!=0)onNoteHeightMatured();
+            }
+
+
+            public void onFinish(){}
+        }.start();
+    }
+
+    protected void onNoteFocused() {
+
+    }
+
+    protected void onNoteIsEmpty() {
+
     }
 
     protected void onNoteHeightMatured() {
@@ -79,12 +108,25 @@ public class LowerLayout {
         return note;
     }
 
+
+
+
+    protected void onAttachClick(View v) {
+
+    }
+
+    protected void onSendClick(View v) {
+
+    }
+
+
+
     public boolean getButtonVisibility() {
         return buttonVisibility;
     }
 
     public void setButtonsVisibility(boolean visible, boolean animate){
-        final int ANIMATION_DURATION = 300;
+        final int ANIMATION_DURATION = 400;
 
         if(buttonVisibility == visible)return;
         this.buttonVisibility=visible;
@@ -109,6 +151,7 @@ public class LowerLayout {
             send.requestLayout();
         }
     }
+
 
 
     public boolean getGlassModeEnabled() {

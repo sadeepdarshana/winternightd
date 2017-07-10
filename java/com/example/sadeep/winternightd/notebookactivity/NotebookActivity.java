@@ -16,6 +16,7 @@ import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.notebook.Notebook;
+import com.example.sadeep.winternightd.notebookactivity.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.notebookactivity.bottombar.CombinedBottomBar;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.temp.XRelativeLayout;
@@ -26,18 +27,15 @@ public class NotebookActivity extends ChangableActionBarActivity {
     private LinearLayout bottombarSpace;
     private LinearLayout notebookSpace;
     private Notebook notebook;
-    private CombinedBottomBar combinedBottomBar;
+    private BottomBarCombined _BottomBar;
     private Note editboxNote;
 
 
     private Note activeNote;
-    NotebookActivity This;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        This = this;
-
 
         setTheme(R.style.AppThemeX);
         setContentView(R.layout.notebook_activity);
@@ -51,33 +49,29 @@ public class NotebookActivity extends ChangableActionBarActivity {
         XClipboard.initialize(this);
 
 
-        combinedBottomBar = new CombinedBottomBar(this);
-        bottombarSpace.addView(combinedBottomBar.getBottombar());
+        _BottomBar = new BottomBarCombined(this){
+            @Override
+            protected void onAttachClick(View v) {
+                AttachBoxManager.display(v,null);
+            }
+
+            @Override
+            protected void onSendClick(View v) {
+                sendClick(v);
+            }
+        };
+        bottombarSpace.addView(_BottomBar.getBottomBar());
 
         NotebookDataHandler.createNotebook("qwerty");
-        notebook = new Notebook(this,"qwerty", combinedBottomBar);
+        notebook = new Notebook(this,"qwerty", _BottomBar);
         notebook.setClipToPadding(false);
         notebookSpace.addView(notebook);
 
 
-        editboxNote = combinedBottomBar.getNote();
+        editboxNote = _BottomBar.getNote();
         activeNote = editboxNote;
 
         getWindow().setBackgroundDrawableResource(R.drawable.default_wallpaper);
-        //getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,235,235)));
-
-        notebook.scrollListener = new Notebook.ScrollListener() {
-            @Override
-            public void onScrolled(int dx, int dy) {
-                if(dy<0) {
-                    combinedBottomBar.requestToolbarHide();
-                    if(editboxNote.isEmpty()) combinedBottomBar.changeBottomLLOpacity(false);
-                }
-                if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()==0){
-                    combinedBottomBar.changeBottomLLOpacity(true);
-                }
-            }
-        };
 
 
         final XRelativeLayout root = (XRelativeLayout) notebookSpace.getParent();
@@ -85,7 +79,9 @@ public class NotebookActivity extends ChangableActionBarActivity {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 try{
-                    AttachBoxManager.popupWindow.dismiss();}catch (Exception e){}
+                    AttachBoxManager.popupWindow.dismiss();
+                }
+                catch (Exception e){}
 
             }
         });
@@ -134,4 +130,17 @@ public class NotebookActivity extends ChangableActionBarActivity {
         return activeNote;
     }
 
+    public void onNotebookScrolled(int dx, int dy) {
+
+        if(dy<0) {
+            if(editboxNote.isEmpty()) {
+                _BottomBar.setGlassModeEnabled(true);
+                _BottomBar.setToolbarVisibility(false);
+            }
+        }
+        if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()==0){
+            _BottomBar.setGlassModeEnabled(false);
+        }
+
+    }
 }
