@@ -1,9 +1,11 @@
 package com.example.sadeep.winternightd.animation;
 
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.HorizontalScrollView;
 
 /**
@@ -16,12 +18,34 @@ public class XAnimation {
     public static final int DIMENSION_HEIGHT = 1;
 
 
-    public static void changeDimension(final View view, int duration, final int dimension, int start, int end){
-        changeDimension(view, duration, dimension, start, end,0);
-    }
     public static void scroll(final HorizontalScrollView view, int duration, int amount){
         scroll( view,  duration,  amount,0);
     }
+
+    public static void scroll(final HorizontalScrollView view, int duration, int amount,int delay){
+        ValueAnimator animator = ValueAnimator.ofInt(0,amount).setDuration(duration);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            int preVal = 0;
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+                view.scrollBy(value-preVal,0);
+                preVal = value;
+            }
+        });
+        AnimatorSet set = new AnimatorSet();
+        set.play(animator);
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.setStartDelay(delay);
+        set.start();
+    }
+
+
+
+    public static void changeDimension(final View view, int duration, final int dimension, int start, int end){
+        changeDimension(view, duration, dimension, start, end,0);
+    }
+
     public static void changeDimension(final View view, int duration, final int dimension, int start, int end,int delay){
 
         ValueAnimator slideAnimator;
@@ -44,21 +68,22 @@ public class XAnimation {
         set.start();
     }
 
-    public static void scroll(final HorizontalScrollView view, int duration, int amount,int delay){
-        ValueAnimator animator = ValueAnimator.ofInt(0,amount).setDuration(duration);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            int preVal = 0;
+
+    public static void changeBackgroundColor(final View view, int duration, int start, int end, int delay){
+
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), start, end);
+        colorAnimation.setDuration(duration); // milliseconds
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Integer value = (Integer) animation.getAnimatedValue();
-                view.scrollBy(value-preVal,0);
-                preVal = value;
+            public void onAnimationUpdate(ValueAnimator animator) {
+                view.setBackgroundColor((int) animator.getAnimatedValue());
             }
+
         });
-        AnimatorSet set = new AnimatorSet();
-        set.play(animator);
-        set.setInterpolator(new AccelerateDecelerateInterpolator());
-        set.setStartDelay(delay);
-        set.start();
+        colorAnimation.setInterpolator(new AccelerateInterpolator(.8f));
+        colorAnimation.setStartDelay(delay);
+        colorAnimation.start();
     }
+
 }
