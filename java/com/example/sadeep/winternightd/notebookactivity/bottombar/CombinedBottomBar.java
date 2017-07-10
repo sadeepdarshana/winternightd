@@ -86,7 +86,7 @@ public class CombinedBottomBar {
         //bottombar.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         toolbar = (HorizontalScrollView)bottombar.findViewById(R.id.toolbar);
-        ToolbarController.initialize(toolbar);
+        //ToolbarController.initialize(toolbar);
 
         send0 = bottombar.findViewById(R.id.send0);
         attach0 = bottombar.findViewById(R.id.attach0);

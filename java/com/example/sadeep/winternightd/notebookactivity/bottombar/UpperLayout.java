@@ -10,9 +10,12 @@ import android.widget.ScrollView;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.animation.XAnimation;
+import com.example.sadeep.winternightd.buttons.customizedbuttons.ToolbarButton;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
 import com.example.sadeep.winternightd.temp.Utils;
+import com.example.sadeep.winternightd.toolbar.Toolbar;
+import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
 /**
  * Created by Sadeep on 7/10/2017.
@@ -24,6 +27,7 @@ public class UpperLayout {
     private LinearLayout upperLayout; //the android View of the Lower Layout generated, (notice this class extends nothing)
 
     private View attach,send,toolbar;
+    private ViewGroup toolbarContainer;
 
     private int attachWidth,sendWidth,toolbarHeight; //widths and heights of the Views WHEN THEY ARE SHOWN
 
@@ -38,7 +42,12 @@ public class UpperLayout {
 
         attach = upperLayout.findViewById(R.id.attach);
         send = upperLayout.findViewById(R.id.send);
-        toolbar = upperLayout.findViewById(R.id.toolbar);
+        toolbarContainer = (ViewGroup) upperLayout.findViewById(R.id.toolbarcontainer);
+
+        Toolbar _Toolbar = new Toolbar(context);
+        toolbar = _Toolbar.getToolbar();
+        ToolbarController.registerToolbar(_Toolbar);
+        toolbarContainer.addView(toolbar);
 
         attachWidth = Utils.getWidth(attach);
         sendWidth = Utils.getWidth(send);
@@ -46,6 +55,7 @@ public class UpperLayout {
 
         setButtonsVisibility(buttonVisibility,false);
         setButtonsVisibility(toolbarVisibility,false);
+
     }
 
     public LinearLayout getUpperLayout() {

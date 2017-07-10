@@ -19,11 +19,13 @@ import com.example.sadeep.winternightd.spans.SpansFactory;
  */
 final public class Toolbar {
 
+    private static final int BUTTONS_COUNT = 6;
+
     private Context context;
     private HorizontalScrollView toolbar;
 
 
-    private ToolbarButton[] toolbarButtons = new ToolbarButton[10];
+    private ToolbarButton[] toolbarButtons = new ToolbarButton[BUTTONS_COUNT];
 
 
     /**
