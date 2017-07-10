@@ -39,7 +39,7 @@ public class Note extends LinearLayout {
 
 
     private boolean isEditable;
-    public static final int defaultFieldType = SimpleIndentedField.classFieldType;
+    public static final int defaultFieldType = CheckedField.classFieldType;
 
 
     private View scrollableParent;
@@ -50,17 +50,6 @@ public class Note extends LinearLayout {
         super(context);
         this.scrollableParent = scrollableParent;
 
-        init(isEditable);
-        if(isNewNote) convertToNewNoteWithOneDefaultField();
-    }
-
-    public Note(Context context, AttributeSet attrs) {
-        this(context, true,true,null,attrs);
-    }
-
-    public Note(Context context,boolean isEditable, boolean isNewNote,View scrollableParent, AttributeSet attrs) {
-        super(context,attrs);
-        this.scrollableParent = scrollableParent;
         init(isEditable);
         if(isNewNote) convertToNewNoteWithOneDefaultField();
     }

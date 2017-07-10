@@ -1,4 +1,4 @@
-package com.example.sadeep.winternightd.notebookactivity;
+package com.example.sadeep.winternightd.notebookactivity.bottombar;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -22,9 +22,10 @@ import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
 import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
 import com.example.sadeep.winternightd.note.Note;
+import com.example.sadeep.winternightd.note.NoteFactory;
 import com.example.sadeep.winternightd.toolbar.ToolbarController;
 
-public class BottomBar  {
+public class CombinedBottomBar {
 
     public ViewGroup getBottombar() {
         return bottombar;
@@ -32,7 +33,7 @@ public class BottomBar  {
 
     private ViewGroup bottombar;
 
-    private View send0, attach0, send1, attach1;
+    public View send0, attach0, send1, attach1;
 
     private Note note;
     private HorizontalScrollView toolbar;
@@ -46,12 +47,13 @@ public class BottomBar  {
     private int toolbarHeight;
     private boolean toolbarVisible = false;
     private boolean bottomLLOpacity = true;
+    public CountDownTimer timer;
 
     private LinearLayout bottomLL;
 
-    private void changeMode(boolean expanded){
+    public void changeMode(boolean expanded){
         final int DURATION = 400;
-        
+
         if(this.expanded==expanded)return;
         this.expanded=expanded;
 
@@ -78,7 +80,7 @@ public class BottomBar  {
 
     }
 
-    public BottomBar(Context context) {
+    public CombinedBottomBar(Context context) {
 
         bottombar = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.bottombar,null);
         //bottombar.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -90,9 +92,12 @@ public class BottomBar  {
         attach0 = bottombar.findViewById(R.id.attach0);
         send1 = bottombar.findViewById(R.id.send1);
         attach1 = bottombar.findViewById(R.id.attach1);
-        note = (Note) bottombar.findViewById(R.id.note);
         noteScroll = (ScrollView) bottombar.findViewById(R.id.notescroll);
         bottomLL = (LinearLayout)bottombar.findViewById(R.id.bottomLL);
+
+        note = NoteFactory.createNewNote(context,true,noteScroll);
+        note.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        noteScroll.addView(note);
 
         sendWidth =send1.getWidth();
         attachWidth =attach1.getWidth();
@@ -183,7 +188,7 @@ public class BottomBar  {
             }
         });
 
-        new CountDownTimer(2000000000, 500)
+         timer=new CountDownTimer(2000000000, 500)
         {
             public void onTick(long millisUntilFinished)
             {
@@ -273,5 +278,14 @@ public class BottomBar  {
         colorAnimation2.start();
 
 
+    }
+
+    public void changeBottomLLMode(boolean visible){
+        if(visible)bottomLL.setVisibility(View.VISIBLE);
+        else bottomLL.setVisibility(View.GONE);
+    }
+
+    public Note getNote() {
+        return note;
     }
 }

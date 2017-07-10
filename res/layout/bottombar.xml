@@ -3,8 +3,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,6 +27,8 @@
         android:background="#00000000"
 
         android:clipChildren="false"
+
+        android:id="@+id/upperLL"
 
         >
 
@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
         android:layout_gravity="center_vertical"
-        android:background="#22aaaaaa" />
+        android:background="#00aaaaaa" />
     <View
         android:layout_marginBottom="0dp"
         android:layout_marginTop="0dp"
@@ -97,7 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
         android:layout_gravity="center_vertical"
-        android:background="#22999999" />
+        android:background="#00999999" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -124,6 +124,7 @@
             android:layout_margin="0dp"
             android:padding="13dp"
             />
+
         <ScrollView
             android:id="@+id/notescroll"
             android:layout_weight="1"
@@ -134,14 +135,6 @@
             android:layout_marginBottom="4dp"
             android:paddingLeft="4dp"
             android:paddingRight="4dp">
-
-
-            <com.example.sadeep.winternightd.note.Note
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/note"
-
-                />
 
         </ScrollView>
 

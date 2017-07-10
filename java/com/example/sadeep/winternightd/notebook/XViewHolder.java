@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.misc.Globals;
-import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.temp.d;
+import com.example.sadeep.winternightd.notebookactivity.bottombar.CombinedBottomBar;
 
 /**
  * Created by Sadeep on 6/17/2017.
@@ -47,7 +46,14 @@ class XViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                d.wow(ref[0].getContext());
+                CombinedBottomBar combinedBottomBar = new CombinedBottomBar(context);
+                ((LinearLayout.LayoutParams) combinedBottomBar.attach0.getLayoutParams()).setMargins(0,0,0,0);
+                ((LinearLayout.LayoutParams) combinedBottomBar.send0.getLayoutParams()).setMargins(0,0,0,0);
+                //combinedBottomBar.timer.cancel();
+                //combinedBottomBar.changeMode(true);
+                //combinedBottomBar.setToolbarVisibility(true);
+                //combinedBottomBar.changeBottomLLMode(false);
+                ((ViewGroup)ref[0].getChildAt(0)).addView(combinedBottomBar.getBottombar());
                 return true;
             }
 
@@ -55,9 +61,10 @@ class XViewHolder extends RecyclerView.ViewHolder {
 
         final CardView card = new CardView(context){
             @Override
-            public boolean onInterceptTouchEvent(MotionEvent ev) {
+            public boolean dispatchTouchEvent(MotionEvent ev) {
                 gestureDetector.onTouchEvent(ev);
-                return super.onInterceptTouchEvent(ev);
+                super.dispatchTouchEvent(ev);
+                return true;
             }
         };
         ref[0]=card;
@@ -71,6 +78,11 @@ class XViewHolder extends RecyclerView.ViewHolder {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         params.setMargins(Globals.dp2px * 6, Globals.dp2px * 6, Globals.dp2px * 6, Globals.dp2px * 6);
         card.setLayoutParams(params);
+
+        LinearLayout container = new LinearLayout(context);
+        container.setLayoutParams(new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+        card.addView(container);
+        container.setOrientation(LinearLayout.VERTICAL);
 
 
         return card;

@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.sadeep.winternightd.notebookactivity.BottomBar;
+import com.example.sadeep.winternightd.notebookactivity.bottombar.CombinedBottomBar;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 
 /**
@@ -18,15 +18,15 @@ public class Notebook extends RecyclerView {
     private NotebookDataHandler dataHandler;
     private LinearLayoutManager layoutManager;
 
-    public BottomBar bottomBar;
+    public CombinedBottomBar combinedBottomBar;
 
     public static boolean scrollEnabled = true;
 
-    public Notebook(Context context, String notebookGuid, BottomBar bottomBar) {
+    public Notebook(Context context, String notebookGuid, CombinedBottomBar combinedBottomBar) {
         super(context);
         this.context = context;
         this.notebookGuid = notebookGuid;
-        this.bottomBar = bottomBar;
+        this.combinedBottomBar = combinedBottomBar;
 
         dataHandler = new NotebookDataHandler(notebookGuid);
         setAdapter(new NotebookAdapter(context,dataHandler.getCursor(),this));

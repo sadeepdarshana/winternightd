@@ -16,7 +16,7 @@ import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.notebook.Notebook;
-import com.example.sadeep.winternightd.selection.CursorPosition;
+import com.example.sadeep.winternightd.notebookactivity.bottombar.CombinedBottomBar;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.temp.XRelativeLayout;
 
@@ -26,7 +26,7 @@ public class NotebookActivity extends ChangableActionBarActivity {
     private LinearLayout bottombarSpace;
     private LinearLayout notebookSpace;
     private Notebook notebook;
-    private BottomBar bottomBar;
+    private CombinedBottomBar combinedBottomBar;
     private Note editboxNote;
 
 
@@ -51,16 +51,16 @@ public class NotebookActivity extends ChangableActionBarActivity {
         XClipboard.initialize(this);
 
 
-        bottomBar = new BottomBar(this);
-        bottombarSpace.addView(bottomBar.getBottombar());
+        combinedBottomBar = new CombinedBottomBar(this);
+        bottombarSpace.addView(combinedBottomBar.getBottombar());
 
         NotebookDataHandler.createNotebook("qwerty");
-        notebook = new Notebook(this,"qwerty",bottomBar);
+        notebook = new Notebook(this,"qwerty", combinedBottomBar);
         notebook.setClipToPadding(false);
         notebookSpace.addView(notebook);
 
 
-        editboxNote = (Note) bottomBar.getBottombar().findViewById(R.id.note);
+        editboxNote = combinedBottomBar.getNote();
         activeNote = editboxNote;
 
         getWindow().setBackgroundDrawableResource(R.drawable.default_wallpaper);
@@ -70,11 +70,11 @@ public class NotebookActivity extends ChangableActionBarActivity {
             @Override
             public void onScrolled(int dx, int dy) {
                 if(dy<0) {
-                    bottomBar.requestToolbarHide();
-                    if(editboxNote.isEmpty())bottomBar.changeBottomLLOpacity(false);
+                    combinedBottomBar.requestToolbarHide();
+                    if(editboxNote.isEmpty()) combinedBottomBar.changeBottomLLOpacity(false);
                 }
                 if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()==0){
-                    bottomBar.changeBottomLLOpacity(true);
+                    combinedBottomBar.changeBottomLLOpacity(true);
                 }
             }
         };

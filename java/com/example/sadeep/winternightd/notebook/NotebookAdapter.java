@@ -3,7 +3,6 @@ package com.example.sadeep.winternightd.notebook;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
@@ -16,6 +15,7 @@ import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
+import com.example.sadeep.winternightd.note.NoteInfo;
 import com.example.sadeep.winternightd.selection.XSelection;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
                 v.setLayoutParams(params);
                 holder.holdingParent.addView(v);
 
-                notebook.bottomBar.getBottombar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                notebook.combinedBottomBar.getBottombar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                     @Override
                     public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
@@ -83,25 +83,25 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
         }
         else if(getItemViewType(position)==XViewHolder.VIEWTYPE_CARDVIEW) //general note
         {
-            holder.holdingParent.removeAllViews();
+            ((ViewGroup)holder.holdingParent.getChildAt(0)).removeAllViews();
 
             try {
                 Note note;
                 if (!usesCursor)
-                    note = NoteFactory.fromFieldDataStream(context, noteStreams.get(position), false, notebook);
+                    note = NoteFactory.fromFieldDataStream(context, noteStreams.get(position), false, notebook,new NoteInfo());
                 else {
                     cursor.moveToPosition(position - 1);
                     RawFieldDataStream rawStream = new RawFieldDataStream(cursor.getString(1), cursor.getString(2), cursor.getBlob(3), cursor.getString(4), cursor.getBlob(5));
                     FieldDataStream stream = new FieldDataStream(rawStream);
-                    note = NoteFactory.fromFieldDataStream(context, stream, false, notebook);
+                    note = NoteFactory.fromFieldDataStream(context, stream, false, notebook,new NoteInfo());
                 }
-                holder.holdingParent.addView(note);
+                ((ViewGroup)holder.holdingParent.getChildAt(0)).addView(note);
             } catch (Exception e) {
                 TextView err = new TextView(context);
                 err.setTextColor(Color.RED);
                 err.setText("Error processing note");
                 err.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION, Globals.defaultFontSize * 1);
-                holder.holdingParent.addView(err);
+                ((ViewGroup)holder.holdingParent.getChildAt(0)).addView(err);
             }
         }
     }

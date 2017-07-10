@@ -70,6 +70,8 @@ final public class ToolbarController {
                 toolbarButtons[tag] = btn;
             }
         }
+
+        updateStatus(LiveFormattingStatus.format);
     }
 
     private static void toolbarButtonClicked(int buttonId) {
