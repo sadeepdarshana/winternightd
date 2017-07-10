@@ -81,11 +81,16 @@ public class LowerLayout {
             {
                 if(note.isEmpty())onNoteIsEmpty();
                 if (note.getHeight() > 1.5 * emptyNoteHeight && emptyNoteHeight!=0)onNoteHeightMatured();
+                if(!note.isEmpty())onNoteHasContent();
             }
 
 
             public void onFinish(){}
         }.start();
+    }
+
+    protected void onNoteHasContent() {
+
     }
 
     protected void onNoteFocused() {

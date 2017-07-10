@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
 import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
+import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
+import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
 import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
@@ -52,7 +54,19 @@ public class NotebookActivity extends ChangableActionBarActivity {
         _BottomBar = new BottomBarCombined(this){
             @Override
             protected void onAttachClick(View v) {
-                AttachBoxManager.display(v,null);
+                if(!((AttachBoxOpener)v).isAttachboxOpen()) {
+                    ((AttachBoxOpener) v).setAttachboxOpened(true);
+                    AttachBoxManager.display(v, new OnAttachBoxItemClick() {
+                        @Override
+                        public void buttonClicked(int attachButtonId) {
+                            editboxNote.attachboxRequests(attachButtonId);
+                        }
+                    });
+                }else{
+                    try {
+                        AttachBoxManager.popupWindow.dismiss();
+                    }catch (Exception e){}
+                }
             }
 
             @Override

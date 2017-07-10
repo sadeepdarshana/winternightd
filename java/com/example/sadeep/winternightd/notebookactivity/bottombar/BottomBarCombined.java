@@ -72,6 +72,12 @@ public class BottomBarCombined {
             protected void onAttachClick(View v) {
                 BottomBarCombined.this.onAttachClick(v);
             }
+
+            @Override
+            protected void onNoteHasContent() {
+                BottomBarCombined.this.setToolbarVisibility(true);
+                BottomBarCombined.this.setGlassModeEnabled(false);
+            }
         };
 
         bottomBar.addView(_UpperLayout.getUpperLayout(),0);
