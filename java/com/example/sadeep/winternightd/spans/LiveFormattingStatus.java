@@ -36,6 +36,6 @@ final public class LiveFormattingStatus {
 
     public static void update(int[] spanStatus) {
         for(int i=0;i< SpansFactory.NO_OF_ORDINARY_SPAN_TYPES;i++)format[i]=spanStatus[i];
-        ToolbarController.updateStatus(spanStatus);
+        ToolbarController.dispatchToolbarUpdates(spanStatus);
     }
 }
