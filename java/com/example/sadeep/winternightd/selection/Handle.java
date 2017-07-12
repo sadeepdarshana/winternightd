@@ -19,10 +19,6 @@ import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.notebook.Notebook;
-import com.example.sadeep.winternightd.notebookactivity.NotebookActivity;
-import com.example.sadeep.winternightd.temp.d;
-
-import java.util.Random;
 
 /**
  * Created by Sadeep on 10/22/2016.

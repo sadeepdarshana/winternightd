@@ -4,8 +4,9 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.sadeep.winternightd.notebookactivity.NotebookActivity;
-import com.example.sadeep.winternightd.notebookactivity.bottombar.BottomBarCombined;
+import com.example.sadeep.winternightd.localstorage.CursorReader;
+import com.example.sadeep.winternightd.activities.notebookactivity.NotebookActivity;
+import com.example.sadeep.winternightd.activities.notebookactivity.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 
 /**
@@ -29,7 +30,7 @@ public class Notebook extends RecyclerView {
         this._BottomBar = _BottomBar;
 
         dataHandler = new NotebookDataHandler(notebookGuid);
-        setAdapter(new NotebookAdapter(notebookActivity,dataHandler.getCursor(),this));
+        setAdapter(new NotebookAdapter(notebookActivity,new CursorReader(dataHandler.getCursor()),this));
 
         layoutManager = new LinearLayoutManager(notebookActivity) {
             @Override
@@ -50,7 +51,7 @@ public class Notebook extends RecyclerView {
 
     public void refresh() {
         dataHandler = new NotebookDataHandler(notebookGuid);
-        setAdapter(new NotebookAdapter(notebookActivity,dataHandler.getCursor(),this));
+        setAdapter(new NotebookAdapter(notebookActivity,new CursorReader(dataHandler.getCursor()),this));
     }
 
     @Override

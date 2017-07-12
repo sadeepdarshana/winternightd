@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.notebookactivity.bottombar.UpperLayout;
+import com.example.sadeep.winternightd.activities.notebookactivity.bottombar.UpperLayout;
 
 /**
  * Created by Sadeep on 6/17/2017.

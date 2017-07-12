@@ -10,6 +10,12 @@ public class NoteInfo {
     public long currentVersionTime;
     public long createdTime;
 
+    public NoteInfo(String noteUUID,long createdTime, long currentVersionTime, String currentVersionUUID) {
+        this.createdTime = createdTime;
+        this.currentVersionTime = currentVersionTime;
+        this.currentVersionUUID = currentVersionUUID;
+        this.noteUUID = noteUUID;
+    }
     private NoteInfo(){}
 
     public static NoteInfo newNoteInfoForCurrentTime(){
