@@ -57,7 +57,7 @@ public class NotebookDataHandler {
     }
 
     public static void createNotebook(String notebookUuid){
-        String createSQL = "CREATE TABLE IF NOT EXISTS `" + notebookUuid + "` ( `noteId` TEXT, `strings0` TEXT, `strings1` TEXT, `ints0` BLOB, `ints1` TEXT, `fieldTypes` BLOB, `time` INTEGER, PRIMARY KEY(`noteId`) );";
+        String createSQL = "CREATE TABLE `" + notebookUuid +"` ( `noteId` TEXT, `strings0` TEXT, `strings1` TEXT, `ints0` BLOB, `ints1` TEXT, `fieldTypes` BLOB, `cvtime` INTEGER, `created` INTEGER, `cvId` TEXT, PRIMARY KEY(`noteId`) )";
         DataConnection.execSQL(createSQL);
     }
 }

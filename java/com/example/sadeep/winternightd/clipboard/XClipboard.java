@@ -5,14 +5,13 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.SystemClock;
 import android.text.SpannableStringBuilder;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.notebookactivity.NotebookActivity;
-import com.example.sadeep.winternightd.temp.Utils;
+import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 import com.example.sadeep.winternightd.selection.XSelection;

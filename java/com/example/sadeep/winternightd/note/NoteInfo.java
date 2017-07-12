@@ -9,4 +9,23 @@ public class NoteInfo {
     public String currentVersionUUID;
     public long currentVersionTime;
     public long createdTime;
+
+    private NoteInfo(){}
+
+    public static NoteInfo newNoteInfoForCurrentTime(){
+        NoteInfo info = new NoteInfo();
+
+        info.noteUUID = java.util.UUID.randomUUID().toString().replaceAll("-","");
+        info.currentVersionUUID = java.util.UUID.randomUUID().toString().replaceAll("-","");
+
+        info.createdTime = System.currentTimeMillis();
+        info.currentVersionTime = info.createdTime;
+
+        return info;
+    }
+
+    public static void updateNoteInfoVersion(NoteInfo info){
+        info.currentVersionUUID = java.util.UUID.randomUUID().toString().replaceAll("-","");
+        info.currentVersionTime = info.createdTime;
+    }
 }

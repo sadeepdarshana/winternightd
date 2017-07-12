@@ -1,19 +1,14 @@
 package com.example.sadeep.winternightd.notebookactivity.bottombar;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.animation.XAnimation;
-import com.example.sadeep.winternightd.buttons.customizedbuttons.ToolbarButton;
-import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.note.NoteFactory;
-import com.example.sadeep.winternightd.temp.Utils;
+import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.toolbar.Toolbar;
 import com.example.sadeep.winternightd.toolbar.ToolbarController;
 

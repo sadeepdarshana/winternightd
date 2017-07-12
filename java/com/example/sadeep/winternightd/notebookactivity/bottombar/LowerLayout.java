@@ -3,7 +3,6 @@ package com.example.sadeep.winternightd.notebookactivity.bottombar;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.animation.XAnimation;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
-import com.example.sadeep.winternightd.temp.Utils;
+import com.example.sadeep.winternightd.misc.Utils;
 
 /**
  * Created by Sadeep on 7/10/2017.

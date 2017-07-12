@@ -79,6 +79,7 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolderUtils.XViewHolder
                     note = NoteFactory.fromFieldDataStream(context, stream, false, notebook,new NoteInfo());
                 }
                 ((XViewHolderUtils.NoteHolder)holder.holder).bindNote(note);
+                ((XViewHolderUtils.NoteHolder)holder.holder).setMode(XViewHolderUtils.NoteHolder.MODE_VIEW);
             } catch (Exception e) {
                 TextView err = new TextView(context);
                 err.setTextColor(Color.RED);

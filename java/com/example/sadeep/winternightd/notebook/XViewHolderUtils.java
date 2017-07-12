@@ -45,6 +45,8 @@ final class XViewHolderUtils {
 
         private Context context;
 
+        private int mode;
+
         public NoteHolder(Context context) {
             super(context);
             this.context = context;
@@ -74,11 +76,9 @@ final class XViewHolderUtils {
 
         }
 
-        protected void onMainCardDoubleTap() {
-
-        }
 
         public void setMode(int mode){
+            this.mode = mode;
             switch (mode){
                 case MODE_VIEW:
                     mainCard.setCardBackgroundColor(Color.WHITE);
@@ -103,7 +103,7 @@ final class XViewHolderUtils {
                     glassCard.setRadius(Globals.dp2px*23);
 
                     FrameLayout.LayoutParams glasscardparams = new FrameLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,400 );
-                    glasscardparams.setMargins(Globals.dp2px * 4, Globals.dp2px * 0, Globals.dp2px * 4, Globals.dp2px * 6);
+                    glasscardparams.setMargins(Globals.dp2px * 4, Globals.dp2px * 5, Globals.dp2px * 4, Globals.dp2px * 6);
                     glassCard.setLayoutParams(glasscardparams);
 
                     if(glassCard.getParent()==null)addView(glassCard);
@@ -132,6 +132,10 @@ final class XViewHolderUtils {
             if(mainCard.getChildCount()!=0 && mainCard.getChildAt(0)instanceof Note)return (Note) mainCard.getChildAt(0);
             return null;
         }
+
+        protected void onMainCardDoubleTap() {
+            setMode(MODE_EDIT);
+        }
     }
 
     static class Header extends LinearLayout {
@@ -149,15 +153,14 @@ final class XViewHolderUtils {
 
         public Footer(Context context, Notebook notebook) {
             super(context);
-            setPadding(0,0,0,0);
-            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0,0,0,0);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,1);
             setLayoutParams(params);
 
-            if(notebook._BottomBar==null)return;
             notebook._BottomBar.getBottomBar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
                     {
                         Footer.this.getLayoutParams().height = bottom;
                         Footer.this.requestLayout();
@@ -169,20 +172,3 @@ final class XViewHolderUtils {
 }
 
 
-    final View v = new View(context);
-v.setPadding(0,0,0,0);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 2*Globals.dp2px);
-        params.setMargins(0,0,0,0);
-        v.setLayoutParams(params);
-        holder.holdingParent.addView(v);
-
-        notebook.bottomBar.getBottombar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-@Override
-public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-
-        {
-        v.getLayoutParams().height = bottom;
-        v.requestLayout();
-        }
-        }
-        });

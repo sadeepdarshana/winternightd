@@ -1,4 +1,4 @@
-package com.example.sadeep.winternightd.temp;
+package com.example.sadeep.winternightd.misc;
 
 import android.text.Spanned;
 import android.view.View;
