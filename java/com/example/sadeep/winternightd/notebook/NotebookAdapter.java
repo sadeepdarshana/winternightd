@@ -3,11 +3,11 @@ package com.example.sadeep.winternightd.notebook;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Created by Sadeep on 6/17/2017.
  */
 
-class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
+class NotebookAdapter extends RecyclerView.Adapter {
     private ArrayList<FieldDataStream> noteStreams;
     private Cursor cursor;
 
@@ -51,38 +51,19 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
 
 
     @Override
-    public XViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new XViewHolder(XViewHolder.generateHoldingParent(context,viewType));
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new XViewHolderUtils(XViewHolderUtils.generateHoldingParent(context,viewType));
 
     }
 
     @Override
-    public void onBindViewHolder(XViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if(getItemViewType(position)==XViewHolder.VIEWTYPE_LINEARLAYOUT_FOOTER){//footer that changes height to be always equal to bottombar_combined's height
-            if(holder.holdingParent.getChildCount()==0) {
-                final View v = new View(context);
-                v.setPadding(0,0,0,0);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 2*Globals.dp2px);
-                params.setMargins(0,0,0,0);
-                v.setLayoutParams(params);
-                holder.holdingParent.addView(v);
-
-                notebook._BottomBar.getBottomBar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                    @Override
-                    public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                        {
-                            v.getLayoutParams().height = bottom;
-                            v.requestLayout();
-                        }
-                    }
-                });
-            }
-
-        }
-        else if(getItemViewType(position)==XViewHolder.VIEWTYPE_CARDVIEW) //general note
+        if(getItemViewType(position)== XViewHolderUtils.VIEWTYPE_NOTE_HOLDER) //general note
         {
-            ((ViewGroup)holder.holdingParent.getChildAt(0)).removeAllViews();
+
+            CardView card = ((CardView)(((FrameLayout)holder.holdingParent).getChildAt(0)));
+            card.removeAllViews();
 
             try {
                 Note note;
@@ -94,7 +75,7 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
                     FieldDataStream stream = new FieldDataStream(rawStream);
                     note = NoteFactory.fromFieldDataStream(context, stream, false, notebook,new NoteInfo());
                 }
-                ((ViewGroup)holder.holdingParent.getChildAt(0)).addView(note);
+                card.addView(note);
             } catch (Exception e) {
                 TextView err = new TextView(context);
                 err.setTextColor(Color.RED);
@@ -106,16 +87,16 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolder> {
     }
 
     @Override
-    public void onViewDetachedFromWindow(XViewHolder holder) {
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if(holder.holdingParent!=null && holder.holdingParent.getChildCount()!=0 && holder.holdingParent.getChildAt(0)== XSelection.getSelectedNote())XSelection.clearSelections();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0)return XViewHolder.VIEWTYPE_LINEARLAYOUT_FOOTER;
-        if(position==getItemCount()-1)return XViewHolder.VIEWTYPE_LINEARLAYOUT_HEADER;
-        return XViewHolder.VIEWTYPE_CARDVIEW;
+        if(position==0)return XViewHolderUtils.VIEWTYPE_FOOTER;
+        if(position==getItemCount()-1)return XViewHolderUtils.VIEWTYPE_HEADER;
+        return XViewHolderUtils.VIEWTYPE_NOTE_HOLDER;
     }
 
     @Override

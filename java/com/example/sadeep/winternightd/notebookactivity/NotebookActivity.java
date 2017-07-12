@@ -1,6 +1,7 @@
 package com.example.sadeep.winternightd.notebookactivity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,14 +32,13 @@ public class NotebookActivity extends ChangableActionBarActivity {
     private BottomBarCombined _BottomBar;
     private Note editboxNote;
 
-
     private Note activeNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.AppThemeX);
+        setTheme(R.style.notebook_activity_theme);
         setContentView(R.layout.notebook_activity);
 
         bottombarSpace = (LinearLayout)findViewById(R.id.bottombar_space);

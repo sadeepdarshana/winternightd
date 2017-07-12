@@ -24,6 +24,9 @@ public class TestActivityy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.test);
+        if(true)return;
+
         test = new LinearLayout(this);
         test.setOrientation(LinearLayout.VERTICAL);
         setContentView(R.layout.test);
