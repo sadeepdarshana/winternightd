@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.notebookactivity.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.notebookactivity.bottombar.UpperLayout;
 
 /**
@@ -27,6 +26,14 @@ final class XViewHolderUtils {
     public static final int VIEWTYPE_HEADER = 0;
     public static final int VIEWTYPE_NOTE_HOLDER = 1;
     public static final int VIEWTYPE_FOOTER = 2;
+
+    static class XViewHolder extends RecyclerView.ViewHolder{
+        public ViewGroup holder;
+        public XViewHolder(ViewGroup holder) {
+            super(holder);
+            this.holder = holder;
+        }
+    }
 
 
     static class NoteHolder extends FrameLayout{
@@ -63,6 +70,7 @@ final class XViewHolderUtils {
             };
             glassCard = new CardView(context);
 
+            setMode(MODE_VIEW);
 
         }
 
@@ -119,6 +127,11 @@ final class XViewHolderUtils {
             mainCard.removeAllViews();
             mainCard.addView(note);
         }
+
+        public Note getNote() {
+            if(mainCard.getChildCount()!=0 && mainCard.getChildAt(0)instanceof Note)return (Note) mainCard.getChildAt(0);
+            return null;
+        }
     }
 
     static class Header extends LinearLayout {
@@ -154,3 +167,22 @@ final class XViewHolderUtils {
         }
     }
 }
+
+
+    final View v = new View(context);
+v.setPadding(0,0,0,0);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 2*Globals.dp2px);
+        params.setMargins(0,0,0,0);
+        v.setLayoutParams(params);
+        holder.holdingParent.addView(v);
+
+        notebook.bottomBar.getBottombar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+@Override
+public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+        {
+        v.getLayoutParams().height = bottom;
+        v.requestLayout();
+        }
+        }
+        });

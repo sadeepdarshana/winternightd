@@ -20,11 +20,15 @@ import com.example.sadeep.winternightd.selection.XSelection;
 
 import java.util.ArrayList;
 
+import static com.example.sadeep.winternightd.notebook.XViewHolderUtils.VIEWTYPE_FOOTER;
+import static com.example.sadeep.winternightd.notebook.XViewHolderUtils.VIEWTYPE_HEADER;
+import static com.example.sadeep.winternightd.notebook.XViewHolderUtils.VIEWTYPE_NOTE_HOLDER;
+
 /**
  * Created by Sadeep on 6/17/2017.
  */
 
-class NotebookAdapter extends RecyclerView.Adapter {
+class NotebookAdapter extends RecyclerView.Adapter <XViewHolderUtils.XViewHolder> {
     private ArrayList<FieldDataStream> noteStreams;
     private Cursor cursor;
 
@@ -51,20 +55,19 @@ class NotebookAdapter extends RecyclerView.Adapter {
 
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new XViewHolderUtils(XViewHolderUtils.generateHoldingParent(context,viewType));
+    public XViewHolderUtils.XViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == VIEWTYPE_HEADER)return new XViewHolderUtils.XViewHolder(new XViewHolderUtils.Header(context));
+        if(viewType == VIEWTYPE_NOTE_HOLDER)return  new XViewHolderUtils.XViewHolder(new XViewHolderUtils.NoteHolder(context));
+        if(viewType == VIEWTYPE_FOOTER)return  new XViewHolderUtils.XViewHolder(new XViewHolderUtils.Footer(context,notebook));
 
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(XViewHolderUtils.XViewHolder holder, int position) {
 
-        if(getItemViewType(position)== XViewHolderUtils.VIEWTYPE_NOTE_HOLDER) //general note
+        if(getItemViewType(position)== VIEWTYPE_NOTE_HOLDER) //general note
         {
-
-            CardView card = ((CardView)(((FrameLayout)holder.holdingParent).getChildAt(0)));
-            card.removeAllViews();
-
             try {
                 Note note;
                 if (!usesCursor)
@@ -75,28 +78,31 @@ class NotebookAdapter extends RecyclerView.Adapter {
                     FieldDataStream stream = new FieldDataStream(rawStream);
                     note = NoteFactory.fromFieldDataStream(context, stream, false, notebook,new NoteInfo());
                 }
-                card.addView(note);
+                ((XViewHolderUtils.NoteHolder)holder.holder).bindNote(note);
             } catch (Exception e) {
                 TextView err = new TextView(context);
                 err.setTextColor(Color.RED);
                 err.setText("Error processing note");
                 err.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION, Globals.defaultFontSize * 1);
-                ((ViewGroup)holder.holdingParent.getChildAt(0)).addView(err);
+                //((ViewGroup)holder.holdingParent.getChildAt(0)).addView(err);
             }
         }
     }
 
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(XViewHolderUtils.XViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        if(holder.holdingParent!=null && holder.holdingParent.getChildCount()!=0 && holder.holdingParent.getChildAt(0)== XSelection.getSelectedNote())XSelection.clearSelections();
+        if(holder.holder instanceof XViewHolderUtils.NoteHolder &&
+                ((XViewHolderUtils.NoteHolder)holder.holder).getNote()== XSelection.getSelectedNote())
+
+            XSelection.clearSelections();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0)return XViewHolderUtils.VIEWTYPE_FOOTER;
-        if(position==getItemCount()-1)return XViewHolderUtils.VIEWTYPE_HEADER;
-        return XViewHolderUtils.VIEWTYPE_NOTE_HOLDER;
+        if(position==0)return VIEWTYPE_FOOTER;
+        if(position==getItemCount()-1)return VIEWTYPE_HEADER;
+        return VIEWTYPE_NOTE_HOLDER;
     }
 
     @Override
