@@ -149,10 +149,10 @@ final public class AttachBoxManager {
     }
 
 
-
-
-
-
-
-
+    public static void tryDismiss() {
+        try{
+            AttachBoxManager.popupWindow.dismiss();
+        }
+        catch (Exception e){}
+    }
 }

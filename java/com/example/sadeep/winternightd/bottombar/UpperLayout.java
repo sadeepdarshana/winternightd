@@ -1,4 +1,4 @@
-package com.example.sadeep.winternightd.activities.notebookactivity.bottombar;
+package com.example.sadeep.winternightd.bottombar;
 
 import android.content.Context;
 import android.view.LayoutInflater;

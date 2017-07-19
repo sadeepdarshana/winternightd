@@ -15,10 +15,12 @@ public class Utils {
     }
 
     public static int getWidth(View view){
+        if(view.getWidth()!=0)return view.getWidth();
         view.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
         return view.getMeasuredWidth();
     }
     public static int getHeight(View view){
+        if(view.getHeight()!=0)return view.getHeight();
         view.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
         return view.getMeasuredHeight();
     }

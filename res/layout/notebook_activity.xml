@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.sadeep.winternightd.temp.XRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.sadeep.winternightd.temp.NoteContainingActivityRootView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:id="@+id/main"
     android:layout_width="fill_parent"
@@ -24,4 +24,4 @@
         android:layout_marginTop="0dp"
         android:layout_height="wrap_content">
     </LinearLayout>
-</com.example.sadeep.winternightd.temp.XRelativeLayout>
+</com.example.sadeep.winternightd.temp.NoteContainingActivityRootView>

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.misc.Globals;
-import com.example.sadeep.winternightd.activities.notebookactivity.bottombar.BottomBarCombined;
+import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
 
 public class TestActivityy extends AppCompatActivity {
 

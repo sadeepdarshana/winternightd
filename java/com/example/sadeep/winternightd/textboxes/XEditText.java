@@ -22,12 +22,11 @@ import android.view.inputmethod.InputConnectionWrapper;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
+import com.example.sadeep.winternightd.activities.NoteContainingActivity;
 import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.misc.Globals;
-import com.example.sadeep.winternightd.spans.LiveFormattingStatus;
 import com.example.sadeep.winternightd.spans.SpansController;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 import com.example.sadeep.winternightd.selection.XSelection;
@@ -64,59 +63,6 @@ public class XEditText extends EditText implements View.OnKeyListener {
 
     public XEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    //We override this built-in EdiText method to detect menu button clicks.
-    @Override
-    public boolean onTextContextMenuItem(int id) {
-        switch (id){
-            case android.R.id.cut:
-                XClipboard.requestCut();
-                break;
-            case android.R.id.paste:
-                XClipboard.requestPaste(getContext());
-                break;
-            case android.R.id.copy:
-                XClipboard.requestCopy();
-            case android.R.id.selectAll:
-                d.wow(getContext()); //todo not implemented
-        }
-        return true;
-    }
-
-
-    /**
-     * TextWatcher will trigger TextChanged events due to setText even though the change in text is not due to
-     * natural causes(user typing, deleting)
-     *
-     * therefore we need to make sure the usual procedure (configuring spans for newly entered text etc) is
-     * not followed for this event.
-     *
-     * So we acknowledge the code at TextWatcher using this flag
-     */
-    @Override
-    public void setText(CharSequence text, BufferType type)  {
-        noTextChangedEventFlag=true;
-        super.setText(text, type);
-    }
-
-    /**
-     * called by the system when user makes a selection (by double tapping/long tapping etc)
-     * we need to make XSelection based on the ordinary selection if possible
-     */
-    @Override
-    protected void onSelectionChanged(int selStart, int selEnd) {
-        super.onSelectionChanged(selStart, selEnd);
-
-        attemptXSelection();
-
-        if(selStart==selEnd)SpansController.updateToolbarForCurrentPosition(getText(),selStart);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        XClipboard.updateLastCopyTime(this);
-        return super.dispatchTouchEvent(event);
     }
 
     private void init(){
@@ -208,6 +154,59 @@ public class XEditText extends EditText implements View.OnKeyListener {
             }
         });
     }
+    //We override this built-in EdiText method to detect menu button clicks.
+    @Override
+    public boolean onTextContextMenuItem(int id) {
+        switch (id){
+            case android.R.id.cut:
+                XClipboard.requestCut();
+                break;
+            case android.R.id.paste:
+                XClipboard.requestPaste(getContext());
+                break;
+            case android.R.id.copy:
+                XClipboard.requestCopy();
+            case android.R.id.selectAll:
+                d.wow(getContext()); //todo not implemented
+        }
+        return true;
+    }
+
+
+    /**
+     * TextWatcher will trigger TextChanged events due to setText even though the change in text is not due to
+     * natural causes(user typing, deleting)
+     *
+     * therefore we need to make sure the usual procedure (configuring spans for newly entered text etc) is
+     * not followed for this event.
+     *
+     * So we acknowledge the code at TextWatcher using this flag
+     */
+    @Override
+    public void setText(CharSequence text, BufferType type)  {
+        noTextChangedEventFlag=true;
+        super.setText(text, type);
+    }
+
+    /**
+     * called by the system when user makes a selection (by double tapping/long tapping etc)
+     * we need to make XSelection based on the ordinary selection if possible
+     */
+    @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        super.onSelectionChanged(selStart, selEnd);
+
+        attemptXSelection();
+
+        if(selStart==selEnd)SpansController.updateToolbarForCurrentPosition(getText(),selStart);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        XClipboard.updateLastCopyTime(this);
+        return super.dispatchTouchEvent(event);
+    }
+
 
 
 
@@ -326,7 +325,7 @@ public class XEditText extends EditText implements View.OnKeyListener {
             public void handleMessage(Message msg) {
                 d.p(XEditText.this.isFocused());
                 sendEmptyMessageDelayed(0, 100);
-                d.p(((ChangableActionBarActivity) getContext()).getCurrentFocus());
+                d.p(((NoteContainingActivity) getContext()).getCurrentFocus());
             }
         };
 

@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
+import com.example.sadeep.winternightd.activities.NoteContainingActivity;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 import com.example.sadeep.winternightd.selection.XSelection;
-import com.example.sadeep.winternightd.spans.SpansController;
 import com.example.sadeep.winternightd.temp.d;
 
 /**
@@ -83,7 +82,7 @@ public class XTextView extends TextView{
             public void handleMessage(Message msg) {
                 d.p(XTextView.this.isFocused());
                 sendEmptyMessageDelayed(0, 100);
-                d.p(((ChangableActionBarActivity) getContext()).getCurrentFocus());
+                d.p(((NoteContainingActivity) getContext()).getCurrentFocus());
             }
         };
 

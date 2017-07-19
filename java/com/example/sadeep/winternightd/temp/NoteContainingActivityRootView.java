@@ -5,23 +5,28 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.sadeep.winternightd.activities.NoteContainingActivity;
+
 /**
  * Created by Sadeep on 6/22/2017.
  */
 
-public class XRelativeLayout extends RelativeLayout {
+public class NoteContainingActivityRootView extends RelativeLayout {
 
     private static boolean layoutEnabled = true;
-    public static XRelativeLayout This = null;
+    public static NoteContainingActivityRootView This = null;
 
 
-    public XRelativeLayout(Context context, AttributeSet attrs) {
+    public NoteContainingActivityRootView(Context context, AttributeSet attrs) {
         super(context, attrs);
         This = this;
-    }
 
-    public XRelativeLayout(Context context) {
-        super(context);
+        addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                ((NoteContainingActivity)getContext()).onRootLayoutSizeChanged();
+            }
+        });
     }
 
     @Override

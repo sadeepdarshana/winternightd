@@ -1,18 +1,12 @@
 package com.example.sadeep.winternightd.selection;
 
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.os.Handler;
-import android.text.Selection;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.example.sadeep.winternightd.activities.ChangableActionBarActivity;
-import com.example.sadeep.winternightd.field.FieldFactory;
+import com.example.sadeep.winternightd.activities.NoteContainingActivity;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
@@ -106,7 +100,7 @@ final public class XSelection {
 
 
         selectionAvailable = true;
-        ((ChangableActionBarActivity)note.getContext()).changeActionBar(ChangableActionBarActivity.ACTIONBAR_SELECT);
+        ((NoteContainingActivity)note.getContext()).setActionBarMode(NoteContainingActivity.ACTIONBAR_SELECT);
 
     }
 
@@ -114,7 +108,7 @@ final public class XSelection {
 
         Notebook.suspendScrollTemporary();
 
-        if(note!=null)((ChangableActionBarActivity)note.getContext()).changeActionBar(0);
+        if(note!=null)((NoteContainingActivity)note.getContext()).setActionBarMode(0);
 
         try {
             handles[0].dismiss();
@@ -177,14 +171,7 @@ final public class XSelection {
         }
         return null;
     }
-    public static void setCursorPosition(Note note,CursorPosition pos) {
-        Field f = note.getFieldAt(pos.fieldIndex);
-        if(f instanceof SimpleIndentedField &&f.getIsEditable()){
-            XEditText tv = (XEditText) ((SimpleIndentedField) f).getMainTextBox();
-            tv.requestFocus();
-            tv.setSelection(pos.characterIndex);
-        }
-    }
+
 
 
     private static void highlightSelection(Note note,CursorPosition start, CursorPosition end) {

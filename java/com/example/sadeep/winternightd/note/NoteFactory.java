@@ -20,6 +20,7 @@ public final class NoteFactory {
         Note note = new Note(context,isEditable,false,parent);
         stream.resetCursor();
         note.readFromFieldDataStream(stream);
+        note.noteInfo = noteInfo;
         return note;
     }
 

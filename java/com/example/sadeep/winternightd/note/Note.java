@@ -226,7 +226,15 @@ public class Note extends LinearLayout {
     }
 
     public void setCursor(CursorPosition pos) {
-        XSelection.setCursorPosition(this,pos);
+        try {
+
+            Field f = getFieldAt(pos.fieldIndex);
+            if (f instanceof SimpleIndentedField && f.getIsEditable()) {
+                XEditText tv = (XEditText) ((SimpleIndentedField) f).getMainTextBox();
+                tv.requestFocus();
+                tv.setSelection(pos.characterIndex);
+            }
+        }catch (Exception e){}
     }
 
     public void setCursorVisible(boolean visible){

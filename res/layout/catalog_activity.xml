@@ -10,11 +10,15 @@
         android:layout_height="wrap_content"
         android:text="" />
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <WinterNightc.Droid.Csharp.Misc.NotebookList
-        android:id="@+id/nlrv"
+        android:layout_height="wrap_content"
+        android:text="Add Section"
+        android:onClick="onClick"/>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/catalogspace">
+
+    </FrameLayout>
 </LinearLayout>

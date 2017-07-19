@@ -1,37 +1,32 @@
 package com.example.sadeep.winternightd.notebook;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
-import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
-import com.example.sadeep.winternightd.localstorage.CursorReader;
+import com.example.sadeep.winternightd.localstorage.NotebookCursorReader;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
-import com.example.sadeep.winternightd.note.NoteInfo;
 import com.example.sadeep.winternightd.selection.XSelection;
 
 import java.util.ArrayList;
 
-import static com.example.sadeep.winternightd.notebook.XViewHolderUtils.VIEWTYPE_FOOTER;
-import static com.example.sadeep.winternightd.notebook.XViewHolderUtils.VIEWTYPE_HEADER;
-import static com.example.sadeep.winternightd.notebook.XViewHolderUtils.VIEWTYPE_NOTE_HOLDER;
+import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_FOOTER;
+import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_HEADER;
+import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_NOTE_HOLDER;
 
 /**
  * Created by Sadeep on 6/17/2017.
  */
 
-class NotebookAdapter extends RecyclerView.Adapter <XViewHolderUtils.XViewHolder> {
+class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.NotebookViewHolder> {
     private ArrayList<FieldDataStream> noteStreams;
-    private CursorReader cursor;
+    private NotebookCursorReader cursor;
 
     private Context context;
     private Notebook notebook;
@@ -46,7 +41,7 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolderUtils.XViewHolder
         usesCursor = false;
     }
 
-    public NotebookAdapter(Context context, CursorReader cursor, Notebook notebook) {
+    public NotebookAdapter(Context context, NotebookCursorReader cursor, Notebook notebook) {
         this.cursor = cursor;
         this.context = context;
         this.notebook = notebook;
@@ -56,16 +51,16 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolderUtils.XViewHolder
 
 
     @Override
-    public XViewHolderUtils.XViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == VIEWTYPE_HEADER)return new XViewHolderUtils.XViewHolder(new XViewHolderUtils.Header(context));
-        if(viewType == VIEWTYPE_NOTE_HOLDER)return  new XViewHolderUtils.XViewHolder(new XViewHolderUtils.NoteHolder(context));
-        if(viewType == VIEWTYPE_FOOTER)return  new XViewHolderUtils.XViewHolder(new XViewHolderUtils.Footer(context,notebook));
+    public NotebookViewHolderUtils.NotebookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == VIEWTYPE_HEADER)return new NotebookViewHolderUtils.NotebookViewHolder(new NotebookViewHolderUtils.Header(context));
+        if(viewType == VIEWTYPE_NOTE_HOLDER)return  new NotebookViewHolderUtils.NotebookViewHolder(new NotebookViewHolderUtils.NoteHolder(context,notebook));
+        if(viewType == VIEWTYPE_FOOTER)return  new NotebookViewHolderUtils.NotebookViewHolder(new NotebookViewHolderUtils.Footer(context,notebook));
 
         return null;
     }
 
     @Override
-    public void onBindViewHolder(XViewHolderUtils.XViewHolder holder, int position) {
+    public void onBindViewHolder(NotebookViewHolderUtils.NotebookViewHolder holder, int position) {
 
         if(getItemViewType(position)!=VIEWTYPE_NOTE_HOLDER)return;
 
@@ -77,8 +72,15 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolderUtils.XViewHolder
 
                 note = NoteFactory.fromFieldDataStream(context, cursor.getFieldDataStream(position-1), false, notebook,cursor.getNoteInfo(position-1));
             }
-            ((XViewHolderUtils.NoteHolder)holder.holder).bindNote(note);
-            ((XViewHolderUtils.NoteHolder)holder.holder).setMode(XViewHolderUtils.NoteHolder.MODE_VIEW);
+
+            ((NotebookViewHolderUtils.NoteHolder)holder.holder).bind(note);
+
+            if(note.noteInfo.noteUUID.equals(notebook.editor.getActiveNoteUUID())) {
+                ((NotebookViewHolderUtils.NoteHolder) holder.holder).setMode(NotebookViewHolderUtils.NoteHolder.MODE_EDIT, false);
+                ((NotebookViewHolderUtils.NoteHolder) holder.holder).bind(notebook.editor.getCacheNote());
+            }
+            else
+                ((NotebookViewHolderUtils.NoteHolder)holder.holder).setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,false);
         }
         catch (Exception e) {
             TextView err = new TextView(context);
@@ -89,10 +91,10 @@ class NotebookAdapter extends RecyclerView.Adapter <XViewHolderUtils.XViewHolder
     }
 
     @Override
-    public void onViewDetachedFromWindow(XViewHolderUtils.XViewHolder holder) {
+    public void onViewDetachedFromWindow(NotebookViewHolderUtils.NotebookViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        if(holder.holder instanceof XViewHolderUtils.NoteHolder &&
-                ((XViewHolderUtils.NoteHolder)holder.holder).getNote()== XSelection.getSelectedNote())
+        if(holder.holder instanceof NotebookViewHolderUtils.NoteHolder &&
+                ((NotebookViewHolderUtils.NoteHolder)holder.holder).getNote()== XSelection.getSelectedNote())
         {
             XSelection.clearSelections();
         }

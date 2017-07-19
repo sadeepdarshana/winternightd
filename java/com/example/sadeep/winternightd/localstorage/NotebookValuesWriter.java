@@ -11,7 +11,7 @@ import java.util.UUID;
  * Created by Sadeep on 7/12/2017.
  */
 
-public class ValuesWriter {
+public class NotebookValuesWriter {
 
     public static void writeNoteInfo(ContentValues values,NoteInfo info){
         values.put("noteId",info.noteUUID);

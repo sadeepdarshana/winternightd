@@ -18,6 +18,11 @@ public class d {
         ((AppCompatActivity)c).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(rnd.nextInt()%255,rnd.nextInt()%255,rnd.nextInt()%255)));
     }
 
+    public static int rndcolor(){
+        Random rnd=new Random();
+       return Color.rgb(rnd.nextInt()%255,rnd.nextInt()%255,rnd.nextInt()%255);
+    }
+
     public static void p(Object ... objects){
         String x="";
         for (Object object:objects) {

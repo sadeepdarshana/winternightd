@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.activities.notebookactivity.NotebookActivity;
+import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.selection.CursorPosition;

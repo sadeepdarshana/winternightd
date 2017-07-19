@@ -10,10 +10,16 @@ import com.example.sadeep.winternightd.note.NoteInfo;
  * Created by Sadeep on 7/12/2017.
  */
 
-public class CursorReader {
+/**
+ * A wrapper for the SQLite data cursor of one Notebook table.
+ * Provides methods to obtain the FieldDataStream and NoteInfo of a note in a given position
+ * in the Notebook which can be used to generate the Note.
+ */
+
+public class NotebookCursorReader {
     private Cursor cursor;
 
-    public CursorReader(Cursor cursor) {
+    public NotebookCursorReader(Cursor cursor) {
         this.cursor = cursor;
     }
 
