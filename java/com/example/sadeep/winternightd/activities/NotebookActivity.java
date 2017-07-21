@@ -1,12 +1,18 @@
 package com.example.sadeep.winternightd.activities;
 
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
@@ -22,20 +28,28 @@ import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.selection.XSelection;
-import com.example.sadeep.winternightd.temp.NoteContainingActivityRootView;
+import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
+import com.example.sadeep.winternightd.temp.d;
 
 
 public class NotebookActivity extends NoteContainingActivity {
 
     private Notebook notebook;
-    private BottomBarCombined newNoteBottomBar;
-    private UpperLayout editNoteBottomBar;
+    public BottomBarCombined newNoteBottomBar;
+    private CardView editNoteBottomBar;
     private Note newNote;
     private Note activeNote;
     public StatusController statusController;
 
     private String notebookUUID="";
     private String title="";
+
+    LinearLayout bottombarSpace;
+    private LinearLayout notebookSpace;
+
+
+    private Handler handler;
+    private NoteContainingActivityRootView rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +62,9 @@ public class NotebookActivity extends NoteContainingActivity {
         setTheme(R.style.notebook_activity_theme);
         setContentView(R.layout.notebook_activity);
 
-        LinearLayout bottombarSpace = (LinearLayout) findViewById(R.id.bottombar_space);
-        LinearLayout notebookSpace = (LinearLayout) findViewById(R.id.notebook_space);
-
+        bottombarSpace = (LinearLayout) findViewById(R.id.bottombar_space);
+        notebookSpace = (LinearLayout) findViewById(R.id.notebook_space);
+        rootView = (NoteContainingActivityRootView)notebookSpace.getParent();
 
         Globals.initialize(this);
         DataConnection.initialize(this);
@@ -81,6 +95,22 @@ public class NotebookActivity extends NoteContainingActivity {
             }
         };
 
+        editNoteBottomBar = new CardView(this);
+        RelativeLayout.LayoutParams cardparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+        editNoteBottomBar.setLayoutParams(cardparams);
+        editNoteBottomBar.setCardBackgroundColor(Color.TRANSPARENT);
+        editNoteBottomBar.setRadius(Globals.dp2px*23);
+        editNoteBottomBar.setCardBackgroundColor(Color.parseColor("#ddffffff"));
+        cardparams.setMargins(2*Globals.dp2px,3*Globals.dp2px,2*Globals.dp2px,0*Globals.dp2px);
+
+        UpperLayout upper =new UpperLayout(this,true,true);
+        CardView.LayoutParams upperlayoutparams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+        cardparams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        upper.getUpperLayout().setLayoutParams(upperlayoutparams);
+        upperlayoutparams.setMargins(2*Globals.dp2px,0*Globals.dp2px,2*Globals.dp2px,1*Globals.dp2px);
+        editNoteBottomBar.addView(upper.getUpperLayout());
+        //upperlayoutparams.gravity = Gravity.BOTTOM;
+
 
         bottombarSpace.addView(newNoteBottomBar.getBottomBar());
 
@@ -96,6 +126,25 @@ public class NotebookActivity extends NoteContainingActivity {
 
         getWindow().setBackgroundDrawableResource(R.drawable.default_wallpaper);
         setActionBarMode(NoteContainingActivity.ACTIONBAR_NORMAL);
+
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if(notebook.editor.cacheNote!=null){
+                    int[] xyupperlayout = new int[2];
+                    notebook.editor.noteHolder.upper.getUpperLayout().getLocationInWindow(xyupperlayout);
+                    int[] xybottommarker = new int[2];
+                    rootView.bottomLeftMarker.getLocationInWindow(xybottommarker);
+                    d.p(xyupperlayout[1]," ",xybottommarker[1]);
+                    int y=xyupperlayout[1];
+                    if(y>0 && y<xybottommarker[1]&&notebook.editor.cacheNote==notebook.editor.noteHolder.getNote())editNoteBottomBar.setVisibility(View.INVISIBLE);
+                    else editNoteBottomBar.setVisibility(View.VISIBLE);
+                }
+                handler.sendEmptyMessageDelayed(0,400);
+            }
+        };
+        handler.sendEmptyMessage(0);
+
     }
 
     @Override
@@ -127,6 +176,9 @@ public class NotebookActivity extends NoteContainingActivity {
     @Override
     public void onRootLayoutSizeChanged() {
         AttachBoxManager.tryDismiss();
+
+
+        if(!statusController.isActiveNoteAtNotebook() &&((LinearLayoutManager)notebook.getLayoutManager()).findFirstVisibleItemPosition()<=4)notebook.scrollToPosition(0);
     }
 
 
@@ -136,10 +188,11 @@ public class NotebookActivity extends NoteContainingActivity {
         NoteContainingActivityRootView.pauseLayout();
         RawFieldDataStream streams=new RawFieldDataStream(newNote.getFieldDataStream());
         //for(int i=0;i<100000;i++) {
-            notebook.getNotebookDataHandler().addNote(streams);
+            notebook.getNotebookDataHandler().addNewNote(newNote);
             //if(i%100==0)d.p(i);
         //}
         notebook.refresh();
+        notebook.scrollToPosition(0);
         newNote.convertToNewNoteWithOneDefaultField();
         ((SimpleIndentedField) newNote.getFieldAt(0)).getMainTextBox().requestFocus();
 
@@ -173,20 +226,31 @@ public class NotebookActivity extends NoteContainingActivity {
     }
 
     public class StatusController{
-        private boolean activeNoteAtNotebook; //false for active note at BottomBar as the editBoxNote
-        private boolean embeddedToolbarVisible;
+        /**
+         * mode = 0 : newnote in bottombar active, newNoteBottomBar visible
+         * mode = 1 : a note in notebook active, NoteHolder's built in bottombar visible
+         * mode = 2 : a note in notebook active, NoteHolder's built in bottombar out of screen, editNoteBottomBar visible
+         */
 
-        private Note activeNote;
+        private int mode;
 
        public void setNotebookActiveNote(Note note){
-           activeNoteAtNotebook = true;
            activeNote = note;
-           embeddedToolbarVisible = true;
            if(newNoteBottomBar.getBottomBar().getParent()!=null)((ViewGroup) newNoteBottomBar.getBottomBar().getParent()).removeView(newNoteBottomBar.getBottomBar());
+           if(editNoteBottomBar.getParent()==null)((ViewGroup)bottombarSpace.getParent()).addView(editNoteBottomBar);
+           mode = 1;
+           editNoteBottomBar.setVisibility(View.INVISIBLE);
+           //handler.sendEmptyMessage(0);
        }
 
         public boolean isActiveNoteAtNotebook() {
-            return activeNoteAtNotebook;
+            return mode==1 || mode ==2;
+        }
+
+        public void setEditNoteAsActiveNote() {
+            if(editNoteBottomBar.getParent()!=null)((ViewGroup) editNoteBottomBar.getParent()).removeView(editNoteBottomBar);
+            if(newNoteBottomBar.getBottomBar().getParent()==null)bottombarSpace.addView(newNoteBottomBar.getBottomBar());
+            mode = 0;
         }
     }
 

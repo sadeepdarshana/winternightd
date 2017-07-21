@@ -17,7 +17,7 @@ import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.Utils;
-import com.example.sadeep.winternightd.temp.NoteContainingActivityRootView;
+import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
 import com.example.sadeep.winternightd.textboxes.EditTextView;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.spans.RichText;

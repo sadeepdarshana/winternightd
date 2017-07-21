@@ -1,6 +1,7 @@
 package com.example.sadeep.winternightd.selection;
 
 import android.graphics.Color;
+import android.text.Selection;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.view.ViewTreeObserver;
@@ -77,8 +78,8 @@ final public class XSelection {
 
         Spannable txt = (Spannable)textbox.getText();
         Object[] spans = txt.getSpans(0,txt.length(),Object.class);
-        for(Object span:spans)if(span.getClass().getName().contains("START")||span.getClass().getName().contains("END"))txt.removeSpan(span);
-
+        //for(Object span:spans)if(span.getClass().getName().contains("START")||span.getClass().getName().contains("END"))txt.removeSpan(span);
+        //Selection.removeSelection();
 
 
         note.setCursorVisible(false);

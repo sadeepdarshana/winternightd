@@ -75,16 +75,8 @@ public class XTextView extends TextView{
         CursorPosition end = new CursorPosition(boundField.getFieldIndex(),getSelectionEnd());
 
         //make the XSelection
-        XSelection.newSelection(boundField.getNote(),start,end,this);
+        //XSelection.newSelection(boundField.getNote(),start,end,this);
         //isFocused();
-        new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                d.p(XTextView.this.isFocused());
-                sendEmptyMessageDelayed(0, 100);
-                d.p(((NoteContainingActivity) getContext()).getCurrentFocus());
-            }
-        };
 
 
         return true;

@@ -1,10 +1,13 @@
 package com.example.sadeep.winternightd.notebook;
 
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import com.example.sadeep.winternightd.bottombar.UpperLayout;
 import com.example.sadeep.winternightd.localstorage.NotebookCursorReader;
 import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
@@ -26,7 +29,7 @@ public class Notebook extends RecyclerView {
 
     public static boolean scrollEnabled = true;
 
-    Editor editor;
+    public Editor editor;
 
     public Notebook(NotebookActivity notebookActivity, String notebookGuid, BottomBarCombined _BottomBar) {
         super(notebookActivity);
@@ -48,8 +51,15 @@ public class Notebook extends RecyclerView {
         };
 
         layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         setLayoutManager(layoutManager);
-        layoutManager.scrollToPositionWithOffset(0,500);
+
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                layoutManager.scrollToPositionWithOffset(0,500);
+            }
+        },2);
 
     }
 
@@ -96,32 +106,43 @@ public class Notebook extends RecyclerView {
 
     public class Editor{
         private Notebook notebook;
-        private String activeNoteUUID;
-        private Note cacheNote;
+        public Note cacheNote;
+        public NotebookViewHolderUtils.NoteHolder noteHolder;
+
 
         public Editor(Notebook notebook) {
             this.notebook = notebook;
         }
 
         public void setActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder){
+            if(cacheNote==noteHolder.getNote())return;
             for(int i=0;i<notebook.getChildCount();i++){
                 if(notebook.getChildAt(i)!=noteHolder && notebook.getChildAt(i)instanceof NotebookViewHolderUtils.NoteHolder)
                     ((NotebookViewHolderUtils.NoteHolder)notebook.getChildAt(i)).setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,true);
             }
 
             noteHolder.setMode(NotebookViewHolderUtils.NoteHolder.MODE_EDIT,true);
-            activeNoteUUID = noteHolder.getNote().noteInfo.noteUUID;
             cacheNote = noteHolder.getNote();
 
             ((NotebookActivity)getContext()).statusController.setNotebookActiveNote(noteHolder.getNote());
+
         }
 
         public String getActiveNoteUUID() {
-            return activeNoteUUID;
+            if(cacheNote!=null)return cacheNote.noteInfo.noteUUID;
+            return null;
         }
 
         public Note getCacheNote() {
             return cacheNote;
+        }
+
+        public void pushNote(Note note) {
+            notebook.getNotebookDataHandler().addExistingNote(note);
+            cacheNote = null;
+            refresh();
+            notebookActivity.statusController.setEditNoteAsActiveNote();
+            notebook.scrollToPosition(0);
         }
     }
 }

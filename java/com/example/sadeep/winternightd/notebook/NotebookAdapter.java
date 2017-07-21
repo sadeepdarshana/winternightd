@@ -66,21 +66,16 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
 
         try {
             Note note;
-            if (!usesCursor)
-                note = NoteFactory.fromFieldDataStream(context, noteStreams.get(position), false, notebook,null);
-            else {
-
+            if(!cursor.getNoteInfo(position-1).noteUUID.equals(notebook.editor.getActiveNoteUUID()))
+            {
                 note = NoteFactory.fromFieldDataStream(context, cursor.getFieldDataStream(position-1), false, notebook,cursor.getNoteInfo(position-1));
+                ((NotebookViewHolderUtils.NoteHolder)holder.holder).bind(note);
+                ((NotebookViewHolderUtils.NoteHolder)holder.holder).setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,false);
             }
-
-            ((NotebookViewHolderUtils.NoteHolder)holder.holder).bind(note);
-
-            if(note.noteInfo.noteUUID.equals(notebook.editor.getActiveNoteUUID())) {
+            else {
                 ((NotebookViewHolderUtils.NoteHolder) holder.holder).setMode(NotebookViewHolderUtils.NoteHolder.MODE_EDIT, false);
                 ((NotebookViewHolderUtils.NoteHolder) holder.holder).bind(notebook.editor.getCacheNote());
             }
-            else
-                ((NotebookViewHolderUtils.NoteHolder)holder.holder).setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,false);
         }
         catch (Exception e) {
             TextView err = new TextView(context);
@@ -103,7 +98,7 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
     @Override
     public int getItemViewType(int position) {
         if(position==0)return VIEWTYPE_FOOTER;
-        if(position==getItemCount()-1)return VIEWTYPE_HEADER;
+        if(position==getItemCount()-1)return  VIEWTYPE_HEADER;
         return VIEWTYPE_NOTE_HOLDER;
     }
 
