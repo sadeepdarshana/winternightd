@@ -72,7 +72,7 @@ public class SpanWrapper {
 
         SpanWrapper min = minByStart(a,this);
         SpanWrapper max = maxByStart(a,this);
-        if(min.end <= max.end)return false;
+        if(min.end <= max.start)return false;
 
         return true;
     }

@@ -8,6 +8,7 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.example.sadeep.winternightd.activities.NoteContainingActivity;
+import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
@@ -35,13 +36,18 @@ final public class XSelection {
     private static  boolean selectionAvailable = false;
     private static Handle [] handles;
     private static Note note;
+    private static int draws=0;
 
     private static ViewTreeObserver.OnPreDrawListener onPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
         @Override
         public boolean onPreDraw() {
             try {
                 XSelection.refreshHandlePositions();
+                if(draws>2)return true ;
+                draws++;
+                if(note.getContext()instanceof NotebookActivity)Notebook.suspendScrollTemporary();
                 note.clearFocus();
+                if(!textbox.hasFocus())textbox.requestFocus();
                 if (textbox instanceof XEditText) ((XEditText) textbox).setSelection(0);
                 return true;
             } catch (Exception e) { return true;}
@@ -102,6 +108,7 @@ final public class XSelection {
 
         selectionAvailable = true;
         ((NoteContainingActivity)note.getContext()).setActionBarMode(NoteContainingActivity.ACTIONBAR_SELECT);
+        draws=0;
 
     }
 

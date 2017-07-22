@@ -39,7 +39,7 @@ public class XTextView extends TextView{
         setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize);
         setTextColor(Color.BLACK);
-        setTextIsSelectable(true);
+        //setTextIsSelectable(true);
     }
 
     /**

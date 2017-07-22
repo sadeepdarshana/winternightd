@@ -1,19 +1,17 @@
 package com.example.sadeep.winternightd.notebook;
 
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import com.example.sadeep.winternightd.bottombar.UpperLayout;
 import com.example.sadeep.winternightd.localstorage.NotebookCursorReader;
 import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.temp.d;
 
 /**
  * Created by Sadeep on 10/26/2016.
@@ -30,6 +28,13 @@ public class Notebook extends RecyclerView {
     public static boolean scrollEnabled = true;
 
     public Editor editor;
+
+    private static Handler scrollresumer = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            scrollEnabled = true;
+        }
+    };;
 
     public Notebook(NotebookActivity notebookActivity, String notebookGuid, BottomBarCombined _BottomBar) {
         super(notebookActivity);
@@ -91,17 +96,11 @@ public class Notebook extends RecyclerView {
         notebookActivity.onNotebookScrolled(dy);
     }
 
+
     public static void suspendScrollTemporary() {
         scrollEnabled = false;
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                scrollEnabled = true;
-            }
-        },100);
+        scrollresumer.removeCallbacksAndMessages(null);
+        scrollresumer.sendEmptyMessageDelayed(0,400);
     }
 
     public class Editor{
@@ -116,6 +115,17 @@ public class Notebook extends RecyclerView {
 
         public void setActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder){
             if(cacheNote==noteHolder.getNote())return;
+
+            if(getChildAdapterPosition(noteHolder)==1)
+                new CountDownTimer(600, 20)
+                {
+                    public void onTick(long millisUntilFinished)
+                    {
+                        notebook.smoothScrollToPosition(0);
+                    }
+                    public void onFinish(){}
+                }.start();
+
             for(int i=0;i<notebook.getChildCount();i++){
                 if(notebook.getChildAt(i)!=noteHolder && notebook.getChildAt(i)instanceof NotebookViewHolderUtils.NoteHolder)
                     ((NotebookViewHolderUtils.NoteHolder)notebook.getChildAt(i)).setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,true);

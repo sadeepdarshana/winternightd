@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- because we need to but cannot simply hide the built-in cursor handle we make it a 1x1 png-->
-        <item name="android:textSelectHandle">@drawable/px1</item>
         <item name="android:textSelectHandleLeft">@drawable/px1</item>
         <item name="android:textSelectHandleRight">@drawable/px1</item>
     </style>

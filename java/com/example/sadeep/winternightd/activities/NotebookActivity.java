@@ -107,7 +107,7 @@ public class NotebookActivity extends NoteContainingActivity {
         CardView.LayoutParams upperlayoutparams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         cardparams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         upper.getUpperLayout().setLayoutParams(upperlayoutparams);
-        upperlayoutparams.setMargins(2*Globals.dp2px,0*Globals.dp2px,2*Globals.dp2px,1*Globals.dp2px);
+        upperlayoutparams.setMargins(2*Globals.dp2px,2*Globals.dp2px,2*Globals.dp2px,1*Globals.dp2px);
         editNoteBottomBar.addView(upper.getUpperLayout());
         //upperlayoutparams.gravity = Gravity.BOTTOM;
 
