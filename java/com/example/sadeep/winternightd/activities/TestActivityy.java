@@ -22,9 +22,11 @@ public class TestActivityy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Globals.initialize(this);
+
         setContentView(R.layout.test);
 
-        getWindow().setBackgroundDrawableResource(R.drawable.rrr);
+        getWindow().setBackgroundDrawableResource(R.drawable.yyy);
     }
 
     private void Click(View v) {
