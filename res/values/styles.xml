@@ -13,15 +13,6 @@
     </style>
 
 
-    <style name="AppThemeX" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#ff00ff</item>
-        <item name="colorControlActivated">#ffaa44</item>
-        <!-- because we need to but cannot simply hide the built-in cursor handle we make it a 1x1 png-->
-
-
-    </style>
 
 
 

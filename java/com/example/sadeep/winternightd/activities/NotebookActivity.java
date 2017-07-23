@@ -166,7 +166,7 @@ public class NotebookActivity extends NoteContainingActivity {
 
     @Override
     protected Drawable getActionBarDrawable() {
-        return new ColorDrawable(0xff007700);
+        return new ColorDrawable(0xff449944);
     }
     @Override
     protected String getActionBarTitle() {

@@ -1,25 +1,807 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_wallpaper"
-    android:clipToPadding="true"
-    android:clipChildren="true"
-    android:backgroundTint="#999999">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#eeffffff">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardElevation="2dp"
-        app:cardCornerRadius="0dp"
         >
 
-        <EditText
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
 
-    </android.support.v7.widget.CardView>
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
 
-</FrameLayout>
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:contentPaddingTop="22dp"
+            app:contentPaddingBottom="0dp"
+
+            app:contentPaddingLeft="1.5dp"
+            app:contentPaddingRight="1.5dp"
+
+            android:layout_marginTop="-2dp"
+
+            app:cardElevation="1.5dp"
+
+            app:cardBackgroundColor="#00ffffff"
+            >
+
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ededed"/>
+            <View
+                android:layout_gravity="bottom"
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+            <View
+                android:background="#77aaaaaa"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"/>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</ScrollView>

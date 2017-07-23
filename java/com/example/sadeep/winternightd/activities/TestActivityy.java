@@ -1,5 +1,6 @@
 package com.example.sadeep.winternightd.activities;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,23 +23,8 @@ public class TestActivityy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
-        if(true)return;
 
-        test = new LinearLayout(this);
-        test.setOrientation(LinearLayout.VERTICAL);
-        setContentView(R.layout.test);
-        getWindow().setBackgroundDrawableResource(R.drawable.default_wallpaper);
-
-        Globals.initialize(this);
-
-        combined = new BottomBarCombined(this){
-            @Override
-            protected void onSendClick(View v) {
-
-            }
-        };
-
-        ((ViewGroup)findViewById(R.id.bottombar_space)).addView(combined.getBottomBar());
+        getWindow().setBackgroundDrawableResource(R.drawable.rrr);
     }
 
     private void Click(View v) {

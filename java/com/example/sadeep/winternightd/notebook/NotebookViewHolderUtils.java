@@ -95,7 +95,7 @@ final class NotebookViewHolderUtils {
             mainCard.setCardElevation(Globals.dp2px * 2f);
             mainCard.setRadius(Globals.dp2px * 0);
             FrameLayout.LayoutParams maincardparams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            maincardparams.setMargins(Globals.dp2px * 6, Globals.dp2px * 6, Globals.dp2px * 6, Globals.dp2px * 6);
+            maincardparams.setMargins(Globals.dp2px * 6, 80, Globals.dp2px * 6, Globals.dp2px * 6);
             mainCard.setLayoutParams(maincardparams);
             mainCard.setMinimumHeight(Globals.dp2px * 100);
             mainCard.setContentPadding(Globals.dp2px * 7, Globals.dp2px * 7, Globals.dp2px * 7, Globals.dp2px * 7);
@@ -145,7 +145,7 @@ final class NotebookViewHolderUtils {
             final int MARGIN = Globals.dp2px*8;
             int glassCardChildHeight = Globals.dp2px*50;
             int mainCardHeight = mainCard.getHeight();
-            return mainCardHeight+glassCardChildHeight+MARGIN;
+            return mainCardHeight+glassCardChildHeight+MARGIN+70;
         }
 
 
