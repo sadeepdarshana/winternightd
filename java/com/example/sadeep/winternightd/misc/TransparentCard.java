@@ -33,9 +33,14 @@ public class TransparentCard extends CardView {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    protected void onSizeChanged(int w, final int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        resetPaddings(h);
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                resetPaddings(h);
+            }
+        },2);
     }
 
     private void resetPaddings(int h) {
@@ -44,7 +49,7 @@ public class TransparentCard extends CardView {
         if(h>Globals.dp2px*1600)pad=Globals.dp2px*0f;
         else if(h>Globals.dp2px*800)pad=Globals.dp2px*.5f;
         else if(h>Globals.dp2px*400)pad=Globals.dp2px*1.0f;
-        else if(h>Globals.dp2px*80)pad=Globals.dp2px*1.5f;
+        else if(h>Globals.dp2px*80)pad=Globals.dp2px*2f;
         else pad=Globals.dp2px*2;
 
         setContentPadding((int)(pad+0.01f),getContentPaddingTop(),(int)(pad+0.01f),getContentPaddingBottom());

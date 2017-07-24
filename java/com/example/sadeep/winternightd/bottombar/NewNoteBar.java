@@ -37,7 +37,7 @@ public class NewNoteBar {
 
     public NewNoteBar(Context context, boolean buttonVisibility, boolean glassModeEnabled) {
         this.context = context;
-        lowerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bottombar_lowerlayout,null);
+        lowerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.new_note_bar,null);
 
         attach = lowerLayout.findViewById(R.id.attach);
         send = lowerLayout.findViewById(R.id.send);

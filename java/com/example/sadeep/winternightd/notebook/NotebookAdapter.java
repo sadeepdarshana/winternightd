@@ -16,6 +16,8 @@ import com.example.sadeep.winternightd.selection.XSelection;
 
 import java.util.ArrayList;
 
+import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_EDIT;
+import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
 import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_FOOTER;
 import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_HEADER;
 import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_NOTE_HOLDER;
@@ -25,28 +27,16 @@ import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.V
  */
 
 class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.NotebookViewHolder> {
-    private ArrayList<FieldDataStream> noteStreams;
     private NotebookCursorReader cursor;
 
     private Context context;
     private Notebook notebook;
 
-    private boolean usesCursor;
-
-    public NotebookAdapter(Context context, ArrayList<FieldDataStream> noteStreams, Notebook notebook) {
-        this.noteStreams = noteStreams;
-        this.context = context;
-        this.notebook = notebook;
-
-        usesCursor = false;
-    }
 
     public NotebookAdapter(Context context, NotebookCursorReader cursor, Notebook notebook) {
         this.cursor = cursor;
         this.context = context;
         this.notebook = notebook;
-
-        usesCursor = true;
     }
 
 
@@ -64,24 +54,19 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
 
         if(getItemViewType(position)!=VIEWTYPE_NOTE_HOLDER)return;
 
-        try {
-            Note note;
-            if(!cursor.getNoteInfo(position-1).noteUUID.equals(notebook.editor.getActiveNoteUUID()))
-            {
-                note = NoteFactory.fromFieldDataStream(context, cursor.getFieldDataStream(position-1), false, notebook,cursor.getNoteInfo(position-1));
-                ((NotebookViewHolderUtils.NoteHolder)holder.holder).bind(note);
-                ((NotebookViewHolderUtils.NoteHolder)holder.holder).setMode(NoteHolderModes.MODE_VIEW,false);
-            }
-            else {
-                ((NotebookViewHolderUtils.NoteHolder) holder.holder).setMode(NoteHolderModes.MODE_EDIT, false);
-                ((NotebookViewHolderUtils.NoteHolder) holder.holder).bind(notebook.editor.getCacheNote());
-            }
+        Note note;
+        NotebookViewHolderUtils.NoteHolder noteHolder = (NotebookViewHolderUtils.NoteHolder) holder.holder;
+
+        if(cursor.getNoteInfo(position-1).noteUUID.equals(notebook.editor.getActiveNoteUUID()))//if (currently editing note)
+        {
+            noteHolder.setMode(MODE_EDIT, false);
+            noteHolder.bind(notebook.editor.getCacheNote(),MODE_EDIT);
+
         }
-        catch (Exception e) {
-            TextView err = new TextView(context);
-            err.setTextColor(Color.RED);
-            err.setText("Error processing note");
-            err.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION, Globals.defaultFontSize * 1);
+        else {
+            note = NoteFactory.fromFieldDataStream(context, cursor.getFieldDataStream(position-1), false, notebook,cursor.getNoteInfo(position-1));
+            noteHolder.bind(note,MODE_VIEW);
+            noteHolder.setMode(MODE_VIEW,false);
         }
     }
 
@@ -104,7 +89,6 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
 
     @Override
     public int getItemCount() {
-        if(!usesCursor)return noteStreams.size()+2;
-        else return cursor.getCursor().getCount()+2;
+        return cursor.getCursor().getCount()+2;
     }
 }

@@ -21,7 +21,7 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_width="match_parent"
-        android:layout_height="0.01dp"
+        android:layout_height="0.5dp"
         android:layout_gravity="center_vertical"
         android:background="#22aaaaaa" />
     <View
@@ -30,8 +30,8 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_width="match_parent"
-        android:layout_height="0.01dp"
+        android:layout_height="0.5dp"
         android:layout_gravity="center_vertical"
-        android:background="#22999999" />
+        android:background="#44999999" />
 
 </LinearLayout>

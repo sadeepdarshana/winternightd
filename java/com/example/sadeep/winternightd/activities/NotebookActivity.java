@@ -56,8 +56,14 @@ public class NotebookActivity extends NoteContainingActivity {
         super.onCreate(savedInstanceState);
 
         Bundle b = getIntent().getExtras();
-        if(b != null)notebookUUID = b.getString("notebookUUID");
-        if(b != null)title = b.getString("title");
+        if(b != null) {
+            notebookUUID = b.getString("notebookUUID");
+            title = b.getString("title");
+        }
+        else {
+            notebookUUID = "b237e56fe938a4e80b75b1be38f58b06e";
+            title = "Home";
+        }
 
         setTheme(R.style.notebook_activity_theme);
         setContentView(R.layout.notebook_activity);
@@ -124,7 +130,7 @@ public class NotebookActivity extends NoteContainingActivity {
 
         statusController = new StatusController();
 
-        getWindow().setBackgroundDrawableResource(R.drawable.default_wallpaper);
+        getWindow().setBackgroundDrawableResource(R.drawable.yyy);
         setActionBarMode(NoteContainingActivity.ACTIONBAR_NORMAL);
 
         handler=new Handler(){

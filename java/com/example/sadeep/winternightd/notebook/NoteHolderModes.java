@@ -47,9 +47,13 @@ public class NoteHolderModes {
             public ViewUpper(Context context) {
                 super(context);
                 dateTimeTextView = new TextView(context);
-                dateTimeTextView.setTextColor(Color.BLUE);
+                dateTimeTextView.setTextColor(0xff228822);
+                dateTimeTextView.setBackgroundColor(Color.TRANSPARENT);
+                setBackgroundColor(Color.TRANSPARENT);
                 addView(dateTimeTextView);
                 updateDateTimeTextView();
+
+                setPadding(Globals.dp2px*4,Globals.dp2px*4,Globals.dp2px*4,Globals.dp2px*4);
             }
 
             private void updateDateTimeTextView() {

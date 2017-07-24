@@ -33,7 +33,7 @@ public class NoteActionsToolbar {
 
     public NoteActionsToolbar(Context context, boolean buttonVisibility, boolean toolbarVisibility) {
         this.context = context;
-        upperLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bottombar_upperlayout,null);
+        upperLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.note_actions_toolbar,null);
 
         attach = upperLayout.findViewById(R.id.attach);
         send = upperLayout.findViewById(R.id.send);

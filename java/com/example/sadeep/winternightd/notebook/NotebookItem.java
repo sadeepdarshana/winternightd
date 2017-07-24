@@ -1,12 +1,13 @@
 package com.example.sadeep.winternightd.notebook;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.NotebookItemChamber;
 import com.example.sadeep.winternightd.misc.TransparentCard;
 
@@ -14,22 +15,33 @@ import com.example.sadeep.winternightd.misc.TransparentCard;
  * Created by Sadeep on 7/24/2017.
  */
 
-public class NotebookItem {
+public class NotebookItem  extends TransparentCard{
     private Context context;
-    private TransparentCard notebookItem;
+
+    private LinearLayout notebookItemInnerLayout;
     private NotebookItemChamber lowerChamber;
     private NotebookItemChamber upperChamber;
+    private LinearLayout noteSpace;
 
     public NotebookItem(Context context) {
+        super(context);
         this.context = context;
-        notebookItem = (TransparentCard) LayoutInflater.from(context).inflate(R.layout.notebookitem,null);
-        lowerChamber = (NotebookItemChamber) notebookItem.findViewById(R.id.lowerchamber);
-        upperChamber = (NotebookItemChamber) notebookItem.findViewById(R.id.upperchamber);
+
+        setCardElevation(2f* Globals.dp2px);
+
+        notebookItemInnerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.notebookitem,null);
+        addView(notebookItemInnerLayout);
+
+        TransparentCard.LayoutParams params = new TransparentCard.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        notebookItemInnerLayout.setLayoutParams(params);
+
+        lowerChamber = (NotebookItemChamber) notebookItemInnerLayout.findViewById(R.id.lowerchamber);
+        upperChamber = (NotebookItemChamber) notebookItemInnerLayout.findViewById(R.id.upperchamber);
+        noteSpace = (LinearLayout) notebookItemInnerLayout.findViewById(R.id.notespace);
+
+
     }
 
-    public TransparentCard getNotebookItem() {
-        return notebookItem;
-    }
 
     public NotebookItemChamber getLowerChamber() {
         return lowerChamber;
@@ -39,7 +51,8 @@ public class NotebookItem {
         return upperChamber;
     }
 
-    public Context getContext() {
-        return context;
+    public LinearLayout getNoteSpace() {
+        return noteSpace;
     }
+
 }

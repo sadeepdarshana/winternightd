@@ -20,6 +20,9 @@ import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.bottombar.NoteActionsToolbar;
 import com.example.sadeep.winternightd.selection.CursorPosition;
 
+import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_EDIT;
+import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
+
 /**
  * Created by Sadeep on 6/17/2017.
  */
@@ -44,8 +47,6 @@ final class NotebookViewHolderUtils {
 
         private Notebook notebook;
 
-        private Context context;
-
         private int mode = -1;//-1 means not assigned a mode yet
 
         public NoteActionsToolbar upper;
@@ -54,105 +55,40 @@ final class NotebookViewHolderUtils {
 
         public NoteHolder(Context context,Notebook notebook) {
             super(context);
-            this.context = context;
             this.notebook = notebook;
 
-            final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onDoubleTap(MotionEvent e) {
-                    NoteHolder.this.onMainCardDoubleTap();
-                    return true;
-                }
-            });
-
-
-            upper = new NoteActionsToolbar(context,true,true){
-                @Override
-                protected void onSendClick(View v) {
-                    super.onSendClick(v);
-                    onNoteSubmitClicked();
-                }
-            };
-
-            CardView.LayoutParams upperlayoutparams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-            upper.getLayout().setLayoutParams(upperlayoutparams);
-            upperlayoutparams.setMargins(2*Globals.dp2px,0*Globals.dp2px,2*Globals.dp2px,1*Globals.dp2px);
-            upperlayoutparams.gravity = Gravity.BOTTOM;
-            glassCard.addView(upper.getLayout());
-
-
-            setMode(NoteHolderModes.MODE_VIEW,false);
-
+            Notebook.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(Globals.dp2px*7,Globals.dp2px*5,Globals.dp2px*7,Globals.dp2px*5);
+            setLayoutParams(params);
         }
 
 
+        public void bind(Note note,int mode){
+            getNoteSpace().removeAllViews();
+            setMode(mode,false);
+            note.setEditable(noteEditable);
+            getNoteSpace().addView(note);
+            
+        }
 
         public void setMode(int mode,final boolean animate){
-            //if(getNote()!=null)getNote().setEditable(mode==MODE_EDIT);
-            if(mode == this.mode)return;
+            if(mode==MODE_VIEW) NoteHolderModes.ModeView.setAsNoteHolderMode(this,animate);
+            if(mode==MODE_EDIT) NoteHolderModes.ModeEdit.setAsNoteHolderMode(this,animate);
+
             this.mode = mode;
-            switch (mode){
-                case NoteHolderModes.MODE_VIEW:
-                    setBackgroundColor(Color.TRANSPARENT);
-                    if(getNote()!=null)getNote().setEditable(false);
-                    if(mainCard.getParent()==null)addView(mainCard);
-                    //if(glassCard.getParent()!=null)removeView(glassCard);
-                    if(animate)
-                        XAnimation.changeDimension(glassCard,500,XAnimation.DIMENSION_HEIGHT,calculateGlassCardHeight(),0);
-                    else{
-                        glassCard.getLayoutParams().height = 0;
-                        requestLayout();
-                    }
-
-                    break;
-
-                case NoteHolderModes.MODE_EDIT:
-                    setBackgroundColor(Color.parseColor("#06000000"));
-                    if(getNote()!=null){
-                        getNote().setEditable(true);
-                        getNote().setCursor(new CursorPosition(0,0));
-                    }
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(glassCard.getParent()==null)addView(glassCard,0);
-                            calculateGlassCardHeight();
-                            if(animate)
-                                XAnimation.changeDimension(glassCard,500,XAnimation.DIMENSION_HEIGHT,Math.min(0,mainCard.getHeight()),calculateGlassCardHeight());
-                            else{
-                                glassCard.getLayoutParams().height = calculateGlassCardHeight();
-                                glassCard.requestLayout();
-                            }
-                        }
-                    },1);
-
-                    notebook.editor.noteHolder = this;
-                    //handler.sendEmptyMessage(0);
-                    break;
-            }
         }
 
         public int getMode() {
             return mode;
         }
 
-        public void bind(Note note){
-            mainCard.removeAllViews();
-            if(note.getParent()!=null)((ViewGroup)note.getParent()).removeView(note);
-            mainCard.addView(note);
-        }
 
         public Note getNote() {
-            if(mainCard.getChildCount()!=0 && mainCard.getChildAt(0)instanceof Note)return (Note) mainCard.getChildAt(0);
-            return null;
-        }
-
-        protected void onMainCardDoubleTap() {
-            notebook.editor.setActiveNote(this);
+            return getNoteSpace().getChildCount()!=0 ?   (Note) getNoteSpace().getChildAt(0) : null;
         }
 
         private void onNoteSubmitClicked() {
-            if(!(mode== NoteHolderModes.MODE_EDIT)||getNote()==null)return;
+            if(!(mode== MODE_EDIT)||getNote()==null)return;
 
             notebook.editor.pushNote(getNote());
         }
