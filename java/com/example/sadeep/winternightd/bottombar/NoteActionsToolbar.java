@@ -16,7 +16,7 @@ import com.example.sadeep.winternightd.toolbar.ToolbarController;
  * Created by Sadeep on 7/10/2017.
  */
 
-public class UpperLayout {
+public class NoteActionsToolbar {
 
     private Context context;
     private LinearLayout upperLayout; //the android View of the Lower Layout generated, (notice this class extends nothing)
@@ -31,7 +31,7 @@ public class UpperLayout {
 
 
 
-    public UpperLayout(Context context, boolean buttonVisibility, boolean toolbarVisibility) {
+    public NoteActionsToolbar(Context context, boolean buttonVisibility, boolean toolbarVisibility) {
         this.context = context;
         upperLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bottombar_upperlayout,null);
 
@@ -72,7 +72,7 @@ public class UpperLayout {
 
     }
 
-    public LinearLayout getUpperLayout() {
+    public LinearLayout getLayout() {
         return upperLayout;
     }
 

@@ -70,10 +70,10 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
             {
                 note = NoteFactory.fromFieldDataStream(context, cursor.getFieldDataStream(position-1), false, notebook,cursor.getNoteInfo(position-1));
                 ((NotebookViewHolderUtils.NoteHolder)holder.holder).bind(note);
-                ((NotebookViewHolderUtils.NoteHolder)holder.holder).setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,false);
+                ((NotebookViewHolderUtils.NoteHolder)holder.holder).setMode(NoteHolderModes.MODE_VIEW,false);
             }
             else {
-                ((NotebookViewHolderUtils.NoteHolder) holder.holder).setMode(NotebookViewHolderUtils.NoteHolder.MODE_EDIT, false);
+                ((NotebookViewHolderUtils.NoteHolder) holder.holder).setMode(NoteHolderModes.MODE_EDIT, false);
                 ((NotebookViewHolderUtils.NoteHolder) holder.holder).bind(notebook.editor.getCacheNote());
             }
         }

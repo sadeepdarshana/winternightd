@@ -53,11 +53,11 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
 
         setPadding(6* Globals.dp2px,0,0,0);
 
-        super.setIsEditable(isEditable); //here we call super.setIsEditable() because we have already created the edittextview to suit the isEditable parameter. (no need of this.setIsEditable())
+        super.setIsEditable(isEditable); //here we call super.setEditable() because we have already created the edittextview to suit the isEditable parameter. (no need of this.setEditable())
     }
 
     @Override
-    public void setIsEditable(boolean isEditable) {//Override Field.setIsEditable()
+    public void setIsEditable(boolean isEditable) {//Override Field.setEditable()
         editTextView.setIsEditable(isEditable);
         super.setIsEditable(isEditable);
     }

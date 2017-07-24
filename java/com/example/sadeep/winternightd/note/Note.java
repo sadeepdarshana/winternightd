@@ -200,7 +200,7 @@ public class Note extends LinearLayout {
 
 //editability related methods
 
-    public void setIsEditable(boolean isEditable){
+    public void setEditable(boolean isEditable){
 
         if(this.isEditable == isEditable)return;
         this.isEditable = isEditable;

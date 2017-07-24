@@ -75,9 +75,9 @@ public class Notebook extends RecyclerView {
             NotebookViewHolderUtils.NoteHolder noteHolder = (NotebookViewHolderUtils.NoteHolder)child;
 
             if(noteHolder.getNote().noteInfo.noteUUID.equals(editor.getActiveNoteUUID()))
-                noteHolder.setMode(NotebookViewHolderUtils.NoteHolder.MODE_EDIT,false);
+                noteHolder.setMode(NoteHolderModes.MODE_EDIT,false);
             else
-                noteHolder.setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,false);
+                noteHolder.setMode(NoteHolderModes.MODE_VIEW,false);
         }
     }
 
@@ -128,10 +128,10 @@ public class Notebook extends RecyclerView {
 
             for(int i=0;i<notebook.getChildCount();i++){
                 if(notebook.getChildAt(i)!=noteHolder && notebook.getChildAt(i)instanceof NotebookViewHolderUtils.NoteHolder)
-                    ((NotebookViewHolderUtils.NoteHolder)notebook.getChildAt(i)).setMode(NotebookViewHolderUtils.NoteHolder.MODE_VIEW,true);
+                    ((NotebookViewHolderUtils.NoteHolder)notebook.getChildAt(i)).setMode(NoteHolderModes.MODE_VIEW,true);
             }
 
-            noteHolder.setMode(NotebookViewHolderUtils.NoteHolder.MODE_EDIT,true);
+            noteHolder.setMode(NoteHolderModes.MODE_EDIT,true);
             cacheNote = noteHolder.getNote();
 
             ((NotebookActivity)getContext()).statusController.setNotebookActiveNote(noteHolder.getNote());

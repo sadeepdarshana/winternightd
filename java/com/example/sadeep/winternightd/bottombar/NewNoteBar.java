@@ -19,7 +19,7 @@ import com.example.sadeep.winternightd.misc.Utils;
  * Created by Sadeep on 7/10/2017.
  */
 
-public class LowerLayout {
+public class NewNoteBar {
 
     private Context context;
     private LinearLayout lowerLayout; //the android View of the Lower Layout generated, (notice this class extends nothing)
@@ -35,7 +35,7 @@ public class LowerLayout {
     private boolean glassModeEnabled = false;
 
 
-    public LowerLayout(Context context, boolean buttonVisibility,boolean glassModeEnabled) {
+    public NewNoteBar(Context context, boolean buttonVisibility, boolean glassModeEnabled) {
         this.context = context;
         lowerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bottombar_lowerlayout,null);
 

@@ -14,7 +14,7 @@ import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.spans.RichText;
 
 /**
- * A class created to unite XEditText and XTextView, behaves as either upon request(by calling setIsEditable).
+ * A class created to unite XEditText and XTextView, behaves as either upon request(by calling setEditable).
  *
  * Fields do not have to account separately for editable and non-editable textboxes because they use this class.
  * (like this class wraps the 2 classes)
@@ -24,7 +24,7 @@ import com.example.sadeep.winternightd.spans.RichText;
  *
  * A XEditText or XTextView (depending on the isEditable attribute passed to constructor) is created when an instance
  * of this class is created which can be fetched through get(). Now you can attach the fetched android view to a parent.
- * If you change the editability of this EditTextView(using setIsEditable) this class replaces the former View with a
+ * If you change the editability of this EditTextView(using setEditable) this class replaces the former View with a
  * new XEditText/XTextView with the same text as the former view.
  */
 public class EditTextView {

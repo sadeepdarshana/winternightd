@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.misc.NotebookItemChamber;
 import com.example.sadeep.winternightd.misc.TransparentCard;
 
 /**
@@ -16,25 +17,29 @@ import com.example.sadeep.winternightd.misc.TransparentCard;
 public class NotebookItem {
     private Context context;
     private TransparentCard notebookItem;
-    private ViewGroup lowerChamber;
-    private ViewGroup upperChamber;
+    private NotebookItemChamber lowerChamber;
+    private NotebookItemChamber upperChamber;
 
     public NotebookItem(Context context) {
         this.context = context;
         notebookItem = (TransparentCard) LayoutInflater.from(context).inflate(R.layout.notebookitem,null);
-        lowerChamber = (ViewGroup) notebookItem.findViewById(R.id.lowerchamber);
-        upperChamber = (ViewGroup) notebookItem.findViewById(R.id.upperchamber);
+        lowerChamber = (NotebookItemChamber) notebookItem.findViewById(R.id.lowerchamber);
+        upperChamber = (NotebookItemChamber) notebookItem.findViewById(R.id.upperchamber);
     }
 
     public TransparentCard getNotebookItem() {
         return notebookItem;
     }
 
-    public ViewGroup getLowerChamber() {
+    public NotebookItemChamber getLowerChamber() {
         return lowerChamber;
     }
 
-    public ViewGroup getUpperChamber() {
+    public NotebookItemChamber getUpperChamber() {
         return upperChamber;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

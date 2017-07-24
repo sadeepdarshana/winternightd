@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    app:contentPaddingLeft="1.5dp"
-    app:contentPaddingRight="1.5dp"
-
     app:cardElevation="2dp"
 
     app:cardBackgroundColor="#00ffffff">
@@ -19,7 +16,7 @@
 
         android:background="#f7f7f7">
 
-        <LinearLayout
+        <com.example.sadeep.winternightd.misc.NotebookItemChamber
             android:id="@+id/upperchamber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +35,7 @@
             android:background="#77aaaaaa"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
-        <LinearLayout
+        <com.example.sadeep.winternightd.misc.NotebookItemChamber
             android:id="@+id/lowerchamber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

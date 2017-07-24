@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import com.example.sadeep.winternightd.R;
 import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
 import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
-import com.example.sadeep.winternightd.bottombar.UpperLayout;
+import com.example.sadeep.winternightd.bottombar.NoteActionsToolbar;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
 import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
@@ -103,12 +103,12 @@ public class NotebookActivity extends NoteContainingActivity {
         editNoteBottomBar.setCardBackgroundColor(Color.parseColor("#ddffffff"));
         cardparams.setMargins(2*Globals.dp2px,3*Globals.dp2px,2*Globals.dp2px,0*Globals.dp2px);
 
-        UpperLayout upper =new UpperLayout(this,true,true);
+        NoteActionsToolbar upper =new NoteActionsToolbar(this,true,true);
         CardView.LayoutParams upperlayoutparams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         cardparams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        upper.getUpperLayout().setLayoutParams(upperlayoutparams);
+        upper.getLayout().setLayoutParams(upperlayoutparams);
         upperlayoutparams.setMargins(2*Globals.dp2px,2*Globals.dp2px,2*Globals.dp2px,1*Globals.dp2px);
-        editNoteBottomBar.addView(upper.getUpperLayout());
+        editNoteBottomBar.addView(upper.getLayout());
         //upperlayoutparams.gravity = Gravity.BOTTOM;
 
 
@@ -132,7 +132,7 @@ public class NotebookActivity extends NoteContainingActivity {
             public void handleMessage(Message msg) {
                 if(notebook.editor.cacheNote!=null){
                     int[] xyupperlayout = new int[2];
-                    notebook.editor.noteHolder.upper.getUpperLayout().getLocationInWindow(xyupperlayout);
+                    notebook.editor.noteHolder.upper.getLayout().getLocationInWindow(xyupperlayout);
                     int[] xybottommarker = new int[2];
                     rootView.bottomLeftMarker.getLocationInWindow(xybottommarker);
                     d.p(xyupperlayout[1]," ",xybottommarker[1]);

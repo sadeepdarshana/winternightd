@@ -17,8 +17,8 @@ public class BottomBarCombined {
     private Context context;
     private LinearLayout bottomBar;
 
-    public UpperLayout _UpperLayout;
-    public LowerLayout _LowerLayout;
+    public NoteActionsToolbar _NoteActionsToolbar;
+    public NewNoteBar _NewNoteBar;
 
 
     private Note note;
@@ -34,7 +34,7 @@ public class BottomBarCombined {
 
         bottomBar = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bottombar_combined,null);
 
-        _UpperLayout = new UpperLayout(context,false,false){
+        _NoteActionsToolbar = new NoteActionsToolbar(context,false,false){
 
             @Override
             protected void onSendClick(View v) {
@@ -46,7 +46,7 @@ public class BottomBarCombined {
                 BottomBarCombined.this.onAttachClick(v);
             }
         };
-        _LowerLayout = new LowerLayout(context,true,false){
+        _NewNoteBar = new NewNoteBar(context,true,false){
             @Override
             protected void onNoteFocused(){
                 BottomBarCombined.this.setGlassModeEnabled(false);
@@ -80,10 +80,10 @@ public class BottomBarCombined {
             }
         };
 
-        bottomBar.addView(_UpperLayout.getUpperLayout(),0);
-        bottomBar.addView(_LowerLayout.getLowerLayout(),3);
+        bottomBar.addView(_NoteActionsToolbar.getLayout(),0);
+        bottomBar.addView(_NewNoteBar.getLowerLayout(),3);
 
-        note = _LowerLayout.getNote();
+        note = _NewNoteBar.getNote();
     }
 
     public LinearLayout getBottomBar() {
@@ -110,22 +110,22 @@ public class BottomBarCombined {
     public void setNoteBoxMode(int mode){
         switch (mode) {
             case MODE_EXPANDED:
-                _UpperLayout.setButtonsVisibility(true, true);
-                _LowerLayout.setButtonsVisibility(false, true);
+                _NoteActionsToolbar.setButtonsVisibility(true, true);
+                _NewNoteBar.setButtonsVisibility(false, true);
                 break;
 
             case MODE_COLLAPSED:
-                _UpperLayout.setButtonsVisibility(false,true);
-                _LowerLayout.setButtonsVisibility(true,true);
+                _NoteActionsToolbar.setButtonsVisibility(false,true);
+                _NewNoteBar.setButtonsVisibility(true,true);
                 break;
         }
 
     }
 
     public void setToolbarVisibility(boolean visible){
-        _UpperLayout.setToolbarVisibility(visible,true);
+        _NoteActionsToolbar.setToolbarVisibility(visible,true);
     }
     public void setGlassModeEnabled(boolean visible){
-        _LowerLayout.setGlassModeEnabled(visible,true);
+        _NewNoteBar.setGlassModeEnabled(visible,true);
     }
 }
