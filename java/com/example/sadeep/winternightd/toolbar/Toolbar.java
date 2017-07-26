@@ -18,12 +18,9 @@ import com.example.sadeep.winternightd.spans.SpansFactory;
 /**
  * Created by Sadeep on 10/12/2016.
  */
-final public class Toolbar {
+final public class Toolbar extends HorizontalScrollView{
 
     private static final int BUTTONS_COUNT = 6;
-
-    private Context context;
-    private HorizontalScrollView toolbar;
 
 
     private ToolbarButton[] toolbarButtons = new ToolbarButton[BUTTONS_COUNT];
@@ -43,10 +40,14 @@ final public class Toolbar {
 
 
     public Toolbar(Context context) {
-        this.context = context;
+        super(context);
+        setFillViewport(true);
+        setHorizontalScrollBarEnabled(false);
+        setVerticalScrollBarEnabled(false);
+        setOverScrollMode(OVER_SCROLL_NEVER);
 
-        toolbar = (HorizontalScrollView) LayoutInflater.from(context).inflate(R.layout.toolbar,null);
-        LinearLayout buttonContainer = (LinearLayout) toolbar.getChildAt(0);
+        LayoutInflater.from(context).inflate(R.layout.toolbar,this,true);
+        LinearLayout buttonContainer = (LinearLayout) getChildAt(0);
 
         /**
          * We have stored the button's id in its tag property at the XML code. (toolbar.xml)
@@ -95,9 +96,6 @@ final public class Toolbar {
 
     }
 
-    public HorizontalScrollView getToolbar() {
-        return toolbar;
-    }
 
     public void updateStatus(int[] spanStatus) {
         if(toolbarButtons[0]==null)return;

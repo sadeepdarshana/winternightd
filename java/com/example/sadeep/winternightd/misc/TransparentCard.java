@@ -29,18 +29,21 @@ public class TransparentCard extends CardView {
 
 
     private void init() {
-        setCardBackgroundColor(0x00000000);
+        setCardElevation(1.3f* Globals.dp2px);
+        setCardBackgroundColor(0xffffffff);
     }
 
     @Override
     protected void onSizeChanged(int w, final int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        postDelayed(new Runnable() {
+        post(new Runnable() {
             @Override
             public void run() {
                 resetPaddings(h);
             }
-        },2);
+        });
+
+        setContentPadding(5,5,5,5);
     }
 
     private void resetPaddings(int h) {
@@ -52,6 +55,6 @@ public class TransparentCard extends CardView {
         else if(h>Globals.dp2px*80)pad=Globals.dp2px*2f;
         else pad=Globals.dp2px*2;
 
-        setContentPadding((int)(pad+0.01f),getContentPaddingTop(),(int)(pad+0.01f),getContentPaddingBottom());
+        //setContentPadding((int)(pad+0.01f),getContentPaddingTop(),(int)(pad+0.01f),getContentPaddingBottom());
     }
 }

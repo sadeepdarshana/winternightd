@@ -16,7 +16,7 @@
         android:orientation="horizontal" />
 
     <View
-        android:background="#77aaaaaa"
+        android:background="#00aaaaaa"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <LinearLayout
@@ -25,9 +25,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:minHeight="100dp"
-        android:background="#ffffff"/>
+        android:background="#00000000"/>
     <View
-        android:background="#77aaaaaa"
+        android:background="#00aaaaaa"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <com.example.sadeep.winternightd.misc.NotebookItemChamber

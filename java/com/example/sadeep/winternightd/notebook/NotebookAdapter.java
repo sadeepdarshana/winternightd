@@ -1,20 +1,13 @@
 package com.example.sadeep.winternightd.notebook;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.localstorage.NotebookCursorReader;
-import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
 import com.example.sadeep.winternightd.selection.XSelection;
-
-import java.util.ArrayList;
 
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_EDIT;
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
@@ -60,7 +53,7 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
         if(cursor.getNoteInfo(position-1).noteUUID.equals(notebook.editor.getActiveNoteUUID()))//if (currently editing note)
         {
             noteHolder.setMode(MODE_EDIT, false);
-            noteHolder.bind(notebook.editor.getCacheNote(),MODE_EDIT);
+            noteHolder.bind(notebook.editor.activeNote,MODE_EDIT);
 
         }
         else {

@@ -3,6 +3,7 @@ package com.example.sadeep.winternightd.activities;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,8 +24,9 @@ public class TestActivityy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Globals.initialize(this);
-
-        setContentView(R.layout.test);
+        LinearLayout i= new LinearLayout(this);
+        setContentView(i);
+        //LayoutInflater.from(this).inflate(R.layout.test,i,true);
 
         getWindow().setBackgroundDrawableResource(R.drawable.yyy);
     }

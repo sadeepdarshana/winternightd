@@ -16,12 +16,10 @@ import com.example.sadeep.winternightd.toolbar.ToolbarController;
  * Created by Sadeep on 7/10/2017.
  */
 
-public class NoteActionsToolbar {
+public class ExtendedToolbar extends LinearLayout{
 
-    private Context context;
-    private LinearLayout upperLayout; //the android View of the Lower Layout generated, (notice this class extends nothing)
 
-    private View attach,send,toolbar;
+    private View attach,send,toolbar,cancel;
     private ViewGroup toolbarContainer;
 
     private int attachWidth,sendWidth,toolbarHeight; //widths and heights of the Views WHEN THEY ARE SHOWN
@@ -31,22 +29,27 @@ public class NoteActionsToolbar {
 
 
 
-    public NoteActionsToolbar(Context context, boolean buttonVisibility, boolean toolbarVisibility) {
-        this.context = context;
-        upperLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.note_actions_toolbar,null);
+    public ExtendedToolbar(Context context, boolean buttonVisibility, boolean toolbarVisibility, boolean cancelButton) {
+        super(context);
+        setClipChildren(false);
 
-        attach = upperLayout.findViewById(R.id.attach);
-        send = upperLayout.findViewById(R.id.send);
-        toolbarContainer = (ViewGroup) upperLayout.findViewById(R.id.toolbarcontainer);
+        LayoutInflater.from(context).inflate(R.layout.extended_toolbar,this,true);
 
-        Toolbar _Toolbar = new Toolbar(context);
-        toolbar = _Toolbar.getToolbar();
-        ToolbarController.registerToolbar(_Toolbar);
-        toolbarContainer.addView(toolbar);
+        attach = findViewById(R.id.attach);
+        send = findViewById(R.id.send);
+        cancel = findViewById(R.id.cancel);
+        toolbarContainer = (ViewGroup) findViewById(R.id.toolbarcontainer);
+
+        if(cancelButton)cancel.setVisibility(VISIBLE);
+
+        Toolbar toolbar = new Toolbar(context);
+        this.toolbar = toolbar;
+        ToolbarController.registerToolbar(toolbar);
+        toolbarContainer.addView(this.toolbar);
 
         attachWidth = Utils.getWidth(attach);
         sendWidth = Utils.getWidth(send);
-        toolbarHeight = Utils.getHeight(toolbar);
+        toolbarHeight = Utils.getHeight(this.toolbar);
 
         setButtonsVisibility(buttonVisibility,false);
         setToolbarVisibility(toolbarVisibility,false);
@@ -63,18 +66,26 @@ public class NoteActionsToolbar {
                 onSendClick(v);
             }
         });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCancelClick(v);
+            }
+        });
+
+    }
+
+    protected void onCancelClick(View v) {
     }
 
     protected void onAttachClick(View v) {
 
     }
+
     protected void onSendClick(View v) {
 
     }
 
-    public LinearLayout getLayout() {
-        return upperLayout;
-    }
 
 
 

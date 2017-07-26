@@ -12,6 +12,9 @@ import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 import com.example.sadeep.winternightd.note.Note;
+import com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.NoteHolder;
+
+import java.util.ArrayList;
 
 /**
  * Created by Sadeep on 10/26/2016.
@@ -23,11 +26,13 @@ public class Notebook extends RecyclerView {
     private NotebookDataHandler dataHandler;
     private LinearLayoutManager layoutManager;
 
-    public BottomBarCombined _BottomBar;
+    public BottomBarCombined bottomBar;
 
     public static boolean scrollEnabled = true;
 
     public Editor editor;
+
+    public NoteHolderController noteHolderController = new NoteHolderController();
 
     private static Handler scrollresumer = new Handler(){
         @Override
@@ -36,11 +41,11 @@ public class Notebook extends RecyclerView {
         }
     };;
 
-    public Notebook(NotebookActivity notebookActivity, String notebookGuid, BottomBarCombined _BottomBar) {
+    public Notebook(NotebookActivity notebookActivity, String notebookGuid, BottomBarCombined bottomBar) {
         super(notebookActivity);
         this.notebookActivity = notebookActivity;
         this.notebookGuid = notebookGuid;
-        this._BottomBar = _BottomBar;
+        this.bottomBar = bottomBar;
 
         editor = new Editor(this);
 
@@ -71,8 +76,8 @@ public class Notebook extends RecyclerView {
     @Override
     public void onChildAttachedToWindow(View child) {
         super.onChildAttachedToWindow(child);//if(true)return;
-        if(child instanceof NotebookViewHolderUtils.NoteHolder){
-            NotebookViewHolderUtils.NoteHolder noteHolder = (NotebookViewHolderUtils.NoteHolder)child;
+        if(child instanceof NoteHolder){
+            NoteHolder noteHolder = (NoteHolder)child;
 
             if(noteHolder.getNote().noteInfo.noteUUID.equals(editor.getActiveNoteUUID()))
                 noteHolder.setMode(NoteHolderModes.MODE_EDIT,false);
@@ -103,18 +108,34 @@ public class Notebook extends RecyclerView {
         scrollresumer.sendEmptyMessageDelayed(0,400);
     }
 
+    public class NoteHolderController{
+        private ArrayList<NoteHolder>noteHolders = new ArrayList<>();
+
+        public void addNoteHolder(NoteHolder noteHolder){
+            noteHolders.add(noteHolder);
+        }
+
+        public void setAllNoteHoldersModeExcept(int mode,NoteHolder except,boolean animate){
+            for(int i=0;i<noteHolders.size();i++){
+                NoteHolder noteHolder = noteHolders.get(i);
+                if(noteHolder == except)continue;
+                if(noteHolder.getMode()!=mode)noteHolder.setMode(mode,animate);
+            }
+        }
+    }
+
     public class Editor{
         private Notebook notebook;
-        public Note cacheNote;
-        public NotebookViewHolderUtils.NoteHolder noteHolder;
+        public Note activeNote;
+        public NoteHolder noteHolder;
 
 
         public Editor(Notebook notebook) {
             this.notebook = notebook;
         }
 
-        public void setActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder){
-            if(cacheNote==noteHolder.getNote())return;
+        public void setActiveNote(NoteHolder noteHolder){
+            if(activeNote ==noteHolder.getNote())return;
 
             if(getChildAdapterPosition(noteHolder)==1)
                 new CountDownTimer(600, 20)
@@ -127,31 +148,26 @@ public class Notebook extends RecyclerView {
                 }.start();
 
             for(int i=0;i<notebook.getChildCount();i++){
-                if(notebook.getChildAt(i)!=noteHolder && notebook.getChildAt(i)instanceof NotebookViewHolderUtils.NoteHolder)
-                    ((NotebookViewHolderUtils.NoteHolder)notebook.getChildAt(i)).setMode(NoteHolderModes.MODE_VIEW,true);
+                if(notebook.getChildAt(i)!=noteHolder && notebook.getChildAt(i)instanceof NoteHolder)
+                    ((NoteHolder)notebook.getChildAt(i)).setMode(NoteHolderModes.MODE_VIEW,true);
             }
 
             noteHolder.setMode(NoteHolderModes.MODE_EDIT,true);
-            cacheNote = noteHolder.getNote();
-
-            ((NotebookActivity)getContext()).statusController.setNotebookActiveNote(noteHolder.getNote());
+            activeNote = noteHolder.getNote();
 
         }
 
         public String getActiveNoteUUID() {
-            if(cacheNote!=null)return cacheNote.noteInfo.noteUUID;
+            if(activeNote !=null)return activeNote.noteInfo.noteUUID;
             return null;
         }
 
-        public Note getCacheNote() {
-            return cacheNote;
-        }
 
-        public void pushNote(Note note) {
-            notebook.getNotebookDataHandler().addExistingNote(note);
-            cacheNote = null;
+        public void pushActiveNote() {
+            if(activeNote==null)return;
+            notebook.getNotebookDataHandler().addExistingNote(activeNote);
+            activeNote = null;
             refresh();
-            notebookActivity.statusController.setEditNoteAsActiveNote();
             notebook.scrollToPosition(0);
         }
     }

@@ -35,4 +35,9 @@ public class NotebookItemChamber extends LinearLayout {
         removeAllViews();
         //// TODO: 7/24/2017 animate
     }
+
+    public View getChamberContent(){
+        if(getChildCount()!=0)return getChildAt(0);
+        return null;
+    }
 }

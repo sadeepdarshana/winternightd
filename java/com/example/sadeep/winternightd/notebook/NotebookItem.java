@@ -27,7 +27,6 @@ public class NotebookItem  extends TransparentCard{
         super(context);
         this.context = context;
 
-        setCardElevation(2f* Globals.dp2px);
 
         notebookItemInnerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.notebookitem,null);
         addView(notebookItemInnerLayout);

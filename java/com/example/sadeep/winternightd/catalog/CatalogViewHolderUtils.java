@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -87,7 +85,7 @@ final class CatalogViewHolderUtils {
             LayoutParams params = new LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,1);
             setLayoutParams(params);
 
-            notebook._BottomBar.getBottomBar().addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            notebook.bottomBar.addOnLayoutChangeListener(new OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     {

@@ -1,24 +1,17 @@
 package com.example.sadeep.winternightd.notebook;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import com.example.sadeep.winternightd.animation.XAnimation;
 import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.bottombar.NoteActionsToolbar;
-import com.example.sadeep.winternightd.selection.CursorPosition;
+import com.example.sadeep.winternightd.bottombar.ExtendedToolbar;
 
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_EDIT;
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
@@ -47,10 +40,12 @@ final class NotebookViewHolderUtils {
 
         private Notebook notebook;
 
-        private int mode = -1;//-1 means not assigned a mode yet
+        int mode = -1;//-1 means not assigned a mode yet
 
-        public NoteActionsToolbar upper;
+        public ExtendedToolbar upper;
         public boolean noteEditable;
+
+        public static final int DEFAULT_MODE = MODE_VIEW;
 
 
         public NoteHolder(Context context,Notebook notebook) {
@@ -58,8 +53,10 @@ final class NotebookViewHolderUtils {
             this.notebook = notebook;
 
             Notebook.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(Globals.dp2px*7,Globals.dp2px*5,Globals.dp2px*7,Globals.dp2px*5);
+            params.setMargins(Globals.dp2px*5,Globals.dp2px*5,Globals.dp2px*5,Globals.dp2px*5);
             setLayoutParams(params);
+
+            notebook.noteHolderController.addNoteHolder(this);
         }
 
 
@@ -68,14 +65,17 @@ final class NotebookViewHolderUtils {
             setMode(mode,false);
             note.setEditable(noteEditable);
             getNoteSpace().addView(note);
-            
+            onBind();
+        }
+
+        private void onBind() {
+            if(mode==MODE_VIEW) NoteHolderModes.ModeView.onBind(this);
+            if(mode==MODE_EDIT) NoteHolderModes.ModeEdit.onBind(this);
         }
 
         public void setMode(int mode,final boolean animate){
             if(mode==MODE_VIEW) NoteHolderModes.ModeView.setAsNoteHolderMode(this,animate);
             if(mode==MODE_EDIT) NoteHolderModes.ModeEdit.setAsNoteHolderMode(this,animate);
-
-            this.mode = mode;
         }
 
         public int getMode() {
@@ -87,10 +87,8 @@ final class NotebookViewHolderUtils {
             return getNoteSpace().getChildCount()!=0 ?   (Note) getNoteSpace().getChildAt(0) : null;
         }
 
-        private void onNoteSubmitClicked() {
-            if(!(mode== MODE_EDIT)||getNote()==null)return;
-
-            notebook.editor.pushNote(getNote());
+        public Notebook getNotebook() {
+            return notebook;
         }
     }
 
@@ -110,10 +108,10 @@ final class NotebookViewHolderUtils {
         public Footer(Context context, final Notebook notebook) {
             super(context);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, Utils.getHeight(new BottomBarCombined(context).getBottomBar()));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, Utils.getHeight(new BottomBarCombined(context)));
             setLayoutParams(params);
 
-            notebook._BottomBar.getBottomBar().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            notebook.bottomBar.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     {
@@ -122,10 +120,10 @@ final class NotebookViewHolderUtils {
                     }
                 }
             });
-            notebook._BottomBar.getBottomBar().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            notebook.bottomBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    if(notebook._BottomBar.getBottomBar().getParent()==null){
+                    if(notebook.bottomBar.getParent()==null){
                         Footer.this.getLayoutParams().height = Globals.dp2px*10;
                         Footer.this.requestLayout();
                     }

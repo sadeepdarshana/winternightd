@@ -19,10 +19,7 @@ import com.example.sadeep.winternightd.misc.Utils;
  * Created by Sadeep on 7/10/2017.
  */
 
-public class NewNoteBar {
-
-    private Context context;
-    private LinearLayout lowerLayout; //the android View of the Lower Layout generated, (notice this class extends nothing)
+public class NewNoteBar  extends LinearLayout{
 
     private View attach,send;
     private Note note;
@@ -36,12 +33,14 @@ public class NewNoteBar {
 
 
     public NewNoteBar(Context context, boolean buttonVisibility, boolean glassModeEnabled) {
-        this.context = context;
-        lowerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.new_note_bar,null);
+        super(context);
+        setBackgroundColor(0xffffffff);
 
-        attach = lowerLayout.findViewById(R.id.attach);
-        send = lowerLayout.findViewById(R.id.send);
-        noteScroll = (ViewGroup) lowerLayout.findViewById(R.id.notescroll);
+        LayoutInflater.from(context).inflate(R.layout.new_note_bar,this,true);
+
+        attach = findViewById(R.id.attach);
+        send = findViewById(R.id.send);
+        noteScroll = (ViewGroup) findViewById(R.id.notescroll);
 
         note = NoteFactory.createNewNote(context,true, noteScroll);
         note.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -102,10 +101,6 @@ public class NewNoteBar {
 
     protected void onNoteHeightMatured() {
 
-    }
-
-    public LinearLayout getLowerLayout() {
-        return lowerLayout;
     }
 
     public Note getNote() {
@@ -174,16 +169,16 @@ public class NewNoteBar {
 
         if(animate) {
             if (glassModeEnabled) {
-                XAnimation.changeBackgroundColor(lowerLayout, ANIMATION_DURATION, colorOpaque, colorIntermediate, 0);
-                XAnimation.changeBackgroundColor(lowerLayout, ANIMATION_DURATION, colorIntermediate, colorTransparent, ANIMATION_DURATION);
+                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorOpaque, colorIntermediate, 0);
+                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorIntermediate, colorTransparent, ANIMATION_DURATION);
             }
             else {
-                XAnimation.changeBackgroundColor(lowerLayout, ANIMATION_DURATION, colorTransparent, colorIntermediate, 0);
-                XAnimation.changeBackgroundColor(lowerLayout, ANIMATION_DURATION, colorIntermediate, colorOpaque, ANIMATION_DURATION);
+                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorTransparent, colorIntermediate, 0);
+                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorIntermediate, colorOpaque, ANIMATION_DURATION);
             }
         }else{
-            if (glassModeEnabled)   lowerLayout.setBackgroundColor(colorTransparent);
-            else                    lowerLayout.setBackgroundColor(colorOpaque);
+            if (glassModeEnabled)   setBackgroundColor(colorTransparent);
+            else                    setBackgroundColor(colorOpaque);
         }
     }
 }
