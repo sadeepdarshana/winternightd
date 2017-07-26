@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
-import com.example.sadeep.winternightd.buttons.MultiStatusButton;
+import com.example.sadeep.winternightd.buttons.RectangularButton;
 
 /**
  * Created by Sadeep on 10/19/2016.
@@ -18,7 +18,7 @@ import com.example.sadeep.winternightd.buttons.MultiStatusButton;
  *   0-button inactive(released)
  *   1-button active(pressed)
  */
-public class ToolbarButton extends MultiStatusButton {
+public class ToolbarButton extends RectangularButton {
     public ToolbarButton(Context context) {
         super(context);
     }

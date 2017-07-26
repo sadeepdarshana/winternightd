@@ -4,13 +4,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
-import com.example.sadeep.winternightd.buttons.MultiStatusButton;
+import com.example.sadeep.winternightd.buttons.RectangularButton;
 
 /**
  * Created by Sadeep on 6/18/2017.
  */
 
-public class AttachButton extends MultiStatusButton implements AttachBoxOpener {
+public class AttachButton extends RectangularButton implements AttachBoxOpener {
 
     private boolean attachboxOpened=false;
 

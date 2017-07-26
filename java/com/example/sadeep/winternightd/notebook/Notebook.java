@@ -16,6 +16,8 @@ import com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.NoteHold
 
 import java.util.ArrayList;
 
+import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
+
 /**
  * Created by Sadeep on 10/26/2016.
  */
@@ -134,29 +136,6 @@ public class Notebook extends RecyclerView {
             this.notebook = notebook;
         }
 
-        public void setActiveNote(NoteHolder noteHolder){
-            if(activeNote ==noteHolder.getNote())return;
-
-            if(getChildAdapterPosition(noteHolder)==1)
-                new CountDownTimer(600, 20)
-                {
-                    public void onTick(long millisUntilFinished)
-                    {
-                        notebook.smoothScrollToPosition(0);
-                    }
-                    public void onFinish(){}
-                }.start();
-
-            for(int i=0;i<notebook.getChildCount();i++){
-                if(notebook.getChildAt(i)!=noteHolder && notebook.getChildAt(i)instanceof NoteHolder)
-                    ((NoteHolder)notebook.getChildAt(i)).setMode(NoteHolderModes.MODE_VIEW,true);
-            }
-
-            noteHolder.setMode(NoteHolderModes.MODE_EDIT,true);
-            activeNote = noteHolder.getNote();
-
-        }
-
         public String getActiveNoteUUID() {
             if(activeNote !=null)return activeNote.noteInfo.noteUUID;
             return null;
@@ -169,6 +148,11 @@ public class Notebook extends RecyclerView {
             activeNote = null;
             refresh();
             notebook.scrollToPosition(0);
+        }
+
+        public void cancelActiveNote(){
+            activeNote=null;
+            noteHolderController.setAllNoteHoldersModeExcept(NoteHolderModes.DEFAULT_MODE,null,true);
         }
     }
 }

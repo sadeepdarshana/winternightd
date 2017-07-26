@@ -1,21 +1,19 @@
 package com.example.sadeep.winternightd.notebook;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
-import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.NotebookItemChamber;
-import com.example.sadeep.winternightd.misc.TransparentCard;
+import com.example.sadeep.winternightd.misc.SexyCard;
 
 /**
  * Created by Sadeep on 7/24/2017.
  */
 
-public class NotebookItem  extends TransparentCard{
+public class NotebookItem  extends SexyCard {
     private Context context;
 
     private LinearLayout notebookItemInnerLayout;
@@ -31,7 +29,7 @@ public class NotebookItem  extends TransparentCard{
         notebookItemInnerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.notebookitem,null);
         addView(notebookItemInnerLayout);
 
-        TransparentCard.LayoutParams params = new TransparentCard.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        SexyCard.LayoutParams params = new SexyCard.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         notebookItemInnerLayout.setLayoutParams(params);
 
         lowerChamber = (NotebookItemChamber) notebookItemInnerLayout.findViewById(R.id.lowerchamber);

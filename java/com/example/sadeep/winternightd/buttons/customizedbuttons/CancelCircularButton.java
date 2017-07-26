@@ -16,7 +16,7 @@ import android.view.View;
 
 public class CancelCircularButton extends FloatingActionButton {
 
-    public static int colorNormal  = Color.parseColor("#fff8f8f8");
+    public static int colorNormal  = Color.parseColor("#fff2f2f2");
     public static int colorPressed = Color.parseColor("#ffcccccc");
 
     public CancelCircularButton(Context context, AttributeSet attrs) {

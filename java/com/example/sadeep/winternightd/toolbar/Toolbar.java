@@ -87,11 +87,11 @@ final public class Toolbar extends HorizontalScrollView{
         }
 
         if (buttonId < 3) {
-            btn.setMode((btn.getMode() + 1) % 2);
             if (LiveFormattingStatus.format[buttonId] == 1)
                 LiveFormattingStatus.format[buttonId] = -1;
             else if (LiveFormattingStatus.format[buttonId] == -1)
                 LiveFormattingStatus.format[buttonId] = 1;
+            ToolbarController.refreshToolbars();
         }
 
     }

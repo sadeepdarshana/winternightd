@@ -42,10 +42,8 @@ final class NotebookViewHolderUtils {
 
         int mode = -1;//-1 means not assigned a mode yet
 
-        public ExtendedToolbar upper;
         public boolean noteEditable;
 
-        public static final int DEFAULT_MODE = MODE_VIEW;
 
 
         public NoteHolder(Context context,Notebook notebook) {

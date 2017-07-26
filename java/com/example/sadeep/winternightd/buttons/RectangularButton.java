@@ -25,7 +25,7 @@ import android.widget.ImageView;
  *      2. button is [kept] highlighted when the finger is on the button (as long as the finger is touching the button)
  */
 
-public abstract class MultiStatusButton extends ImageView {
+public abstract class RectangularButton extends ImageView {
 
 
 
@@ -36,15 +36,15 @@ public abstract class MultiStatusButton extends ImageView {
 
     protected int backgroundColorTouchDown;  //touchdown(background will be this color as long as the finger is on button)
 
-    public MultiStatusButton(Context context) {
+    public RectangularButton(Context context) {
         super(context);
         init();
     }
-    public MultiStatusButton(Context context, AttributeSet attrs) {
+    public RectangularButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-    public MultiStatusButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RectangularButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
 
@@ -67,7 +67,7 @@ public abstract class MultiStatusButton extends ImageView {
                 if (event.getAction() == MotionEvent.ACTION_UP)
                 {
                     updateColorsForModeChanges(); //reverts to the default colors of the current mode.
-                    MultiStatusButton.this.performClick(); //Because we return true for onTouch, android doesn't fire the Click event. So we do.
+                    RectangularButton.this.performClick(); //Because we return true for onTouch, android doesn't fire the Click event. So we do.
                 }
 
                 if(event.getAction() == MotionEvent.ACTION_CANCEL)updateColorsForModeChanges(); //remove the highlighting when user moves the finger away from the button.

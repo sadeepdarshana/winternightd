@@ -24,8 +24,10 @@ import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.N
  */
 
 public class NoteHolderModes {
+    
     public static final int MODE_VIEW = 0;
     public static final int MODE_EDIT = 1;
+    public static final int DEFAULT_MODE = MODE_VIEW;
 
     public static class ModeView{
 

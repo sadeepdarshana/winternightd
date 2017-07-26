@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         >
 
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -40,8 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -73,8 +73,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -106,8 +106,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -139,8 +139,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -172,8 +172,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -205,8 +205,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -238,8 +238,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -271,8 +271,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -304,8 +304,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -337,8 +337,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -370,8 +370,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -403,8 +403,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -436,8 +436,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -469,8 +469,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -502,8 +502,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -535,8 +535,8 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
-        <com.example.sadeep.winternightd.misc.TransparentCard
+        </com.example.sadeep.winternightd.misc.SexyCard>
+        <com.example.sadeep.winternightd.misc.SexyCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -568,7 +568,7 @@
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"/>
 
-        </com.example.sadeep.winternightd.misc.TransparentCard>
+        </com.example.sadeep.winternightd.misc.SexyCard>
     </LinearLayout>
 
 </merge>

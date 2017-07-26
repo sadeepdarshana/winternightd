@@ -10,19 +10,19 @@ import android.widget.EditText;
  * Created by Sadeep on 7/23/2017.
  */
 
-public class TransparentCard extends CardView {
-    public TransparentCard(Context context) {
+public class SexyCard extends CardView {
+    public SexyCard(Context context) {
         super(context);
         init();
     }
 
 
-    public TransparentCard(Context context, AttributeSet attrs) {
+    public SexyCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public TransparentCard(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SexyCard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

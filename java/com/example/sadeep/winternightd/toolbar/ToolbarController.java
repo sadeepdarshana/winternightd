@@ -42,4 +42,8 @@ final public class ToolbarController {
             toolbars.get(i).updateStatus(spanStatus);
         }
     }
+
+    public static void refreshToolbars(){
+        dispatchToolbarUpdates(LiveFormattingStatus.format);
+    }
 }
