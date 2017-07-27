@@ -4,9 +4,15 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+
+import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
+import com.example.sadeep.winternightd.misc.NotebookItemChamber;
+import com.example.sadeep.winternightd.misc.Utils;
 
 /**
  * Created by Sadeep on 6/18/2017.
@@ -87,4 +93,44 @@ public class XAnimation {
         colorAnimation.start();
     }
 
+    public static void squeezeAndRemove(final View view, int duration, final int dimension,int delay){
+        int start=0;
+        if(dimension==DIMENSION_WIDTH)start=view.getWidth();
+        if(dimension==DIMENSION_HEIGHT)start=view.getHeight();
+        changeDimension(view,duration,dimension,start,0,delay);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(view.getParent()!=null)((ViewGroup)view.getParent()).removeView(view);
+            }
+        }, delay + duration + 300);
+    }
+
+    public static void addAndExpand(View view, ViewGroup parent,int indexInParent, int duration, int dimension, int delay) {
+        int end=0;
+        if(dimension==DIMENSION_WIDTH)end=Utils.getWidth(view);
+        if(dimension==DIMENSION_HEIGHT)end=Utils.getHeight(view);
+
+        try {
+            if (dimension == DIMENSION_WIDTH) end = Math.max(view.getLayoutParams().width,end);
+            if (dimension == DIMENSION_HEIGHT) end = Math.max(view.getLayoutParams().height,end);
+        }catch (Exception e){}
+
+        addAndExpand(view,parent,indexInParent,duration,dimension,delay,end,0);
+    }
+
+    public static void addAndExpand(final View view, ViewGroup parent, int indexInParent, int duration, final int dimension, int delay, int end, final int endParam) {
+
+        parent.addView(view,indexInParent);
+
+        changeDimension(view,duration,dimension,0,end,delay);
+
+        if(endParam!=0)view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(dimension==DIMENSION_WIDTH)view.getLayoutParams().width=endParam;
+                if(dimension==DIMENSION_HEIGHT)view.getLayoutParams().height=endParam;
+            }
+        }, delay + duration + 50);
+    }
 }

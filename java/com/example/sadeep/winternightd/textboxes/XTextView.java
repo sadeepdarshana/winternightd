@@ -32,7 +32,8 @@ public class XTextView extends TextView{
     }
     private void init() {
 
-        setPadding(0,0,0,3*Globals.dp2px);
+        //setPadding(0,0,0,3*Globals.dp2px); dunno why?
+        setPadding(0,0,0,0);
         setBackgroundColor(Color.TRANSPARENT);
         setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize);

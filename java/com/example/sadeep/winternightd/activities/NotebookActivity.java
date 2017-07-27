@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.animation.XAnimation;
 import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
 import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
 import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
@@ -22,6 +23,8 @@ import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
 public class NotebookActivity extends NoteContainingActivity {
@@ -41,6 +44,8 @@ public class NotebookActivity extends NoteContainingActivity {
     private LinearLayout notebookSpace;
 
     public NoteContainingActivityRootView rootView;
+
+    private CountDownTimer notebookActivityTimer;
 
     public NotebookActivity(){
         contextSessionId=new java.util.Random().nextLong();
@@ -107,24 +112,40 @@ public class NotebookActivity extends NoteContainingActivity {
         newNote = newNoteBottomBar.getNote();
         activeNote = newNote;
 
-        getWindow().setBackgroundDrawableResource(R.drawable.yyy);
+        //getWindow().setBackgroundDrawableResource(R.drawable.yyy);
         setActionBarMode(NoteContainingActivity.ACTIONBAR_NORMAL);
 
 
-        new CountDownTimer(2000000000, 500)
+        notebookActivityTimer =new CountDownTimer(2000000000, 500)
         {
             public void onTick(long millisUntilFinished)
             {
+                onNotebookScrolled(-1);
                 if(contextSessionId!=NotebookActivity.classContextSessionId)this.cancel();
                 if(notebook.editor.activeNote==null){
-                    newNoteBottomBar.setVisibility(View.VISIBLE);
+                    if(!newNoteBottomBar.layoutShown) {
+                        XAnimation.addAndExpand(newNoteBottomBar,bottombarSpace,0,300,XAnimation.DIMENSION_HEIGHT,0,newNoteBottomBar.storedHeight,WRAP_CONTENT);
+                        newNoteBottomBar.layoutShown=true;
+                        onNotebookScrolled(-1);
+                    }
                 }else {
-                    newNoteBottomBar.setVisibility(View.GONE);
+                    if(newNoteBottomBar.layoutShown) {
+                        newNoteBottomBar.layoutShown=false;
+                        newNoteBottomBar.storedHeight=newNoteBottomBar.getHeight();
+                        XAnimation.squeezeAndRemove(newNoteBottomBar,300,XAnimation.DIMENSION_HEIGHT,0);
+                    }
                 }
             }
 
             public void onFinish(){}
-        }.start();
+        };
+
+        newNoteBottomBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notebookActivityTimer.start();
+            }
+        },200);
     }
 
     @Override
@@ -187,7 +208,7 @@ public class NotebookActivity extends NoteContainingActivity {
 
     public void onNotebookScrolled(int dy) {
         if(notebook.editor.activeNote ==null) {
-            if (dy < 0) {
+            if (dy < 0  && ((LinearLayoutManager) notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition() != 0 ) {
                 if (newNote.isEmpty()) {
                     newNoteBottomBar.setGlassModeEnabled(true);
                     newNoteBottomBar.setToolbarVisibility(false);

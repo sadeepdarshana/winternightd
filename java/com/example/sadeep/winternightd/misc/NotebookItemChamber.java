@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.sadeep.winternightd.animation.XAnimation;
+
 /**
  * Created by Sadeep on 7/24/2017.
  */
@@ -27,13 +29,16 @@ public class NotebookItemChamber extends LinearLayout {
     }
 
     public void setChamberContent(View content, boolean animate){
-        removeAllViews();
-        addView(content);
-        //// TODO: 7/24/2017 animate this
+        emptyChamber(animate);
+
+        if(animate)XAnimation.addAndExpand(content,this,0,300,XAnimation.DIMENSION_HEIGHT,0);
+        else addView(content,0);
     }
     public void emptyChamber(boolean animate){
-        removeAllViews();
-        //// TODO: 7/24/2017 animate
+        if(animate)for(int i=0;i<getChildCount();i++)
+            XAnimation.squeezeAndRemove(getChildAt(i),300,XAnimation.DIMENSION_HEIGHT,0);
+        else
+            removeAllViews();
     }
 
     public View getChamberContent(){

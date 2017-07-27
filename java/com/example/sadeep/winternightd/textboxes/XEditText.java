@@ -66,7 +66,9 @@ public class XEditText extends EditText implements View.OnKeyListener {
 
         setPadding(0,0,0,0);
         setBackgroundColor(Color.TRANSPARENT);
-        setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setLayoutParams(params);
+
         setTextSize(TypedValue.COMPLEX_UNIT_FRACTION, Globals.defaultFontSize);
 
         setImeOptions(getImeOptions()| EditorInfo.IME_FLAG_NO_EXTRACT_UI); //disables (fullscreen keyboard when device at landscape mode)

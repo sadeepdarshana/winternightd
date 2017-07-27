@@ -25,6 +25,9 @@ public class BottomBarCombined extends LinearLayout{
 
     public static final int MODE_EXPANDED = 1;
 
+    public int storedHeight;
+
+    public boolean layoutShown=true;
 
 
     public BottomBarCombined(Context context) {

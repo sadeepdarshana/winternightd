@@ -55,8 +55,6 @@ public class Notebook extends RecyclerView {
 
         editor = new Editor(this);
 
-        dataHandler = new NotebookDataHandler(notebookGuid);
-        setAdapter(new NotebookAdapter(notebookActivity,new NotebookCursorReader(dataHandler.getCursor()),this));
 
         layoutManager = new LinearLayoutManager(notebookActivity) {
             @Override
@@ -69,6 +67,9 @@ public class Notebook extends RecyclerView {
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         setLayoutManager(layoutManager);
+
+
+        refresh();
 
         postDelayed(new Runnable() {
             @Override
@@ -99,6 +100,31 @@ public class Notebook extends RecyclerView {
     public void refresh() {
         dataHandler = new NotebookDataHandler(notebookGuid);
         setAdapter(new NotebookAdapter(notebookActivity,new NotebookCursorReader(dataHandler.getCursor()),this));
+
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                smoothScrollToPosition(0);
+            }
+        },0);
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                smoothScrollToPosition(0);
+            }
+        },100);
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                smoothScrollToPosition(0);
+            }
+        },200);
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                smoothScrollToPosition(0);
+            }
+        },500);
     }
 
     @Override
