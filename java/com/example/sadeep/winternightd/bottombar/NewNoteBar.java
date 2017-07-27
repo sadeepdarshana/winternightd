@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.animation.XAnimation;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.note.NoteFactory;
@@ -77,11 +78,11 @@ public class NewNoteBar  extends LinearLayout{
         {
             public void onTick(long millisUntilFinished)
             {
+                if(((NotebookActivity)getContext()).contextSessionId!=NotebookActivity.classContextSessionId)this.cancel();
                 if(note.isEmpty())onNoteIsEmpty();
                 if (note.getHeight() > 1.5 * emptyNoteHeight && emptyNoteHeight!=0)onNoteHeightMatured();
                 if(!note.isEmpty())onNoteHasContent();
             }
-
 
             public void onFinish(){}
         }.start();

@@ -3,7 +3,6 @@ package com.example.sadeep.winternightd.misc;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.widget.EditText;
 
@@ -23,7 +22,6 @@ final public  class Globals {
     public static void initialize(Context context){
         dp2px = (int)((float)context.getResources().getDisplayMetrics().densityDpi / (float) DisplayMetrics.DENSITY_DEFAULT);
         defaultFontSize = new EditText(context).getTextSize();
-
     }
 
 }

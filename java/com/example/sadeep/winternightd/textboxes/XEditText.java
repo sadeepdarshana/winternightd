@@ -3,8 +3,6 @@ package com.example.sadeep.winternightd.textboxes;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -22,7 +20,6 @@ import android.view.inputmethod.InputConnectionWrapper;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.sadeep.winternightd.activities.NoteContainingActivity;
 import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.field.fields.Field;
 import com.example.sadeep.winternightd.field.SingleText;
@@ -320,14 +317,6 @@ public class XEditText extends EditText implements View.OnKeyListener {
         //make the XSelection
         XSelection.newSelection(boundField.getNote(),start,end,this);
         //isFocused();
-        new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                d.p(XEditText.this.isFocused());
-                sendEmptyMessageDelayed(0, 100);
-                d.p(((NoteContainingActivity) getContext()).getCurrentFocus());
-            }
-        };
 
 
         return true;

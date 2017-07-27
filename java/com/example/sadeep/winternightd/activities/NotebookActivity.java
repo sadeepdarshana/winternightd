@@ -3,6 +3,7 @@ package com.example.sadeep.winternightd.activities;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,6 +26,9 @@ import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
 
 public class NotebookActivity extends NoteContainingActivity {
 
+    public static long classContextSessionId;   //used for the GC of the activity
+    public long contextSessionId;               //   ''
+
     private Notebook notebook;
     public BottomBarCombined newNoteBottomBar;
     private Note newNote;
@@ -36,7 +40,12 @@ public class NotebookActivity extends NoteContainingActivity {
     LinearLayout bottombarSpace;
     private LinearLayout notebookSpace;
 
-    private NoteContainingActivityRootView rootView;
+    public NoteContainingActivityRootView rootView;
+
+    public NotebookActivity(){
+        contextSessionId=new java.util.Random().nextLong();
+        classContextSessionId=contextSessionId;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +78,7 @@ public class NotebookActivity extends NoteContainingActivity {
             protected void onAttachClick(View v) {
                 if(!((AttachBoxOpener)v).isAttachboxOpen()) {
                     ((AttachBoxOpener) v).setAttachboxOpened(true);
-                    AttachBoxManager.display(v, new OnAttachBoxItemClick() {
+                    AttachBoxManager.display(v,((NotebookActivity)v.getContext()).rootView.bottomLeftMarker, new OnAttachBoxItemClick() {
                         @Override
                         public void buttonClicked(int attachButtonId) {
                             newNote.attachboxRequests(attachButtonId);
@@ -102,6 +111,20 @@ public class NotebookActivity extends NoteContainingActivity {
         setActionBarMode(NoteContainingActivity.ACTIONBAR_NORMAL);
 
 
+        new CountDownTimer(2000000000, 500)
+        {
+            public void onTick(long millisUntilFinished)
+            {
+                if(contextSessionId!=NotebookActivity.classContextSessionId)this.cancel();
+                if(notebook.editor.activeNote==null){
+                    newNoteBottomBar.setVisibility(View.VISIBLE);
+                }else {
+                    newNoteBottomBar.setVisibility(View.GONE);
+                }
+            }
+
+            public void onFinish(){}
+        }.start();
     }
 
     @Override
@@ -177,4 +200,7 @@ public class NotebookActivity extends NoteContainingActivity {
         }
     }
 
+    public Notebook getNotebook() {
+        return notebook;
+    }
 }

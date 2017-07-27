@@ -18,6 +18,7 @@ import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.fields.BulletedField;
 import com.example.sadeep.winternightd.field.fields.CheckedField;
 import com.example.sadeep.winternightd.field.fields.NumberedField;
+import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.spans.SpansFactory;
@@ -108,6 +109,7 @@ public class Note extends LinearLayout {
 
         f.setIsEditable(isEditable);
 
+
         super.addView(child,index,params);
 
         f.onAttachedToNote();
@@ -121,6 +123,8 @@ public class Note extends LinearLayout {
     }
     @Override
     public void removeViewAt(int index) {
+        Notebook.suspendScrollTemporary();
+
         super.removeViewAt(index);
 
         if(getFieldCount()-1>=index)//if the removed is not the bottom most Field
@@ -361,6 +365,11 @@ public class Note extends LinearLayout {
     public void readFromFieldDataStream(FieldDataStream stream){
         while (!stream.endOfStream())
             addView(FieldFactory.fromFieldDataStream(getContext(), stream, isEditable));
+    }
+
+    public void revertTo(FieldDataStream stream){
+        removeAllViews();
+        readFromFieldDataStream(stream);
     }
 
 }

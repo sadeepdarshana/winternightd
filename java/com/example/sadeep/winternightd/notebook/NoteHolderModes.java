@@ -10,7 +10,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sadeep.winternightd.activities.NoteContainingActivity;
+import com.example.sadeep.winternightd.activities.NotebookActivity;
+import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
+import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
 import com.example.sadeep.winternightd.bottombar.ExtendedToolbar;
+import com.example.sadeep.winternightd.buttons.customizedbuttons.AttachBoxOpener;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.NotebookItemChamber;
 
@@ -24,7 +29,7 @@ import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.N
  */
 
 public class NoteHolderModes {
-    
+
     public static final int MODE_VIEW = 0;
     public static final int MODE_EDIT = 1;
     public static final int DEFAULT_MODE = MODE_VIEW;
@@ -37,7 +42,8 @@ public class NoteHolderModes {
             if(noteHolder.getNote()!=null)noteHolder.getNote().setEditable(false);
             noteHolder.noteEditable = false;
 
-            noteHolder.getUpperChamber().setChamberContent(new ViewUpper(noteHolder.getContext()),animate);
+            ViewUpper viewUpper = new ViewUpper(noteHolder.getContext());
+            noteHolder.getUpperChamber().setChamberContent(viewUpper,animate);
             noteHolder.getLowerChamber().emptyChamber(animate);
 
             noteHolder.setRadius(Globals.dp2px*4);
@@ -45,6 +51,7 @@ public class NoteHolderModes {
             final GestureDetector gestureDetector = new GestureDetector(noteHolder.getContext(), new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
+                    noteHolder.getNotebook().editor.cancelActiveNote();
                     noteHolder.getNoteSpace().setOnTouchListener(null);
                     noteHolder.setMode(MODE_EDIT,true);
                     setAsActiveNote(noteHolder);
@@ -62,6 +69,8 @@ public class NoteHolderModes {
             });
 
             noteHolder.mode = MODE_VIEW;
+
+            if(noteHolder.getNote()!=null)viewUpper.setDateTime(noteHolder.getNote().noteInfo.currentVersionTime);
         }
 
         public static void onBind(NotebookViewHolderUtils.NoteHolder noteHolder) {
@@ -69,7 +78,7 @@ public class NoteHolderModes {
             viewUpper.setDateTime(noteHolder.getNote().noteInfo.currentVersionTime);
         }
 
-        private static void setAsActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder) {
+        public static void setAsActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder) {
             noteHolder.getNotebook().noteHolderController.setAllNoteHoldersModeExcept(DEFAULT_MODE,noteHolder,true);
             noteHolder.getNotebook().editor.activeNote = noteHolder.getNote();
         }
@@ -88,6 +97,7 @@ public class NoteHolderModes {
                 dateTimeTextView = new TextView(context);
                 dateTimeTextView.setTextColor(0xff228822);
                 dateTimeTextView.setBackgroundColor(Color.TRANSPARENT);
+                //// TODO: 7/26/2017 reduce font size
                 setBackgroundColor(Color.TRANSPARENT);
                 addView(dateTimeTextView);
                 updateDateTimeTextView();
@@ -113,7 +123,7 @@ public class NoteHolderModes {
             noteHolder.noteEditable = true;
 
             noteHolder.getUpperChamber().setChamberContent(new EditUpper(noteHolder.getContext()),animate);
-            noteHolder.getLowerChamber().setChamberContent(new EditLower(noteHolder.getContext()),animate);
+            noteHolder.getLowerChamber().setChamberContent(new EditLower(noteHolder.getContext(),noteHolder),animate);
 
             noteHolder.setRadius(Globals.dp2px*23);
 
@@ -135,12 +145,43 @@ public class NoteHolderModes {
 
         public static class EditLower extends LinearLayout{
 
-            public EditLower(Context context) {
+            public EditLower(Context context, final NotebookViewHolderUtils.NoteHolder noteHolder) {
                 super(context);
                 NotebookItemChamber.LayoutParams params1 = new NotebookItemChamber.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 setLayoutParams(params1);
 
-                ExtendedToolbar extendedToolbar = new ExtendedToolbar(context,true,true, true);
+                ExtendedToolbar extendedToolbar = new ExtendedToolbar(context,true,true, true){
+                    @Override
+                    protected void onAttachClick(View v) {
+                        super.onAttachClick(v);
+                        if(!((AttachBoxOpener)v).isAttachboxOpen()) {
+                            ((AttachBoxOpener) v).setAttachboxOpened(true);
+                            AttachBoxManager.display(v,((NotebookActivity)v.getContext()).rootView.bottomLeftMarker, new OnAttachBoxItemClick() {
+                                @Override
+                                public void buttonClicked(int attachButtonId) {
+                                    Notebook.suspendScrollTemporary();
+                                    noteHolder.getNotebook().editor.activeNote.attachboxRequests(attachButtonId);
+                                }
+                            });
+                        }else{
+                            try {
+                                AttachBoxManager.popupWindow.dismiss();
+                            }catch (Exception e){}
+                        }
+                    }
+
+                    @Override
+                    protected void onCancelClick(View v) {
+                        super.onCancelClick(v);
+                        noteHolder.getNotebook().editor.cancelActiveNote();
+                    }
+
+                    @Override
+                    protected void onSendClick(View v) {
+                        super.onSendClick(v);
+                        noteHolder.getNotebook().editor.pushActiveNote();
+                    }
+                };
                 addView(extendedToolbar);
 
                 EditLower.LayoutParams params2= new EditLower.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

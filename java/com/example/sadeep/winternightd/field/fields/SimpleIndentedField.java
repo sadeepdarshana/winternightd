@@ -6,18 +6,18 @@ package com.example.sadeep.winternightd.field.fields;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Layout;
 import android.text.Spanned;
 import android.widget.TextView;
 
+import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.dumping.FieldDataStream;
 import com.example.sadeep.winternightd.field.FieldFactory;
 import com.example.sadeep.winternightd.field.SingleText;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
+import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.textboxes.EditTextView;
 import com.example.sadeep.winternightd.textboxes.XEditText;
 import com.example.sadeep.winternightd.spans.RichText;
@@ -89,6 +89,7 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
      */
     @Override
     public void backspaceField() {
+
         CharSequence charSequenceNextField = null;
         if(getNote().getChildCount()-1!=this.getFieldIndex()){
             Field nextfield = getNote().getFieldAt(this.getFieldIndex()+1);
@@ -101,12 +102,12 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
         this.getMainTextBox().requestFocus();
         ((XEditText)this.getMainTextBox()).setSelection(len);
 
-        new Handler(){
+        postDelayed(new Runnable() {
             @Override
-            public void handleMessage(Message msg) {
+            public void run() {
                 getNote().removeView(getNote().getFieldAt(getFieldIndex()+1));
             }
-        }.sendMessageDelayed(new Message(),1);
+        },1);
 
 
     }
@@ -121,6 +122,8 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
     public boolean onEnterKeyPressed(TextView textView) {
         if(this.getClass()==SimpleIndentedField.class)return false;
 
+        try{((NotebookActivity)getContext()).getNotebook().setLayoutFrozen(true);}catch (Exception e){};
+
         CharSequence textTransferred = textView.getText().subSequence(textView.getSelectionStart(),textView.length());
         CharSequence textRemains = textView.getText().subSequence(0,textView.getSelectionStart()-1);
 
@@ -128,12 +131,13 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
         getNote().addView(newfield,getFieldIndex()+1);
 
 
-        newfield.getMainTextBox().
-                setText(textTransferred);
+        newfield.getMainTextBox().setText(textTransferred);
         this.getMainTextBox().setText(textRemains);
 
         newfield.getMainTextBox().requestFocus();
         ((XEditText)newfield.getMainTextBox()).setSelection(0);
+
+        try{((NotebookActivity)getContext()).getNotebook().setLayoutFrozen(false);}catch (Exception e){};
 
         newfield.setIndent(this.getIndent());
 
@@ -161,18 +165,15 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
         newfield.getMainTextBox().requestFocus();
         ((XEditText)newfield.getMainTextBox()).setSelection(0);
 
-        new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
 
+        post(new Runnable() {
+            @Override
+            public void run() {
                 newfield.setIndent(SimpleIndentedField.this.getIndent());
                 getNote().removeView(SimpleIndentedField.this);
                 NoteContainingActivityRootView.resumeLayout();
-
             }
-        }.sendMessageDelayed(new Message(),0);
-
-
+        });
 
     }
 

@@ -1,6 +1,5 @@
 package com.example.sadeep.winternightd.notebook;
 
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,15 +35,20 @@ public class Notebook extends RecyclerView {
 
     public NoteHolderController noteHolderController = new NoteHolderController();
 
+    static Notebook deletethis=null;
+
     private static Handler scrollresumer = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            scrollEnabled = true;
+
+            deletethis.setLayoutFrozen(false);
+            //scrollEnabled = true;
         }
     };;
 
     public Notebook(NotebookActivity notebookActivity, String notebookGuid, BottomBarCombined bottomBar) {
         super(notebookActivity);
+        deletethis=this;
         this.notebookActivity = notebookActivity;
         this.notebookGuid = notebookGuid;
         this.bottomBar = bottomBar;
@@ -105,7 +109,9 @@ public class Notebook extends RecyclerView {
 
 
     public static void suspendScrollTemporary() {
-        scrollEnabled = false;
+        deletethis.setLayoutFrozen(true);
+        //scrollEnabled = false;
+
         scrollresumer.removeCallbacksAndMessages(null);
         scrollresumer.sendEmptyMessageDelayed(0,400);
     }
@@ -129,7 +135,6 @@ public class Notebook extends RecyclerView {
     public class Editor{
         private Notebook notebook;
         public Note activeNote;
-        public NoteHolder noteHolder;
 
 
         public Editor(Notebook notebook) {
@@ -151,8 +156,14 @@ public class Notebook extends RecyclerView {
         }
 
         public void cancelActiveNote(){
-            activeNote=null;
-            noteHolderController.setAllNoteHoldersModeExcept(NoteHolderModes.DEFAULT_MODE,null,true);
+            try {
+                noteHolderController.setAllNoteHoldersModeExcept(NoteHolderModes.DEFAULT_MODE, null, true);
+
+                NotebookCursorReader reader = new NotebookCursorReader(dataHandler.getCursorForNote(activeNote.noteInfo.noteUUID));
+                activeNote.revertTo(reader.getFieldDataStream(0));
+
+                activeNote = null;
+            }catch (Exception e){}
         }
     }
 }

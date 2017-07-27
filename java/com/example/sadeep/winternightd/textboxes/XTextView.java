@@ -2,8 +2,6 @@ package com.example.sadeep.winternightd.textboxes;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
