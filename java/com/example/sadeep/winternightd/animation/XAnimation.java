@@ -8,10 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 
-import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
-import com.example.sadeep.winternightd.misc.NotebookItemChamber;
 import com.example.sadeep.winternightd.misc.Utils;
 
 /**

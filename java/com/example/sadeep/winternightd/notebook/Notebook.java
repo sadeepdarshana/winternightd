@@ -8,14 +8,12 @@ import android.view.View;
 
 import com.example.sadeep.winternightd.localstorage.NotebookCursorReader;
 import com.example.sadeep.winternightd.activities.NotebookActivity;
-import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
+import com.example.sadeep.winternightd.bottombar.BottomBar;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.NoteHolder;
 
 import java.util.ArrayList;
-
-import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
 
 /**
  * Created by Sadeep on 10/26/2016.
@@ -27,7 +25,7 @@ public class Notebook extends RecyclerView {
     private NotebookDataHandler dataHandler;
     private LinearLayoutManager layoutManager;
 
-    public BottomBarCombined bottomBar;
+    public BottomBar bottomBar;
 
     public static boolean scrollEnabled = true;
 
@@ -46,7 +44,7 @@ public class Notebook extends RecyclerView {
         }
     };;
 
-    public Notebook(NotebookActivity notebookActivity, String notebookGuid, BottomBarCombined bottomBar) {
+    public Notebook(NotebookActivity notebookActivity, String notebookGuid, BottomBar bottomBar) {
         super(notebookActivity);
         deletethis=this;
         this.notebookActivity = notebookActivity;

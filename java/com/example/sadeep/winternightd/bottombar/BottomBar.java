@@ -12,7 +12,7 @@ import com.example.sadeep.winternightd.note.Note;
  * Created by Sadeep on 7/10/2017.
  */
 
-public class BottomBarCombined extends LinearLayout{
+public class BottomBar extends LinearLayout{
 
 
     public ExtendedToolbar extendedToolbar;
@@ -30,7 +30,7 @@ public class BottomBarCombined extends LinearLayout{
     public boolean layoutShown=true;
 
 
-    public BottomBarCombined(Context context) {
+    public BottomBar(Context context) {
         super(context);
 
         setOrientation(VERTICAL);
@@ -41,19 +41,19 @@ public class BottomBarCombined extends LinearLayout{
 
             @Override
             protected void onSendClick(View v) {
-                BottomBarCombined.this.onSendClick(v);
+                BottomBar.this.onSendClick(v);
             }
 
             @Override
             protected void onAttachClick(View v) {
-                BottomBarCombined.this.onAttachClick(v);
+                BottomBar.this.onAttachClick(v);
             }
         };
         newNoteBar = new NewNoteBar(context,true,false){
             @Override
             protected void onNoteFocused(){
-                BottomBarCombined.this.setGlassModeEnabled(false);
-                BottomBarCombined.this.setToolbarVisibility(true);
+                BottomBar.this.setGlassModeEnabled(false);
+                BottomBar.this.setToolbarVisibility(true);
             }
 
             @Override
@@ -68,18 +68,18 @@ public class BottomBarCombined extends LinearLayout{
 
             @Override
             protected void onSendClick(View v) {
-                BottomBarCombined.this.onSendClick(v);
+                BottomBar.this.onSendClick(v);
             }
 
             @Override
             protected void onAttachClick(View v) {
-                BottomBarCombined.this.onAttachClick(v);
+                BottomBar.this.onAttachClick(v);
             }
 
             @Override
             protected void onNoteHasContent() {
-                BottomBarCombined.this.setToolbarVisibility(true);
-                BottomBarCombined.this.setGlassModeEnabled(false);
+                BottomBar.this.setToolbarVisibility(true);
+                BottomBar.this.setGlassModeEnabled(false);
             }
         };
 

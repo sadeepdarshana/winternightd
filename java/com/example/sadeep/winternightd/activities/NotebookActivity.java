@@ -20,7 +20,7 @@ import com.example.sadeep.winternightd.localstorage.DataConnection;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.notebook.Notebook;
-import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
+import com.example.sadeep.winternightd.bottombar.BottomBar;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
 
@@ -33,7 +33,7 @@ public class NotebookActivity extends NoteContainingActivity {
     public long contextSessionId;               //   ''
 
     private Notebook notebook;
-    public BottomBarCombined newNoteBottomBar;
+    public BottomBar newNoteBottomBar;
     private Note newNote;
     private Note activeNote;
 
@@ -78,7 +78,7 @@ public class NotebookActivity extends NoteContainingActivity {
         XClipboard.initialize(this);
 
 
-        newNoteBottomBar = new BottomBarCombined(this){
+        newNoteBottomBar = new BottomBar(this){
             @Override
             protected void onAttachClick(View v) {
                 if(!((AttachBoxOpener)v).isAttachboxOpen()) {
@@ -120,13 +120,13 @@ public class NotebookActivity extends NoteContainingActivity {
         {
             public void onTick(long millisUntilFinished)
             {
-                onNotebookScrolled(-1);
                 if(contextSessionId!=NotebookActivity.classContextSessionId)this.cancel();
                 if(notebook.editor.activeNote==null){
                     if(!newNoteBottomBar.layoutShown) {
                         XAnimation.addAndExpand(newNoteBottomBar,bottombarSpace,0,300,XAnimation.DIMENSION_HEIGHT,0,newNoteBottomBar.storedHeight,WRAP_CONTENT);
                         newNoteBottomBar.layoutShown=true;
-                        onNotebookScrolled(-1);
+                        enableBottomBarToGlassModeIfNecessary();
+                        disableBottomBarGlassModeIfNecessary();
                     }
                 }else {
                     if(newNoteBottomBar.layoutShown) {
@@ -207,16 +207,25 @@ public class NotebookActivity extends NoteContainingActivity {
     }
 
     public void onNotebookScrolled(int dy) {
-        if(notebook.editor.activeNote ==null) {
-            if (dy < 0  && ((LinearLayoutManager) notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition() != 0 ) {
-                if (newNote.isEmpty()) {
-                    newNoteBottomBar.setGlassModeEnabled(true);
-                    newNoteBottomBar.setToolbarVisibility(false);
-                }
-            }
-            if (((LinearLayoutManager) notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0) {
-                newNoteBottomBar.setGlassModeEnabled(false);
-            }
+        if(dy<0)disableBottomBarGlassModeIfNecessary();
+    }
+
+    public void disableBottomBarGlassModeIfNecessary(){
+        if (  notebook.editor.activeNote == null
+            &&((LinearLayoutManager) notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)
+        {
+            newNoteBottomBar.setGlassModeEnabled(false);
+        }
+    }
+
+    public void enableBottomBarToGlassModeIfNecessary(){
+        if (   notebook.editor.activeNote == null
+            && newNote.isEmpty()
+            && ((LinearLayoutManager) notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition() != 0)
+        {
+
+            newNoteBottomBar.setGlassModeEnabled(true);
+            newNoteBottomBar.setToolbarVisibility(false);
 
         }
     }

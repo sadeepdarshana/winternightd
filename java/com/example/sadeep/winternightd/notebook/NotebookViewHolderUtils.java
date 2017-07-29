@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import com.example.sadeep.winternightd.bottombar.BottomBarCombined;
+import com.example.sadeep.winternightd.bottombar.BottomBar;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.note.Note;
-import com.example.sadeep.winternightd.bottombar.ExtendedToolbar;
 
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_EDIT;
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
@@ -106,7 +105,7 @@ final class NotebookViewHolderUtils {
         public Footer(Context context, final Notebook notebook) {
             super(context);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, Utils.getHeight(new BottomBarCombined(context))+Globals.dp2px*10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, Utils.getHeight(new BottomBar(context))+Globals.dp2px*10);
             setLayoutParams(params);
 
             notebook.bottomBar.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {

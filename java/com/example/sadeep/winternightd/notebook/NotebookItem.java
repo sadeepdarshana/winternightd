@@ -14,7 +14,6 @@ import com.example.sadeep.winternightd.misc.SexyCard;
  */
 
 public class NotebookItem  extends SexyCard {
-    private Context context;
 
     private LinearLayout notebookItemInnerLayout;
     private NotebookItemChamber lowerChamber;
@@ -23,7 +22,6 @@ public class NotebookItem  extends SexyCard {
 
     public NotebookItem(Context context) {
         super(context);
-        this.context = context;
 
 
         notebookItemInnerLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.notebookitem,null);
