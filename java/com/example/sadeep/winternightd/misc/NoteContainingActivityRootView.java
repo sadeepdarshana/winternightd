@@ -36,6 +36,8 @@ public class NoteContainingActivityRootView extends RelativeLayout {
         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         bottomLeftMarker.setLayoutParams(params);
         addView(bottomLeftMarker);
+
+
     }
 
     @Override

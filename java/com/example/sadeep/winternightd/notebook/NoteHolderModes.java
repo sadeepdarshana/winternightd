@@ -82,6 +82,7 @@ public class NoteHolderModes {
         public static void setAsActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder) {
             noteHolder.getNotebook().noteHolderController.setAllNoteHoldersModeExcept(DEFAULT_MODE,noteHolder,true);
             noteHolder.getNotebook().editor.activeNote = noteHolder.getNote();
+            noteHolder.getNotebook().notebookActivity.refreshBottomBar();
         }
 
         public static class ViewUpper extends FrameLayout{

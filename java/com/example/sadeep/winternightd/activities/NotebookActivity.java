@@ -17,12 +17,14 @@ import com.example.sadeep.winternightd.clipboard.XClipboard;
 import com.example.sadeep.winternightd.dumping.RawFieldDataStream;
 import com.example.sadeep.winternightd.field.fields.SimpleIndentedField;
 import com.example.sadeep.winternightd.localstorage.DataConnection;
+import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.bottombar.BottomBar;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
+import com.example.sadeep.winternightd.temp.d;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -44,8 +46,6 @@ public class NotebookActivity extends NoteContainingActivity {
     private LinearLayout notebookSpace;
 
     public NoteContainingActivityRootView rootView;
-
-    private CountDownTimer notebookActivityTimer;
 
     public NotebookActivity(){
         contextSessionId=new java.util.Random().nextLong();
@@ -115,39 +115,53 @@ public class NotebookActivity extends NoteContainingActivity {
         //getWindow().setBackgroundDrawableResource(R.drawable.yyy);
         setActionBarMode(NoteContainingActivity.ACTIONBAR_NORMAL);
 
+        Utils.setKeyboardVisibilityListener(this,new Utils.KeyboardVisibilityListener() {
+            @Override
+            public void onKeyboardVisibilityChanged(boolean keyboardVisible,final int size) {
+                if(!keyboardVisible)return;
 
-        notebookActivityTimer =new CountDownTimer(2000000000, 500)
-        {
-            public void onTick(long millisUntilFinished)
-            {
-                if(contextSessionId!=NotebookActivity.classContextSessionId)this.cancel();
-                if(notebook.editor.activeNote==null){
-                    if(!newNoteBottomBar.layoutShown) {
-                        XAnimation.addAndExpand(newNoteBottomBar,bottombarSpace,0,300,XAnimation.DIMENSION_HEIGHT,0,newNoteBottomBar.storedHeight,WRAP_CONTENT);
-                        if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()<=1)
-                            XAnimation.vScroll(notebook,300,newNoteBottomBar.storedHeight);
-                        newNoteBottomBar.layoutShown=true;
-                        enableBottomBarToGlassModeIfNecessary();
-                        disableBottomBarGlassModeIfNecessary();
-                    }
-                }else {
-                    if(newNoteBottomBar.layoutShown) {
-                        newNoteBottomBar.layoutShown=false;
-                        newNoteBottomBar.storedHeight=newNoteBottomBar.getHeight();
-                        XAnimation.squeezeAndRemove(newNoteBottomBar,300,XAnimation.DIMENSION_HEIGHT,0);
-                    }
+                int index = notebook.layoutManager.findFirstVisibleItemPosition();
+                if(index<=3) {
+                    notebook.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            notebook.smoothScrollToPosition(0);
+                        }
+                    }, 400);
+                    notebook.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            notebook.smoothScrollToPosition(0);
+                        }
+                    }, 250);
+                    notebook.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            notebook.smoothScrollToPosition(0);
+                        }
+                    }, 100);
                 }
             }
+        });
+    }
 
-            public void onFinish(){}
-        };
-
-        newNoteBottomBar.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                notebookActivityTimer.start();
+    public void refreshBottomBar(){
+        if(notebook.editor.activeNote==null){
+            if(!newNoteBottomBar.layoutShown) {
+                XAnimation.addAndExpand(newNoteBottomBar,bottombarSpace,0,300,XAnimation.DIMENSION_HEIGHT,0,newNoteBottomBar.storedHeight,WRAP_CONTENT);
+                if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()<=1)
+                    XAnimation.vScroll(notebook,300,newNoteBottomBar.storedHeight);
+                newNoteBottomBar.layoutShown=true;
+                enableBottomBarToGlassModeIfNecessary();
+                disableBottomBarGlassModeIfNecessary();
             }
-        },200);
+        }else {
+            if(newNoteBottomBar.layoutShown) {
+                newNoteBottomBar.layoutShown=false;
+                newNoteBottomBar.storedHeight=newNoteBottomBar.getHeight();
+                XAnimation.squeezeAndRemove(newNoteBottomBar,300,XAnimation.DIMENSION_HEIGHT,0);
+            }
+        }
     }
 
     @Override

@@ -140,6 +140,7 @@ public class XAnimation {
 
     public static void addAndExpand(final View view, ViewGroup parent, int indexInParent, int duration, final int dimension, int delay, int end, final int endParam) {
 
+        if(view.getParent()!=null)((ViewGroup)view.getParent()).removeView(view);
         parent.addView(view,indexInParent);
 
         changeDimension(view,duration,dimension,0,end,delay);

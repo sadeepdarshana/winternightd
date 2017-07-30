@@ -43,6 +43,6 @@ public class ToolbarButton extends RectangularButton {
 
     @Override
     protected int[] getContentColorForMode() {
-        return  new int[]{Color.parseColor("#00AC00"), Color.parseColor("#1EE44A")   };
+        return  new int[]{Color.parseColor("#00AC00"), Color.parseColor("#0Eb42A")   };
     }
 }

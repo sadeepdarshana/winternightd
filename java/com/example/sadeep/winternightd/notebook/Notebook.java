@@ -20,11 +20,11 @@ import java.util.ArrayList;
  * Created by Sadeep on 10/26/2016.
  */
 public class Notebook extends RecyclerView {
-    private NotebookActivity notebookActivity;
+    public NotebookActivity notebookActivity;
     private String notebookGuid;
 
     private NotebookDataHandler dataHandler;
-    private LinearLayoutManager layoutManager;
+    public LinearLayoutManager layoutManager;
 
     public BottomBar bottomBar;
 
@@ -164,6 +164,7 @@ public class Notebook extends RecyclerView {
             activeNote = null;
             refresh();
             notebook.scrollToPosition(0);
+            notebookActivity.refreshBottomBar();
         }
 
         public void cancelActiveNote(){
@@ -175,6 +176,9 @@ public class Notebook extends RecyclerView {
 
                 activeNote = null;
             }catch (Exception e){}
+            Utils.hideKeyboard(getContext());
+
+            notebookActivity.refreshBottomBar();
         }
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.Spanned;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.sadeep.winternightd.spans.RichText;
@@ -37,5 +38,31 @@ public class Utils {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    public interface KeyboardVisibilityListener {
+        void onKeyboardVisibilityChanged(boolean keyboardVisible,int size);
+    }
+    public static void setKeyboardVisibilityListener(Activity activity, final KeyboardVisibilityListener keyboardVisibilityListener) {
+        final View contentView = activity.findViewById(android.R.id.content);
+        contentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private int mPreviousHeight;
+
+            @Override
+            public void onGlobalLayout() {
+                int newHeight = contentView.getHeight();
+                if (mPreviousHeight != 0) {
+                    if (mPreviousHeight > newHeight) {
+                        // Height decreased: keyboard was shown
+                        keyboardVisibilityListener.onKeyboardVisibilityChanged(true,mPreviousHeight-newHeight);
+                    } else if (mPreviousHeight < newHeight) {
+                        // Height increased: keyboard was hidden
+                        keyboardVisibilityListener.onKeyboardVisibilityChanged(false,mPreviousHeight-newHeight);
+                    } else {
+                        // No change
+                    }
+                }
+                mPreviousHeight = newHeight;
+            }
+        });
     }
 }
