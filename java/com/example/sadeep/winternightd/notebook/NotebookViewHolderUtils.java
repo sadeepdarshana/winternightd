@@ -105,7 +105,8 @@ final class NotebookViewHolderUtils {
         public Footer(Context context, final Notebook notebook) {
             super(context);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, Utils.getHeight(new BottomBar(context))+Globals.dp2px*10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                    notebook.bottomBar.storedHeight!=-1?notebook.bottomBar.getHeight():Utils.getHeight(new BottomBar(context))+Globals.dp2px*10);
             setLayoutParams(params);
 
             notebook.bottomBar.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -113,15 +114,6 @@ final class NotebookViewHolderUtils {
                 public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     {
                         Footer.this.getLayoutParams().height = bottom;
-                        Footer.this.requestLayout();
-                    }
-                }
-            });
-            notebook.bottomBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    if(notebook.bottomBar.getParent()==null){
-                        Footer.this.getLayoutParams().height = Globals.dp2px*10;
                         Footer.this.requestLayout();
                     }
                 }

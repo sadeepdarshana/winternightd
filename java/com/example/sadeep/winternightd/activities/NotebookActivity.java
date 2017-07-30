@@ -124,6 +124,8 @@ public class NotebookActivity extends NoteContainingActivity {
                 if(notebook.editor.activeNote==null){
                     if(!newNoteBottomBar.layoutShown) {
                         XAnimation.addAndExpand(newNoteBottomBar,bottombarSpace,0,300,XAnimation.DIMENSION_HEIGHT,0,newNoteBottomBar.storedHeight,WRAP_CONTENT);
+                        if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()<=1)
+                            XAnimation.vScroll(notebook,300,newNoteBottomBar.storedHeight);
                         newNoteBottomBar.layoutShown=true;
                         enableBottomBarToGlassModeIfNecessary();
                         disableBottomBarGlassModeIfNecessary();
@@ -207,7 +209,8 @@ public class NotebookActivity extends NoteContainingActivity {
     }
 
     public void onNotebookScrolled(int dy) {
-        if(dy<0)disableBottomBarGlassModeIfNecessary();
+        if(dy<0)enableBottomBarToGlassModeIfNecessary();
+        if(dy>0)disableBottomBarGlassModeIfNecessary();
     }
 
     public void disableBottomBarGlassModeIfNecessary(){

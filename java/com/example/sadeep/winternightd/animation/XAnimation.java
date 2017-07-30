@@ -21,11 +21,11 @@ public class XAnimation {
     public static final int DIMENSION_HEIGHT = 1;
 
 
-    public static void scroll(final HorizontalScrollView view, int duration, int amount){
-        scroll( view,  duration,  amount,0);
+    public static void hScroll(final HorizontalScrollView view, int duration, int amount){
+        hScroll( view,  duration,  amount,0);
     }
 
-    public static void scroll(final HorizontalScrollView view, int duration, int amount,int delay){
+    public static void hScroll(final HorizontalScrollView view, int duration, int amount, int delay){
         ValueAnimator animator = ValueAnimator.ofInt(0,amount).setDuration(duration);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             int preVal = 0;
@@ -33,6 +33,28 @@ public class XAnimation {
             public void onAnimationUpdate(ValueAnimator animation) {
                 Integer value = (Integer) animation.getAnimatedValue();
                 view.scrollBy(value-preVal,0);
+                preVal = value;
+            }
+        });
+        AnimatorSet set = new AnimatorSet();
+        set.play(animator);
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.setStartDelay(delay);
+        set.start();
+    }
+
+    public static void vScroll(final View view, int duration, int amount){
+        vScroll( view,  duration,  amount,0);
+    }
+
+    public static void vScroll(final View view, int duration, int amount, int delay){
+        ValueAnimator animator = ValueAnimator.ofInt(0,amount).setDuration(duration);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            int preVal = 0;
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+                view.scrollBy(0,value-preVal);
                 preVal = value;
             }
         });

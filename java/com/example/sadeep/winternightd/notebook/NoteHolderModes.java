@@ -2,6 +2,7 @@ package com.example.sadeep.winternightd.notebook;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -97,7 +98,7 @@ public class NoteHolderModes {
                 dateTimeTextView = new TextView(context);
                 dateTimeTextView.setTextColor(0xff228822);
                 dateTimeTextView.setBackgroundColor(Color.TRANSPARENT);
-                //// TODO: 7/26/2017 reduce font size
+                dateTimeTextView.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize*.67f);
                 setBackgroundColor(Color.TRANSPARENT);
                 addView(dateTimeTextView);
                 updateDateTimeTextView();

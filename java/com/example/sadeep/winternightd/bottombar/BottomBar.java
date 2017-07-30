@@ -25,7 +25,7 @@ public class BottomBar extends LinearLayout{
 
     public static final int MODE_EXPANDED = 1;
 
-    public int storedHeight;
+    public int storedHeight=-1;
 
     public boolean layoutShown=true;
 
