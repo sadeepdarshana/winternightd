@@ -124,6 +124,8 @@ public class BottomBar extends LinearLayout{
 
     public void setToolbarVisibility(boolean visible){
         extendedToolbar.setToolbarVisibility(visible,true);
+        if(visible)extendedToolbar.setBackgroundColor(0x88ebebeb);
+        else extendedToolbar.setBackgroundColor(0);
     }
     public void setGlassModeEnabled(boolean visible){
         newNoteBar.setGlassModeEnabled(visible,true);

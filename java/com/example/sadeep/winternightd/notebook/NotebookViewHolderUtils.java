@@ -106,7 +106,7 @@ final class NotebookViewHolderUtils {
             super(context);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
-                    notebook.bottomBar.storedHeight!=-1?notebook.bottomBar.getHeight():Utils.getHeight(new BottomBar(context))+Globals.dp2px*10);
+                    notebook.bottomBar.storedHeight!=-1?notebook.bottomBar.getHeight():Utils.getHeight(new BottomBar(context))+Globals.dp2px*20);
             setLayoutParams(params);
 
             notebook.bottomBar.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {

@@ -33,6 +33,10 @@ public class CatalogActivity extends AppCompatActivity {
         CatalogDataHandler.createCatalogTable();
         catalog = new Catalog(this);
         catalogspace.addView(catalog);
+
+
+        EditText titlebox = (EditText)findViewById(R.id.title);
+        titlebox.setFocusableInTouchMode(true);
     }
 
     public void onClick(View view) {

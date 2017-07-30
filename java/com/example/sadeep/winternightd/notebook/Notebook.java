@@ -10,6 +10,7 @@ import com.example.sadeep.winternightd.localstorage.NotebookCursorReader;
 import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.bottombar.BottomBar;
 import com.example.sadeep.winternightd.localstorage.NotebookDataHandler;
+import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.note.Note;
 import com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.NoteHolder;
 
@@ -50,6 +51,8 @@ public class Notebook extends RecyclerView {
         this.notebookActivity = notebookActivity;
         this.notebookGuid = notebookGuid;
         this.bottomBar = bottomBar;
+
+        setOverScrollMode(OVER_SCROLL_NEVER);
 
         editor = new Editor(this);
 
@@ -98,31 +101,15 @@ public class Notebook extends RecyclerView {
     public void refresh() {
         dataHandler = new NotebookDataHandler(notebookGuid);
         setAdapter(new NotebookAdapter(notebookActivity,new NotebookCursorReader(dataHandler.getCursor()),this));
-/*
+
         postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run() { 
                 smoothScrollToPosition(0);
             }
-        },0);
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                smoothScrollToPosition(0);
-            }
-        },200);
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                smoothScrollToPosition(0);
-            }
-        },400);
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                smoothScrollToPosition(0);
-            }
-        },1000);*/
+        },50);
+
+        Utils.hideKeyboard(getContext());
     }
 
     @Override

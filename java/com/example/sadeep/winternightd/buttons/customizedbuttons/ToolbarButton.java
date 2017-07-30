@@ -38,7 +38,7 @@ public class ToolbarButton extends RectangularButton {
 
     @Override
     protected int[] getBackgroundColorForMode() {
-        return new int[]{Color.TRANSPARENT          , Color.argb(20, 0, 0, 0)};
+        return new int[]{Color.TRANSPARENT          , Color.argb(35, 0, 0, 0)};
     }
 
     @Override

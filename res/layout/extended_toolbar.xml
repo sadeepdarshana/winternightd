@@ -8,8 +8,6 @@
 
     android:layout_margin="0dp"
 
-    android:background="#00000000"
-
     android:clipChildren="false"
 
     >

@@ -164,7 +164,7 @@ public class NewNoteBar  extends LinearLayout{
         if(glassModeEnabled == this.glassModeEnabled)return;
         this.glassModeEnabled = glassModeEnabled;
 
-        final int colorOpaque = Color.argb(246,252,252,252);        //color when glass mode disabled
+        final int colorOpaque = Color.argb(253,252,252,252);        //color when glass mode disabled
         final int colorIntermediate = Color.argb(75,150,150,150);   //transition between the two colors goes through this color
         final int colorTransparent = Color.argb(50,50,50,50);       //color when in glass mode
 
