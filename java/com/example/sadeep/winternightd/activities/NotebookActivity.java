@@ -3,7 +3,6 @@ package com.example.sadeep.winternightd.activities;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -24,8 +23,8 @@ import com.example.sadeep.winternightd.notebook.Notebook;
 import com.example.sadeep.winternightd.bottombar.BottomBar;
 import com.example.sadeep.winternightd.selection.XSelection;
 import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
-import com.example.sadeep.winternightd.temp.d;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
@@ -34,10 +33,10 @@ public class NotebookActivity extends NoteContainingActivity {
     public static long classContextSessionId;   //used for the GC of the activity
     public long contextSessionId;               //   ''
 
-    private Notebook notebook;
+    public Notebook notebook;
     public BottomBar newNoteBottomBar;
-    private Note newNote;
-    private Note activeNote;
+    public Note newNote;
+    public Note activeNote;
 
     private String notebookUUID="";
     private String title="";
@@ -125,28 +124,32 @@ public class NotebookActivity extends NoteContainingActivity {
                     notebook.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            notebook.smoothScrollToPosition(0);
+                            notebook.scrollToPosition(0);
                         }
                     }, 400);
                     notebook.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            notebook.smoothScrollToPosition(0);
+                            notebook.scrollToPosition(0);
                         }
                     }, 250);
                     notebook.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            notebook.smoothScrollToPosition(0);
+                            notebook.scrollToPosition(0);
                         }
                     }, 100);
                 }
+
+                newNoteBottomBar.getLayoutParams().height=WRAP_CONTENT;
+                newNoteBottomBar.getLayoutParams().width=MATCH_PARENT;
+                newNoteBottomBar.requestLayout();
             }
         });
     }
 
     public void refreshBottomBar(){
-        if(notebook.editor.activeNote==null){
+        if(notebook.editor.getActiveNote()==null){
             if(!newNoteBottomBar.layoutShown) {
                 XAnimation.addAndExpand(newNoteBottomBar,bottombarSpace,0,300,XAnimation.DIMENSION_HEIGHT,0,newNoteBottomBar.storedHeight,WRAP_CONTENT);
                 if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()<=1)
@@ -174,7 +177,7 @@ public class NotebookActivity extends NoteContainingActivity {
                 XClipboard.requestCopy();
                 break;
             case R.id.action_paste:
-                XClipboard.requestPaste(this);
+                XClipboard.requestPaste(this, null);
                 break;
             case android.R.id.home:
                 XSelection.clearSelections();
@@ -228,7 +231,7 @@ public class NotebookActivity extends NoteContainingActivity {
     }
 
     public void disableBottomBarGlassModeIfNecessary(){
-        if (  notebook.editor.activeNote == null
+        if (  notebook.editor.getActiveNote() == null
             &&((LinearLayoutManager) notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)
         {
             newNoteBottomBar.setGlassModeEnabled(false);
@@ -236,7 +239,7 @@ public class NotebookActivity extends NoteContainingActivity {
     }
 
     public void enableBottomBarToGlassModeIfNecessary(){
-        if (   notebook.editor.activeNote == null
+        if (   notebook.editor.getActiveNote() == null
             && newNote.isEmpty()
             && ((LinearLayoutManager) notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition() != 0)
         {

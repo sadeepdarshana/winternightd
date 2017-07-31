@@ -73,6 +73,10 @@ public class XAnimation {
     }
 
     public static void changeDimension(final View view, int duration, final int dimension, int start, int end,int delay){
+        changeDimension(view, duration, dimension, start, end,delay,null);
+    }
+
+    public static void changeDimension(final View view, int duration, final int dimension, int start, int end, int delay, final ViewGroup parent){
 
         ValueAnimator slideAnimator;
         if(dimension==0)slideAnimator = ValueAnimator.ofInt(start,end).setDuration(duration);
@@ -81,6 +85,8 @@ public class XAnimation {
         slideAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+                if(parent!=null && view.getParent()==null)parent.addView(view);
+
                 Integer value = (Integer) animation.getAnimatedValue();
                 if(dimension==0)view.getLayoutParams().width = value.intValue();
                 else if(dimension==1)view.getLayoutParams().height = value.intValue();
@@ -120,7 +126,7 @@ public class XAnimation {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(view.getParent()!=null)((ViewGroup)view.getParent()).removeView(view);
+                if(view.getParent()!=null&&(view.getHeight()==0||view.getWidth()==0))((ViewGroup)view.getParent()).removeView(view);
             }
         }, delay + duration + 300);
     }
@@ -143,7 +149,7 @@ public class XAnimation {
         if(view.getParent()!=null)((ViewGroup)view.getParent()).removeView(view);
         parent.addView(view,indexInParent);
 
-        changeDimension(view,duration,dimension,0,end,delay);
+        changeDimension(view,duration,dimension,0,end,delay,parent);
 
         if(endParam!=0)view.postDelayed(new Runnable() {
             @Override
@@ -151,6 +157,6 @@ public class XAnimation {
                 if(dimension==DIMENSION_WIDTH)view.getLayoutParams().width=endParam;
                 if(dimension==DIMENSION_HEIGHT)view.getLayoutParams().height=endParam;
             }
-        }, delay + duration + 50);
+        }, delay + duration + 100);
     }
 }

@@ -81,7 +81,7 @@ public class NoteHolderModes {
 
         public static void setAsActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder) {
             noteHolder.getNotebook().noteHolderController.setAllNoteHoldersModeExcept(DEFAULT_MODE,noteHolder,true);
-            noteHolder.getNotebook().editor.activeNote = noteHolder.getNote();
+            noteHolder.getNotebook().editor.setActiveNote(noteHolder.getNote());
             noteHolder.getNotebook().notebookActivity.refreshBottomBar();
         }
 
@@ -162,7 +162,7 @@ public class NoteHolderModes {
                                 @Override
                                 public void buttonClicked(int attachButtonId) {
                                     Notebook.suspendScrollTemporary();
-                                    noteHolder.getNotebook().editor.activeNote.attachboxRequests(attachButtonId);
+                                    noteHolder.getNotebook().editor.getActiveNote().attachboxRequests(attachButtonId);
                                 }
                             });
                         }else{

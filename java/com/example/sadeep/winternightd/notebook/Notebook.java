@@ -145,7 +145,7 @@ public class Notebook extends RecyclerView {
 
     public class Editor{
         private Notebook notebook;
-        public Note activeNote;
+        private Note activeNote;
 
 
         public Editor(Notebook notebook) {
@@ -165,6 +165,7 @@ public class Notebook extends RecyclerView {
             refresh();
             notebook.scrollToPosition(0);
             notebookActivity.refreshBottomBar();
+            notebookActivity.enableBottomBarToGlassModeIfNecessary();
         }
 
         public void cancelActiveNote(){
@@ -179,6 +180,14 @@ public class Notebook extends RecyclerView {
             Utils.hideKeyboard(getContext());
 
             notebookActivity.refreshBottomBar();
+        }
+
+        public Note getActiveNote() {
+            return activeNote;
+        }
+
+        public void setActiveNote(Note activeNote) {
+            this.activeNote = activeNote;
         }
     }
 }

@@ -53,7 +53,7 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
         if(cursor.getNoteInfo(position-1).noteUUID.equals(notebook.editor.getActiveNoteUUID()))//if (currently editing note)
         {
             noteHolder.setMode(MODE_EDIT, false);
-            noteHolder.bind(notebook.editor.activeNote,MODE_EDIT);
+            noteHolder.bind(notebook.editor.getActiveNote(),MODE_EDIT);
 
         }
         else {

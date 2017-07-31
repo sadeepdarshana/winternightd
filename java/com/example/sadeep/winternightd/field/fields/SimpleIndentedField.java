@@ -120,7 +120,7 @@ public class SimpleIndentedField extends IndentedField implements SingleText {
      */
     @Override
     public boolean onEnterKeyPressed(TextView textView) {
-        if(this.getClass()==SimpleIndentedField.class)return false;
+        //if(this.getClass()==SimpleIndentedField.class)return false;
 
         try{((NotebookActivity)getContext()).getNotebook().setLayoutFrozen(true);}catch (Exception e){};
 

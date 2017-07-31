@@ -46,7 +46,7 @@ public class XEditText extends EditText implements View.OnKeyListener {
     private boolean noTextChangedEventFlag = false; /** @see #setText(CharSequence text, BufferType type)    for more details**/
 
     //needed to call methods on the Field such as boundField.onEnterKeyPressed()
-    private Field boundField; //the Field the EditText is attached to, usually same as getParent()
+    public Field boundField; //the Field the EditText is attached to, usually same as getParent()
 
     public XEditText(Field boundField,Context context){
         this(context);
@@ -161,7 +161,7 @@ public class XEditText extends EditText implements View.OnKeyListener {
                 XClipboard.requestCut();
                 break;
             case android.R.id.paste:
-                XClipboard.requestPaste(getContext());
+                XClipboard.requestPaste(getContext(),this);
                 break;
             case android.R.id.copy:
                 XClipboard.requestCopy();

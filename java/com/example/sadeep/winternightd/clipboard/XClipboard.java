@@ -88,7 +88,7 @@ final public class XClipboard {
 
     }
 
-    public static void pasteClipboardToCurrentCursor(Context context) {
+    public static void pasteClipboardToCurrentCursor(Context context, XEditText intoXEditText) {
 
         Note note =null;
         if(XSelection.isSelectionAvailable()){
@@ -105,6 +105,10 @@ final public class XClipboard {
         }
 
         CursorPosition cp = note.getCurrentCursorPosition();
+
+        if(cp==null){
+            cp=new CursorPosition(intoXEditText.boundField.getFieldIndex(),intoXEditText.getSelectionStart());
+        }
 
         if(cp.isInternal()){
             SimpleIndentedField field = (SimpleIndentedField) note.getFieldAt(cp.fieldIndex);
@@ -131,8 +135,8 @@ final public class XClipboard {
         }
     }
 
-    public static void requestPaste(Context context){
-        pasteClipboardToCurrentCursor(context);
+    public static void requestPaste(Context context, XEditText xEditText){
+        pasteClipboardToCurrentCursor(context,xEditText);
     }
 
     public static void requestCopy(){
