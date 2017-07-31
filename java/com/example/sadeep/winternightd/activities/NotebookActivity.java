@@ -120,7 +120,7 @@ public class NotebookActivity extends NoteContainingActivity {
                 if(!keyboardVisible)return;
 
                 int index = notebook.layoutManager.findFirstVisibleItemPosition();
-                if(index<=3) {
+                if(index<=3 && notebook.editor.getActiveNote()==null) {
                     notebook.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -155,8 +155,8 @@ public class NotebookActivity extends NoteContainingActivity {
                 if(((LinearLayoutManager)notebook.getLayoutManager()).findFirstCompletelyVisibleItemPosition()<=1)
                     XAnimation.vScroll(notebook,300,newNoteBottomBar.storedHeight);
                 newNoteBottomBar.layoutShown=true;
-                enableBottomBarToGlassModeIfNecessary();
                 disableBottomBarGlassModeIfNecessary();
+                enableBottomBarToGlassModeIfNecessary();
             }
         }else {
             if(newNoteBottomBar.layoutShown) {

@@ -61,6 +61,7 @@ final class NotebookViewHolderUtils {
             getNoteSpace().removeAllViews();
             setMode(mode,false);
             note.setEditable(noteEditable);
+            if(note.getParent()!=null)((ViewGroup)note.getParent()).removeView(note);
             getNoteSpace().addView(note);
             onBind();
         }

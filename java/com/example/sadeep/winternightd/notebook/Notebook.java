@@ -162,10 +162,12 @@ public class Notebook extends RecyclerView {
             if(activeNote==null)return;
             notebook.getNotebookDataHandler().addExistingNote(activeNote);
             activeNote = null;
+            notebookActivity.refreshBottomBar();
             refresh();
             notebook.scrollToPosition(0);
-            notebookActivity.refreshBottomBar();
-            notebookActivity.enableBottomBarToGlassModeIfNecessary();
+            notebookActivity.onNotebookScrolled(-1);
+            notebookActivity.newNoteBottomBar.setGlassModeEnabled(true);
+            notebookActivity.newNoteBottomBar.setToolbarVisibility(false);
         }
 
         public void cancelActiveNote(){
