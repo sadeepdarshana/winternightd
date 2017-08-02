@@ -39,17 +39,14 @@ final public class AttachBoxManager {
 
     public static void display(final View button,View anchor, final OnAttachBoxItemClick listener) {
 
-        if(popupWindow!=null){
-            try{popupWindow.dismiss();}
-            catch (Exception e){}
-        }
+        tryDismiss();
 
         int ATTACHBOX_BUTTON_MINIMUM_WIDTH = Globals.dp2px*55;
 
         Activity context= (Activity) button.getContext();
 
-        int buttonCoords[] = new int[2];
-        anchor.getLocationInWindow(buttonCoords);
+        int anchorCoords[] = new int[2];
+        anchor.getLocationInWindow(anchorCoords);
 
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -57,16 +54,16 @@ final public class AttachBoxManager {
         int screenWidth=displayMetrics.widthPixels;
         int screenHeight=displayMetrics.heightPixels;
 
-        int attachboxHeight = screenHeight-(buttonCoords[1]);
+        int attachboxHeight = screenHeight-(anchorCoords[1]);
         int attachboxWidth = screenWidth;
         int posX = 0;
-        int posY = buttonCoords[1];
+        int posY = anchorCoords[1];
         int _rippleX = button.getWidth()/2;
         int _rippleY = 0;
 
         if(attachboxHeight<400){
             attachboxHeight=500;
-            posY = buttonCoords[1]-attachboxHeight;
+            posY = anchorCoords[1]-attachboxHeight;
             _rippleY = attachboxHeight;
         }
 
@@ -74,8 +71,8 @@ final public class AttachBoxManager {
         final int rippleY = _rippleY;
 
 
-        final LinearLayout grid = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.attachbox,(ViewGroup) button.getParent(),false);
-        ((GridLayout)grid.getChildAt(1)).setColumnCount(screenWidth/(ATTACHBOX_BUTTON_MINIMUM_WIDTH));
+        final LinearLayout gridParent = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.attachbox,(ViewGroup) button.getParent(),false);
+        ((GridLayout)gridParent.getChildAt(1)).setColumnCount(screenWidth/(ATTACHBOX_BUTTON_MINIMUM_WIDTH));
 
 
         final PopupWindow popupWindow = new PopupWindow(context);
@@ -84,7 +81,7 @@ final public class AttachBoxManager {
         popupWindow.setWidth(screenWidth);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        popupWindow.setContentView(grid);
+        popupWindow.setContentView(gridParent);
         popupWindow.showAtLocation(button, Gravity.NO_GRAVITY,posX,posY);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -101,12 +98,12 @@ final public class AttachBoxManager {
                     public void run() {
                         ((AttachBoxOpener)button).setAttachboxOpened(false);
                     }
-                },900);
+                },10);
             }
         });
 
-        for(int i=0;i<((GridLayout)grid.getChildAt(1)).getChildCount();i++){
-            ((GridLayout)grid.getChildAt(1)).getChildAt(i).setOnClickListener(new View.OnClickListener() {
+        for(int i=0;i<((GridLayout)gridParent.getChildAt(1)).getChildCount();i++){
+            ((GridLayout)gridParent.getChildAt(1)).getChildAt(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
                     if(!(v instanceof AttachBoxButton))return;
@@ -114,7 +111,7 @@ final public class AttachBoxManager {
                     button.post(new Runnable() {
                         @Override
                         public void run() {
-                            Animator anim = ViewAnimationUtils.createCircularReveal(grid,rippleX,rippleY, (float) Math.hypot(grid.getWidth(), grid.getHeight()),0);
+                            Animator anim = ViewAnimationUtils.createCircularReveal(gridParent,rippleX,rippleY, (float) Math.hypot(gridParent.getWidth(), gridParent.getHeight()),0);
                             anim.setDuration(200) ;
                             anim.start();
                         }
@@ -134,8 +131,7 @@ final public class AttachBoxManager {
         button.post(new Runnable() {
             @Override
             public void run() {
-                grid.setVisibility(View.VISIBLE);
-                Animator anim = ViewAnimationUtils.createCircularReveal(grid, rippleX, rippleY, 0, (float) Math.hypot(grid.getWidth(), grid.getHeight()));
+                Animator anim = ViewAnimationUtils.createCircularReveal(gridParent, rippleX, rippleY, 0, (float) Math.hypot(gridParent.getWidth(), gridParent.getHeight()));
                 anim.setDuration(500) ;
                 anim.start();
             }

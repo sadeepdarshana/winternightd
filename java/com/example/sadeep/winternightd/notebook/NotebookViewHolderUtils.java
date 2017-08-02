@@ -24,7 +24,8 @@ final class NotebookViewHolderUtils {
 
     public static final int VIEWTYPE_HEADER = 0;
     public static final int VIEWTYPE_NOTE_HOLDER = 1;
-    public static final int VIEWTYPE_FOOTER = 2;
+    public static final int VIEWTYPE_HEIGHT_BALANCER=2;
+    public static final int VIEWTYPE_NEWNOTEBAR = 3;
 
     static class NotebookViewHolder extends RecyclerView.ViewHolder{
         public ViewGroup holder;
@@ -101,24 +102,14 @@ final class NotebookViewHolderUtils {
         }
     }
 
-    static class Footer extends LinearLayout{
+    static class HeightBalancer extends LinearLayout{
 
-        public Footer(Context context, final Notebook notebook) {
+        public HeightBalancer(Context context, final Notebook notebook) {
             super(context);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
-                    notebook.bottomBar.storedHeight!=-1?notebook.bottomBar.getHeight():Utils.getHeight(new BottomBar(context))+Globals.dp2px*20);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT);
             setLayoutParams(params);
 
-            notebook.bottomBar.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View xv, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    {
-                        Footer.this.getLayoutParams().height = bottom;
-                        Footer.this.requestLayout();
-                    }
-                }
-            });
         }
     }
 }

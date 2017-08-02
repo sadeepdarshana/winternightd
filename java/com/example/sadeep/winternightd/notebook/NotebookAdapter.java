@@ -11,7 +11,8 @@ import com.example.sadeep.winternightd.selection.XSelection;
 
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_EDIT;
 import static com.example.sadeep.winternightd.notebook.NoteHolderModes.MODE_VIEW;
-import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_FOOTER;
+import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_HEIGHT_BALANCER;
+import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_NEWNOTEBAR;
 import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_HEADER;
 import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.VIEWTYPE_NOTE_HOLDER;
 
@@ -37,7 +38,7 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
     public NotebookViewHolderUtils.NotebookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == VIEWTYPE_HEADER)return new NotebookViewHolderUtils.NotebookViewHolder(new NotebookViewHolderUtils.Header(context));
         if(viewType == VIEWTYPE_NOTE_HOLDER)return  new NotebookViewHolderUtils.NotebookViewHolder(new NotebookViewHolderUtils.NoteHolder(context,notebook));
-        if(viewType == VIEWTYPE_FOOTER)return  new NotebookViewHolderUtils.NotebookViewHolder(new NotebookViewHolderUtils.Footer(context,notebook));
+        if(viewType == VIEWTYPE_NEWNOTEBAR)return  new NotebookViewHolderUtils.NotebookViewHolder(new NotebookViewHolderUtils.Footer(context,notebook));
 
         return null;
     }
@@ -45,21 +46,21 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
     @Override
     public void onBindViewHolder(NotebookViewHolderUtils.NotebookViewHolder holder, int position) {
 
-        if(getItemViewType(position)!=VIEWTYPE_NOTE_HOLDER)return;
+        if(getItemViewType(position)==VIEWTYPE_NOTE_HOLDER) {
 
-        Note note;
-        NotebookViewHolderUtils.NoteHolder noteHolder = (NotebookViewHolderUtils.NoteHolder) holder.holder;
+            Note note;
+            NotebookViewHolderUtils.NoteHolder noteHolder = (NotebookViewHolderUtils.NoteHolder) holder.holder;
 
-        if(cursor.getNoteInfo(position-1).noteUUID.equals(notebook.editor.getActiveNoteUUID()))//if (currently editing note)
-        {
-            noteHolder.setMode(MODE_EDIT, false);
-            noteHolder.bind(notebook.editor.getActiveNote(),MODE_EDIT);
+            if (cursor.getNoteInfo(position - 1).noteUUID.equals(notebook.editor.getActiveNoteUUID()))//if (currently editing note)
+            {
+                noteHolder.setMode(MODE_EDIT, false);
+                noteHolder.bind(notebook.editor.getActiveNote(), MODE_EDIT);
 
-        }
-        else {
-            note = NoteFactory.fromFieldDataStream(context, cursor.getFieldDataStream(position-1), false, notebook,cursor.getNoteInfo(position-1));
-            noteHolder.bind(note,MODE_VIEW);
-            noteHolder.setMode(MODE_VIEW,false);
+            } else {
+                note = NoteFactory.fromFieldDataStream(context, cursor.getFieldDataStream(position - 1), false, notebook, cursor.getNoteInfo(position - 1));
+                noteHolder.bind(note, MODE_VIEW);
+                noteHolder.setMode(MODE_VIEW, false);
+            }
         }
     }
 
@@ -75,13 +76,14 @@ class NotebookAdapter extends RecyclerView.Adapter <NotebookViewHolderUtils.Note
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0)return VIEWTYPE_FOOTER;
+        if(position==0)return VIEWTYPE_NEWNOTEBAR;
+        if(position==1)return VIEWTYPE_HEIGHT_BALANCER;
         if(position==getItemCount()-1)return  VIEWTYPE_HEADER;
         return VIEWTYPE_NOTE_HOLDER;
     }
 
     @Override
     public int getItemCount() {
-        return cursor.getCursor().getCount()+2;
+        return cursor.getCursor().getCount()+3;
     }
 }
