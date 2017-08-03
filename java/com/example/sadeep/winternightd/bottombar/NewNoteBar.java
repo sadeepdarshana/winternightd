@@ -30,10 +30,9 @@ public class NewNoteBar  extends LinearLayout{
     private int attachWidth,sendWidth, emptyNoteHeight; //widths of the buttons WHEN THEY ARE SHOWN
 
     private boolean buttonVisibility = true;
-    private boolean glassModeEnabled = false;
 
 
-    public NewNoteBar(Context context, boolean buttonVisibility, boolean glassModeEnabled) {
+    public NewNoteBar(Context context, boolean buttonVisibility) {
         super(context);
         setBackgroundColor(0xffffffff);
 
@@ -58,7 +57,6 @@ public class NewNoteBar  extends LinearLayout{
         sendWidth = Utils.getWidth(send);
 
         setButtonsVisibility(buttonVisibility,false);
-        setGlassModeEnabled(glassModeEnabled,false);
 
 
         attach.setOnClickListener(new View.OnClickListener() {
@@ -152,34 +150,4 @@ public class NewNoteBar  extends LinearLayout{
         }
     }
 
-
-
-    public boolean getGlassModeEnabled() {
-        return glassModeEnabled;
-    }
-
-    public void setGlassModeEnabled(boolean glassModeEnabled,boolean animate) {
-        final int ANIMATION_DURATION = 50;
-
-        if(glassModeEnabled == this.glassModeEnabled)return;
-        this.glassModeEnabled = glassModeEnabled;
-
-        final int colorOpaque = Color.argb(253,252,252,252);        //color when glass mode disabled
-        final int colorIntermediate = Color.argb(75,150,150,150);   //transition between the two colors goes through this color
-        final int colorTransparent = Color.argb(50,50,50,50);       //color when in glass mode
-
-        if(animate) {
-            if (glassModeEnabled) {
-                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorOpaque, colorIntermediate, 0);
-                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorIntermediate, colorTransparent, ANIMATION_DURATION);
-            }
-            else {
-                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorTransparent, colorIntermediate, 0);
-                XAnimation.changeBackgroundColor(this, ANIMATION_DURATION, colorIntermediate, colorOpaque, ANIMATION_DURATION);
-            }
-        }else{
-            if (glassModeEnabled)   setBackgroundColor(colorTransparent);
-            else                    setBackgroundColor(colorOpaque);
-        }
-    }
 }

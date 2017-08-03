@@ -1,16 +1,21 @@
 package com.example.sadeep.winternightd.bottombar;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.animation.XAnimation;
+import com.example.sadeep.winternightd.misc.NoteContainingActivityRootView;
 import com.example.sadeep.winternightd.misc.Utils;
 import com.example.sadeep.winternightd.toolbar.Toolbar;
 import com.example.sadeep.winternightd.toolbar.ToolbarController;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by Sadeep on 7/10/2017.
@@ -19,7 +24,8 @@ import com.example.sadeep.winternightd.toolbar.ToolbarController;
 public class ExtendedToolbar extends LinearLayout{
 
 
-    private View attach,send,toolbar,cancel;
+    private View attach,send,cancel;
+    Toolbar toolbar;
     private ViewGroup toolbarContainer;
 
     private int attachWidth,sendWidth,toolbarHeight; //widths and heights of the Views WHEN THEY ARE SHOWN
@@ -44,8 +50,7 @@ public class ExtendedToolbar extends LinearLayout{
 
         if(cancelButton)cancel.setVisibility(VISIBLE);
 
-        Toolbar toolbar = new Toolbar(context);
-        this.toolbar = toolbar;
+        toolbar = new Toolbar(context);
         ToolbarController.registerToolbar(toolbar);
         toolbarContainer.addView(this.toolbar);
 
@@ -129,18 +134,21 @@ public class ExtendedToolbar extends LinearLayout{
     }
 
     public void setToolbarVisibility(boolean visible, boolean animate){
-        final int ANIMATION_DURATION = 400;
+        final int ANIMATION_DURATION = 300;
 
         if(toolbarVisibility == visible)return;
         this.toolbarVisibility=visible;
 
         if(animate) {
             if(visible) {
-                XAnimation.changeDimension(toolbar, ANIMATION_DURATION, XAnimation.DIMENSION_HEIGHT, 0, toolbarHeight);
+                toolbar.getLayoutParams().height=toolbarHeight;
+                toolbar.setClipToOutline(true);
+                XAnimation.changeDimension(toolbar, ANIMATION_DURATION, XAnimation.DIMENSION_WIDTH, 0, ((View)getParent()).getWidth(),0,null,MATCH_PARENT);
             }else {
                 XAnimation.changeDimension(toolbar, ANIMATION_DURATION, XAnimation.DIMENSION_HEIGHT, toolbarHeight, 0);
             }
-        }else{
+        }else
+        {
             if(visible){
                 toolbar.getLayoutParams().height=toolbarHeight;
             }else{

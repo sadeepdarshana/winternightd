@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.R;
+import com.example.sadeep.winternightd.activities.NotebookActivity;
+import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.note.Note;
 
 /**
@@ -49,11 +51,20 @@ public class BottomBar extends LinearLayout{
                 BottomBar.this.onAttachClick(v);
             }
         };
-        newNoteBar = new NewNoteBar(context,true,false){
+        newNoteBar = new NewNoteBar(context,true){
             @Override
             protected void onNoteFocused(){
-                BottomBar.this.setGlassModeEnabled(false);
-                BottomBar.this.setToolbarVisibility(true);
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(getToolbarVisibility()==false){
+                            BottomBar.this.setToolbarVisibility(true);
+                            NotebookActivity.a.notebook.layoutManager.scrollToPositionWithOffset(0, Globals.dp2px*75);
+                        }
+                        //
+                    }
+                },500);
+                //NotebookActivity.a.notebook.scrollToPosition(0);
             }
 
             @Override
@@ -79,7 +90,6 @@ public class BottomBar extends LinearLayout{
             @Override
             protected void onNoteHasContent() {
                 BottomBar.this.setToolbarVisibility(true);
-                BottomBar.this.setGlassModeEnabled(false);
             }
         };
 
@@ -127,7 +137,7 @@ public class BottomBar extends LinearLayout{
         if(visible)extendedToolbar.setBackgroundColor(0xccebebeb);
         else extendedToolbar.setBackgroundColor(0);
     }
-    public void setGlassModeEnabled(boolean visible){
-        newNoteBar.setGlassModeEnabled(visible,true);
+    public boolean getToolbarVisibility(){
+        return extendedToolbar.getToolbarVisibility();
     }
 }

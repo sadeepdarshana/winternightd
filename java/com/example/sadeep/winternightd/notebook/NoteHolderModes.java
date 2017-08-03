@@ -82,7 +82,6 @@ public class NoteHolderModes {
         public static void setAsActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder) {
             noteHolder.getNotebook().noteHolderController.setAllNoteHoldersModeExcept(DEFAULT_MODE,noteHolder,true);
             noteHolder.getNotebook().editor.setActiveNote(noteHolder.getNote());
-            noteHolder.getNotebook().notebookActivity.refreshBottomBar();
         }
 
         public static class ViewUpper extends FrameLayout{
@@ -97,7 +96,7 @@ public class NoteHolderModes {
             public ViewUpper(Context context) {
                 super(context);
                 dateTimeTextView = new TextView(context);
-                dateTimeTextView.setTextColor(0xff228822);
+                dateTimeTextView.setTextColor(0xff999999);
                 dateTimeTextView.setBackgroundColor(Color.TRANSPARENT);
                 dateTimeTextView.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize*.67f);
                 setBackgroundColor(Color.TRANSPARENT);

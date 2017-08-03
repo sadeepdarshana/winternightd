@@ -1,10 +1,12 @@
 package com.example.sadeep.winternightd.notebook;
 
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.sadeep.winternightd.localstorage.NotebookCursorReader;
 import com.example.sadeep.winternightd.activities.NotebookActivity;
@@ -162,11 +164,9 @@ public class Notebook extends RecyclerView {
             if(activeNote==null)return;
             notebook.getNotebookDataHandler().addExistingNote(activeNote);
             activeNote = null;
-            notebookActivity.refreshBottomBar();
             refresh();
             notebook.scrollToPosition(0);
             notebookActivity.onNotebookScrolled(-1);
-            notebookActivity.newNoteBottomBar.setGlassModeEnabled(true);
             notebookActivity.newNoteBottomBar.setToolbarVisibility(false);
         }
 
@@ -181,7 +181,6 @@ public class Notebook extends RecyclerView {
             }catch (Exception e){}
             Utils.hideKeyboard(getContext());
 
-            notebookActivity.refreshBottomBar();
         }
 
         public Note getActiveNote() {
@@ -191,5 +190,10 @@ public class Notebook extends RecyclerView {
         public void setActiveNote(Note activeNote) {
             this.activeNote = activeNote;
         }
+    }
+    public static boolean dd=true;
+    @Override
+    public void draw(Canvas c) {
+        if(dd)super.draw(c);
     }
 }

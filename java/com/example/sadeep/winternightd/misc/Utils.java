@@ -38,6 +38,7 @@ public class Utils {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
     }
     public interface KeyboardVisibilityListener {
         void onKeyboardVisibilityChanged(boolean keyboardVisible,int size);

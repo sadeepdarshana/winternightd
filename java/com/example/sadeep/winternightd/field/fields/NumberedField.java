@@ -43,7 +43,7 @@ public class NumberedField extends SimpleIndentedField {
         numberTextView.setPadding(0,0,0,0);
         numberTextView.setBackgroundColor(Color.TRANSPARENT);
         numberTextView.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize);
-        numberTextView.setTextColor(Color.parseColor("#992255"));
+        numberTextView.setTextColor(0xffAA4477);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lp.setMargins( 3* Globals.dp2px,0 , 1* Globals.dp2px,0);

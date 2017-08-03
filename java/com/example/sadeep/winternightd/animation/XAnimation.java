@@ -1,5 +1,6 @@
 package com.example.sadeep.winternightd.animation;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -9,7 +10,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.HorizontalScrollView;
 
+import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.misc.Utils;
+import com.example.sadeep.winternightd.toolbar.Toolbar;
 
 /**
  * Created by Sadeep on 6/18/2017.
@@ -77,6 +80,9 @@ public class XAnimation {
     }
 
     public static void changeDimension(final View view, int duration, final int dimension, int start, int end, int delay, final ViewGroup parent){
+        changeDimension(view, duration, dimension, start, end,delay,parent,0);
+    }
+    public static void changeDimension(final View view, int duration, final int dimension, int start, int end, int delay, final ViewGroup parent,final int endParam){
 
         ValueAnimator slideAnimator;
         if(dimension==0)slideAnimator = ValueAnimator.ofInt(start,end).setDuration(duration);
@@ -98,8 +104,31 @@ public class XAnimation {
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.setStartDelay(delay);
         set.start();
-    }
+        slideAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if(endParam!=0) {
+                    if (dimension == DIMENSION_WIDTH) view.getLayoutParams().width = endParam;
+                    if (dimension == DIMENSION_HEIGHT) view.getLayoutParams().height = endParam;
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
 
     public static void changeBackgroundColor(final View view, int duration, int start, int end, int delay){
 
@@ -159,4 +188,5 @@ public class XAnimation {
             }
         }, delay + duration + 100);
     }
+
 }
