@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sadeep.winternightd.activities.NoteContainingActivity;
 import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.attachbox.AttachBoxManager;
 import com.example.sadeep.winternightd.attachbox.OnAttachBoxItemClick;
@@ -22,8 +22,6 @@ import com.example.sadeep.winternightd.misc.NotebookItemChamber;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-
-import static com.example.sadeep.winternightd.notebook.NotebookViewHolderUtils.NoteHolder.*;
 
 /**
  * Created by Sadeep on 7/24/2017.
@@ -43,11 +41,11 @@ public class NoteHolderModes {
             if(noteHolder.getNote()!=null)noteHolder.getNote().setEditable(false);
             noteHolder.noteEditable = false;
 
-            ViewUpper viewUpper = new ViewUpper(noteHolder.getContext());
-            noteHolder.getUpperChamber().setChamberContent(viewUpper,animate);
-            noteHolder.getLowerChamber().emptyChamber(animate);
+            ViewLower viewLower = new ViewLower(noteHolder.getContext());
+            noteHolder.getLowerChamber().setChamberContent(viewLower,animate);
+            noteHolder.getUpperChamber().emptyChamber(animate);
 
-            noteHolder.setRadius(Globals.dp2px*4);
+            noteHolder.setRadius(Globals.dp2px*2);
 
             final GestureDetector gestureDetector = new GestureDetector(noteHolder.getContext(), new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -71,12 +69,12 @@ public class NoteHolderModes {
 
             noteHolder.mode = MODE_VIEW;
 
-            if(noteHolder.getNote()!=null)viewUpper.setDateTime(noteHolder.getNote().noteInfo.currentVersionTime);
+            if(noteHolder.getNote()!=null) viewLower.setDateTime(noteHolder.getNote().noteInfo.currentVersionTime);
         }
 
         public static void onBind(NotebookViewHolderUtils.NoteHolder noteHolder) {
-            ViewUpper viewUpper = (ViewUpper) noteHolder.getUpperChamber().getChamberContent();
-            viewUpper.setDateTime(noteHolder.getNote().noteInfo.currentVersionTime);
+            ViewLower viewLower = (ViewLower) noteHolder.getLowerChamber().getChamberContent();
+            viewLower.setDateTime(noteHolder.getNote().noteInfo.currentVersionTime);
         }
 
         public static void setAsActiveNote(NotebookViewHolderUtils.NoteHolder noteHolder) {
@@ -84,7 +82,14 @@ public class NoteHolderModes {
             noteHolder.getNotebook().editor.setActiveNote(noteHolder.getNote());
         }
 
-        public static class ViewUpper extends FrameLayout{
+        public static class ViewUpper extends View{
+
+            public ViewUpper(Context context) {
+                super(context);
+            }
+        }
+
+        public static class ViewLower extends FrameLayout{
             private long dateTime;
             private TextView dateTimeTextView;
 
@@ -93,15 +98,19 @@ public class NoteHolderModes {
                 updateDateTimeTextView();
             }
 
-            public ViewUpper(Context context) {
+            public ViewLower(Context context) {
                 super(context);
                 dateTimeTextView = new TextView(context);
-                dateTimeTextView.setTextColor(0xff999999);
+                dateTimeTextView.setTextColor(0xff228822);
                 dateTimeTextView.setBackgroundColor(Color.TRANSPARENT);
                 dateTimeTextView.setTextSize(TypedValue.COMPLEX_UNIT_FRACTION,  Globals.defaultFontSize*.67f);
                 setBackgroundColor(Color.TRANSPARENT);
                 addView(dateTimeTextView);
                 updateDateTimeTextView();
+
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.gravity = Gravity.RIGHT;
+                dateTimeTextView.setLayoutParams(params);
 
                 setPadding(Globals.dp2px*2,Globals.dp2px*4,Globals.dp2px*2,Globals.dp2px*4);
 

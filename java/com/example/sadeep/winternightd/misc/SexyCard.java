@@ -29,7 +29,7 @@ public class SexyCard extends CardView {
 
 
     private void init() {
-        setCardElevation(1.3f* Globals.dp2px);
+        setCardElevation(1.4f* Globals.dp2px);
         setCardBackgroundColor(0xffffffff);
     }
 

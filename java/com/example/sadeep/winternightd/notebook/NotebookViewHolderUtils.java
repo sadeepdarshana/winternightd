@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
+import com.example.sadeep.winternightd.activities.NotebookActivity;
 import com.example.sadeep.winternightd.bottombar.BottomBar;
 import com.example.sadeep.winternightd.misc.Globals;
 import com.example.sadeep.winternightd.misc.Utils;
@@ -57,7 +58,7 @@ public final class NotebookViewHolderUtils {
             this.notebook = notebook;
 
             Notebook.LayoutParams params = new RecyclerView.LayoutParams(MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(Globals.dp2px*5,Globals.dp2px*5,Globals.dp2px*5,Globals.dp2px*5);
+            params.setMargins(Globals.dp2px*6,Globals.dp2px*5,Globals.dp2px*6,Globals.dp2px*5);
             setLayoutParams(params);
 
             notebook.noteHolderController.addNoteHolder(this);
@@ -102,9 +103,19 @@ public final class NotebookViewHolderUtils {
         public Header(Context context) {
             super(context);
             setPadding(0, 0, 0, 0);
-            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(MATCH_PARENT, Globals.dp2px * 6);
+            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(MATCH_PARENT,Globals.dp2px * 6);
             params.setMargins(0, 0, 0, 0);
             setLayoutParams(params);
+            post(new Runnable() {
+                @Override
+                public void run() {/*
+                    RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(MATCH_PARENT, ((NotebookActivity)getContext()).
+                            getSupportActionBar().getHeight()+Globals.dp2px * 6);
+                    params.setMargins(0, 0, 0, 0);
+                    setLayoutParams(params);*/
+
+                }
+            });
         }
     }
 

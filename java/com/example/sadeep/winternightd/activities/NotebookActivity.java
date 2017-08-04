@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -125,6 +126,40 @@ public class NotebookActivity extends NoteContainingActivity {
                 NotebookViewHolderUtils.HeightBalancer.balancer.balance();
             }
         });
+
+        final CountDownTimer timer=new CountDownTimer(100000000,50){
+            float elevation = -1;
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (elevation<0) elevation = getSupportActionBar().getElevation();
+
+                if(getActionBarMode()==ACTIONBAR_NORMAL){
+                    if(notebook.layoutManager.findFirstCompletelyVisibleItemPosition()!=0) {
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0x00333333));
+                        setActionbarTextColor(0x00ffffff);
+                        getSupportActionBar().setElevation(2);
+                        getSupportActionBar().invalidateOptionsMenu();
+                    }
+                    else {
+                        getSupportActionBar().setBackgroundDrawable(getActionBarDrawable());
+                        setActionbarTextColor(0xffffffff);
+                        getSupportActionBar().setElevation(elevation);
+                    }
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        newNoteBottomBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                timer.start();
+
+            }
+        },1);
     }
 
 

@@ -5,6 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,6 +24,7 @@ public abstract class NoteContainingActivity extends AppCompatActivity {
 
     public static final int ACTIONBAR_NORMAL = 0;
     public static final int ACTIONBAR_SELECT = 1;
+
 
     private int mode;
 
@@ -74,7 +78,17 @@ public abstract class NoteContainingActivity extends AppCompatActivity {
             invalidateOptionsMenu();
         }
     }
+    public int getActionBarMode() {
+        return mode;
+    }
+    public void setActionbarTextColor(int color) {
 
+        String title = getSupportActionBar().getTitle().toString();
+        Spannable spannablerTitle = new SpannableString(title);
+        spannablerTitle.setSpan(new ForegroundColorSpan(color), 0, spannablerTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(spannablerTitle);
+
+    }
 
     public void onRootLayoutSizeChanged(){}
 

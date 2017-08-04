@@ -54,7 +54,7 @@ public class Notebook extends RecyclerView {
         this.notebookGuid = notebookGuid;
         this.bottomBar = bottomBar;
 
-        setOverScrollMode(OVER_SCROLL_NEVER);
+        //setOverScrollMode(OVER_SCROLL_NEVER);
 
         editor = new Editor(this);
 
